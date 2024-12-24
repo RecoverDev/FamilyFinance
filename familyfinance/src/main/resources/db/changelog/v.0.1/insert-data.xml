@@ -1,0 +1,85 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+   <changeSet id="1.0" author="recover">
+     <insert schemaName="public" tableName="person">
+          <column name="username" value="common"/>
+          <column name="full_name" value="Common User"/>
+          <column name="email" value="common@server.com"/>
+          <column name="password" value="$2a$10$3R8.QzaOmxZt5W0GZwtMNuvXrPsN/W5vy4uezkzH3iFfp1QPn4cHG"/>
+          <column name="role" value="0"/>
+          <column name="blocked" valueBoolean="true"/>
+     </insert>
+     <insert schemaName="public" tableName="person">
+          <column name="username" value="admin"/>
+          <column name="full_name" value="Administrator"/>
+          <column name="email" value="admin@server.com"/>
+          <column name="password" value="$2a$10$3R8.QzaOmxZt5W0GZwtMNuvXrPsN/W5vy4uezkzH3iFfp1QPn4cHG"/>
+          <column name="role" value="1"/>
+          <column name="blocked" valueBoolean="false"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses_type">
+          <column name="name" value = "Обязательные расходы"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses_type">
+          <column name="name" value = "Произвольные расходы"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses_type">
+          <column name="name" value = "Непредвиденные расходы"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses">
+         <column name="name" value = "Коммунальные услуги"/>
+         <column name="expenses_type_id" valueComputed = "(SELECT id FROM expenses_type WHERE name = 'Обязательные расходы')"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses">
+         <column name="name" value = "Продукты питания"/>
+         <column name="expenses_type_id" valueComputed = "(SELECT id FROM expenses_type WHERE name = 'Обязательные расходы')"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses">
+         <column name="name" value = "Одежда и обувь"/>
+         <column name="expenses_type_id" valueComputed = "(SELECT id FROM expenses_type WHERE name = 'Обязательные расходы')"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+
+     <insert schemaName="public" tableName="expenses">
+         <column name="name" value = "Кафе и рестораны"/>
+         <column name="expenses_type_id" valueComputed = "(SELECT id FROM expenses_type WHERE name = 'Произвольные расходы')"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses">
+         <column name="name" value = "Электроника"/>
+         <column name="expenses_type_id" valueComputed = "(SELECT id FROM expenses_type WHERE name = 'Произвольные расходы')"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses">
+         <column name="name" value = "Театры и кино"/>
+         <column name="expenses_type_id" valueComputed = "(SELECT id FROM expenses_type WHERE name = 'Произвольные расходы')"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     <insert schemaName="public" tableName="expenses">
+         <column name="name" value = "Ремонт автомобиля"/>
+         <column name="expenses_type_id" valueComputed = "(SELECT id FROM expenses_type WHERE name = 'Непредвиденные расходы')"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     
+     <insert schemaName="public" tableName="income">
+         <column name="name" value = "Заработная плата"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     <insert schemaName="public" tableName="income">
+         <column name="name" value = "Пенсия"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+     <insert schemaName="public" tableName="income">
+         <column name="name" value = "Проценты от вкладов"/>
+         <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
+     </insert>
+
+
+   </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: FamilyFinance
+    description: 'Family Finance Service'
+    version: '1.0'
+  datasource:
+    url: jdbc:postgresql://${PG_HOST}:5432/${PG_DB}
+    username: ${PG_USER}
+    password: ${PG_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: false
+  liquibase:
+    change-log: db/changelog/changelog.xml
+    enabled: true
