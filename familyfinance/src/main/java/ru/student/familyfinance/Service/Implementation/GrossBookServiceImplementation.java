@@ -33,43 +33,43 @@ public class GrossBookServiceImplementation implements GrossBookService {
 
     @Override
     public List<GrossBook> getGrossBooks(LocalDate begin, LocalDate end, Person person) {
-        List<GrossBook> result =  (List<GrossBook>)repository.findByPerson(person);
-        return result.stream().filter(g -> g.getDateOfOperation().isAfter(begin) && g.getDateOfOperation().isBefore(end)).toList();
+        List<GrossBook> result =  (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
+        return result;
     }
 
     @Override
     public double getIncomeByPeriod(LocalDate begin, LocalDate end, Person person) {
-        List<GrossBook> result = (List<GrossBook>)repository.findByPerson(person);
+        List<GrossBook> result = (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
         return result.stream().filter(g -> g.getIncome() != null).mapToDouble(i -> i.getSumm()).sum();
     }
 
     @Override
     public List<GrossBook> getListIncomesByPeriod(LocalDate begin, LocalDate end, Person person) {
-        List<GrossBook> result = (List<GrossBook>)repository.findByPerson(person);
+        List<GrossBook> result = (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
         return result.stream().filter(g -> g.getIncome() != null).toList();
     }
 
     @Override
     public double getExpensesByPeriod(LocalDate begin, LocalDate end, Person person) {
-        List<GrossBook> result = (List<GrossBook>)repository.findByPerson(person);
+        List<GrossBook> result = (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
         return result.stream().filter(g -> g.getExpenses() != null).mapToDouble(i -> i.getSumm()).sum();
     }
 
     @Override
     public List<GrossBook> getListExpensesByPeriod(LocalDate begin, LocalDate end, Person person) {
-        List<GrossBook> result = (List<GrossBook>)repository.findByPerson(person);
+        List<GrossBook> result = (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
         return result.stream().filter(g -> g.getExpenses() != null).toList();
     }
 
     @Override
     public double getTargetByPeriod(LocalDate begin, LocalDate end, Person person) {
-        List<GrossBook> result = (List<GrossBook>)repository.findByPerson(person);
+        List<GrossBook> result = (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
         return result.stream().filter(g -> g.getTarget() != null).mapToDouble(i -> i.getSumm()).sum();
     }
 
     @Override
     public List<GrossBook> getListTargetByPeriod(LocalDate begin, LocalDate end, Person person) {
-        List<GrossBook> result = (List<GrossBook>)repository.findByPerson(person);
+        List<GrossBook> result = (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
         return result.stream().filter(g -> g.getTarget() != null).toList();
     }
 
