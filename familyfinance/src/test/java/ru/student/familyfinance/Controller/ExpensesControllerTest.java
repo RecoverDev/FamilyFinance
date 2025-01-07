@@ -139,7 +139,7 @@ public class ExpensesControllerTest {
     }
 
     @Test
-    @DisplayName("Изменение нового вида расходов")
+    @DisplayName("Изменение вида расходов")
     @WithMockUser
     public void putExpensesTest() throws Exception {
         doReturn(listExpenses.get(0)).when(mapper).toExpenses(listExpensesDTO.get(0));
