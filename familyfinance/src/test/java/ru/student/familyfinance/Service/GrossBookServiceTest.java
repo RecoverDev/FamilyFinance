@@ -1,4 +1,4 @@
-package ru.student.familyfinance;
+package ru.student.familyfinance.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -21,11 +21,10 @@ import ru.student.familyfinance.Model.Income;
 import ru.student.familyfinance.Model.Person;
 import ru.student.familyfinance.Model.Target;
 import ru.student.familyfinance.Repository.GrossBookRepository;
-import ru.student.familyfinance.Service.GrossBookService;
 import ru.student.familyfinance.Service.Implementation.GrossBookServiceImplementation;
 
 @ExtendWith(MockitoExtension.class)
-public class GrossBookTest {
+public class GrossBookServiceTest {
 
     @Mock
     GrossBookRepository repository;

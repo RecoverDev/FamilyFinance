@@ -1,4 +1,4 @@
-package ru.student.familyfinance;
+package ru.student.familyfinance.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -19,7 +19,6 @@ import ru.student.familyfinance.Model.Expenses;
 import ru.student.familyfinance.Model.ExpensesType;
 import ru.student.familyfinance.Model.Person;
 import ru.student.familyfinance.Repository.ExpensesRepository;
-import ru.student.familyfinance.Service.ExpensesService;
 import ru.student.familyfinance.Service.Implementation.ExpensesServiceImplementation;
 
 @ExtendWith(MockitoExtension.class)

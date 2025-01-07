@@ -1,4 +1,4 @@
-package ru.student.familyfinance;
+package ru.student.familyfinance.Service;
 
 import static org.mockito.Mockito.doReturn;
 
@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ru.student.familyfinance.Repository.ExpensesTypeRepository;
-import ru.student.familyfinance.Service.ExpensesTypeService;
 import ru.student.familyfinance.Service.Implementation.ExpensesTypeServiceImplementation;
 import ru.student.familyfinance.Model.ExpensesType;
 

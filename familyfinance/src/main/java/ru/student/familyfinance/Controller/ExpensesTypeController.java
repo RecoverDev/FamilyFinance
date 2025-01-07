@@ -42,7 +42,7 @@ public class ExpensesTypeController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<ExpensesType>> getExpensesTypes() {
-        List<ExpensesType> result = (List<ExpensesType>)service.getExpensesType();
+        List<ExpensesType> result = service.getExpensesType();
         return result.size() > 0 ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
