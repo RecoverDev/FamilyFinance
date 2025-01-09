@@ -29,10 +29,7 @@ import ru.student.familyfinance.DTO.PlanDTO;
 import ru.student.familyfinance.Mapper.MapperPlan;
 import ru.student.familyfinance.Model.Person;
 import ru.student.familyfinance.Model.Plan;
-import ru.student.familyfinance.Service.ExpensesService;
-import ru.student.familyfinance.Service.IncomeService;
 import ru.student.familyfinance.Service.PlanService;
-import ru.student.familyfinance.Service.TargetService;
 
 @Tag(name = "Plan Controller", description = "API по работе с планом пользователя")
 @RestController
@@ -40,10 +37,8 @@ import ru.student.familyfinance.Service.TargetService;
 @RequiredArgsConstructor
 public class PlanController {
     private final PlanService service;
-    private final IncomeService incomeService;
-    private final ExpensesService expensesService;
-    private final TargetService targetService;
     private final MapperPlan mapper;
+    private final Builder builder;
 
     @Operation(summary = "Получение плана пользователя на определенный месяц", tags = "Plan Controller")
     @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
@@ -65,7 +60,7 @@ public class PlanController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<HttpStatus> postPlan(@AuthenticationPrincipal Person person, @RequestBody PlanDTO planDTO) {
-        Plan plan = buildPlan(planDTO, person);
+        Plan plan = builder.buildPlan(planDTO, person);
 
         boolean result = service.addPlan(plan);
         return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -87,7 +82,7 @@ public class PlanController {
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<HttpStatus> putPlan(@AuthenticationPrincipal Person person, @RequestBody PlanDTO planDTO) {
-        Plan plan = buildPlan(planDTO, person);
+        Plan plan = builder.buildPlan(planDTO, person);
         boolean result = service.editPlan(plan);
         return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
@@ -120,14 +115,5 @@ public class PlanController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    private Plan buildPlan(PlanDTO planDTO, Person person) {
-        Plan plan = mapper.toPlan(planDTO);
-        plan.setPerson(person);
-        plan.setIncome(incomeService.getIncomeById(planDTO.getIncome_id()));
-        plan.setExpenses(expensesService.getExpensesById(planDTO.getExpenses_id()));
-        plan.setTarget(targetService.getTargetById(planDTO.getTarget_id()));
-
-        return plan;
-    }
 
 }
