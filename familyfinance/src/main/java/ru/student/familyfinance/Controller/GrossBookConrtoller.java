@@ -28,10 +28,7 @@ import ru.student.familyfinance.DTO.GrossBookDTO;
 import ru.student.familyfinance.Mapper.MapperGrossBook;
 import ru.student.familyfinance.Model.GrossBook;
 import ru.student.familyfinance.Model.Person;
-import ru.student.familyfinance.Service.ExpensesService;
 import ru.student.familyfinance.Service.GrossBookService;
-import ru.student.familyfinance.Service.IncomeService;
-import ru.student.familyfinance.Service.TargetService;
 
 @Tag(name = "GrossBook Controller", description = "API по работе с журналом фактических расходов и доходов пользователя")
 @RestController
@@ -39,9 +36,7 @@ import ru.student.familyfinance.Service.TargetService;
 @RequiredArgsConstructor
 public class GrossBookConrtoller {
     private final GrossBookService service;
-    private final IncomeService incomeService;
-    private final ExpensesService expensesService;
-    private final TargetService targetService;
+    private final GrossBookBuilder builder;
     private final MapperGrossBook mapper;
 
     @Operation(summary = "Получение всех записей об операциях пользователя за период", tags = "GrossBook Controller")
@@ -66,7 +61,7 @@ public class GrossBookConrtoller {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<HttpStatus> postGrossBook(@AuthenticationPrincipal Person person, @RequestBody GrossBookDTO grossBookDTO) {
-        GrossBook grossBook = buildGrossBook(person, grossBookDTO);
+        GrossBook grossBook = builder.buildGrossBook(person, grossBookDTO);
         boolean result = service.addGrossBook(grossBook);
         return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
@@ -77,7 +72,7 @@ public class GrossBookConrtoller {
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<HttpStatus> putGrossBook(@AuthenticationPrincipal Person person, @RequestBody GrossBookDTO grossBookDTO) {
-        GrossBook grossBook = buildGrossBook(person, grossBookDTO);
+        GrossBook grossBook = builder.buildGrossBook(person, grossBookDTO);
         boolean result = service.editGrossBook(grossBook);
         return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
@@ -139,15 +134,4 @@ public class GrossBookConrtoller {
         List<GrossBookDTO> result = mapper.toListGrossBookDTO(grossBooks);
         return result.size() > 0 ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    private GrossBook buildGrossBook(Person person, GrossBookDTO grossBookDTO) {
-        GrossBook result = mapper.toGrossBook(grossBookDTO);
-        result.setPerson(person);
-        result.setIncome(incomeService.getIncomeById(grossBookDTO.getIncome_id()));
-        result.setExpenses(expensesService.getExpensesById(grossBookDTO.getExpenses_id()));
-        result.setTarget(targetService.getTargetById(grossBookDTO.getTarget_id()));
-
-        return result;
-    }
-
 }

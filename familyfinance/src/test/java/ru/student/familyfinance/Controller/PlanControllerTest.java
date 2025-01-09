@@ -58,7 +58,7 @@ public class PlanControllerTest {
     private PlanService service;
 
     @MockitoBean
-    private Builder builder;
+    private PlanBuilder builder;
 
     @MockitoBean
     private MapperPlan mapper;
@@ -83,7 +83,7 @@ public class PlanControllerTest {
         doReturn(listPlanDTO).when(mapper).toListPlanDTO(listPlans);
         String json = jsonMapper.writeValueAsString(listPlanDTO);
 
-        mvc.perform(get("/plans/2024-01-01")).andExpect(status().isOk()).andExpect(content().json(json));
+        mvc.perform(get("/plans/2024-01-01").principal(authenticationToken)).andExpect(status().isOk()).andExpect(content().json(json));
         Mockito.verify(service, Mockito.times(1)).getPlans(person, LocalDate.of(2024, 1, 1));
         Mockito.verify(mapper, Mockito.times(1)).toListPlanDTO(listPlans);
     }

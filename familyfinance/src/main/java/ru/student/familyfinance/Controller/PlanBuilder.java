@@ -13,7 +13,7 @@ import ru.student.familyfinance.Service.TargetService;
 
 @Component
 @RequiredArgsConstructor
-public class Builder {
+public class PlanBuilder {
     private final MapperPlan mapper;
     private final IncomeService incomeService;
     private final ExpensesService expensesService;

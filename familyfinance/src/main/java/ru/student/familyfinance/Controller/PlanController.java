@@ -38,7 +38,7 @@ import ru.student.familyfinance.Service.PlanService;
 public class PlanController {
     private final PlanService service;
     private final MapperPlan mapper;
-    private final Builder builder;
+    private final PlanBuilder builder;
 
     @Operation(summary = "Получение плана пользователя на определенный месяц", tags = "Plan Controller")
     @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
