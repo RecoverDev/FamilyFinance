@@ -10,13 +10,7 @@
             "request": "launch",
             "mainClass": "ru.student.familyfinance.FamilyfinanceApplication",
             "projectName": "familyfinance",
-            // "envFile": "${workspaceFolder}/.env"
-            "env": {
-                "PG_HOST" : "localhost",
-                "PG_DB" : "familyfinance",
-                "PG_USER" : "postgres",
-                "PG_PASSWORD" : "password"
-            }
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
