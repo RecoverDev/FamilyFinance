@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,14 +42,14 @@ public class AutorizationController {
     @Operation(summary = "Регистрация пользователя", tags = "Autorization Controller")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Пользователь успешно зарегистрировался", content = @Content),
                             @ApiResponse(responseCode = "304", description = "Ошибка регистрации пользователя", content = @Content)})
-    @GetMapping("/registration")
+    @PostMapping("/registration")
     public ResponseEntity<HttpStatus> registration(@RequestBody RegistrationPerson registrationPerson) {
 
 
         Person person = new Person(0, registrationPerson.getUsername(), 
                                          registrationPerson.getFullName(), 
-                                         registrationPerson.getEmail(),
                                          passwordEncoder.encode(registrationPerson.getPassword()), 
+                                         registrationPerson.getEmail(),
                                          0,
                                          false);
         boolean result = service.addPerson(person);

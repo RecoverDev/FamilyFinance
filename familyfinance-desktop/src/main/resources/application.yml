@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: 'Family Finance - Desktop'
+  main:
+    web-application-type: 'none'
+logging:
+  structured:
+    format:
+      file: 'ecs'
+  file:
+    name: 'log.json'
+backend:
+  url: 'http://localhost:8080'

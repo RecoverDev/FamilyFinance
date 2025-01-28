@@ -45,10 +45,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityWebFilterChain (HttpSecurity http) throws Exception {
 
-        return http.csrf(cs -> cs.disable())
+        return http
                 .authorizeHttpRequests((autorize) -> 
                 autorize.requestMatchers("/registration", "/test","/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated())
+                .csrf(cs -> cs.disable())
                 .httpBasic(Customizer.withDefaults())
                 .build();
 
