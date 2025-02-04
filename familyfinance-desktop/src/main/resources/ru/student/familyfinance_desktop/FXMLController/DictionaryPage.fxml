@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21"
+    fx:controller="ru.student.familyfinance_desktop.FXMLController.DictionaryController">
+    <Tab text = "Виды доходов">
+        <content>
+            <GridPane alignment="center" hgap="2" vgap="1">
+                <padding>
+                    <Insets bottom="5" left="5" right="5" top="5" />
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES"/>
+                    <ColumnConstraints prefWidth="60.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES"/>
+                </rowConstraints>
+
+                <TableView fx:id="incomeTable" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER">
+                    <columns>
+                        <TableColumn fx:id="nameIncome" text="Наименование" />
+                    </columns>
+                </TableView>
+
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER">
+                    <Button fx:id="addButton" onAction="#addIncomeAction" text="" >
+                        <VBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                        <graphic>
+                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@Images/add-button.png" />
+                                </image>
+                            </ImageView>
+                        </graphic> 
+                        <tooltip>
+                            <Tooltip text="Добавить новый вид доходов"/>
+                        </tooltip>                   
+                    </Button>
+
+                    <Button fx:id="deleteButton" onAction="#deleteIncomeAction" prefWidth="30.0" prefHeight="30.0" text="" >
+                        <VBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                        <graphic>
+                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@Images/delete-button.png" />
+                                </image>
+                            </ImageView>
+                        </graphic> 
+                        <tooltip>
+                            <Tooltip text="Удалить вид доходов"/>
+                        </tooltip>                   
+                    </Button>
+
+                    <Button fx:id="editButton" onAction="#editIncomeAction" prefWidth="30.0" prefHeight="30.0" text="" >
+                        <VBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                        <graphic>
+                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@Images/edit-button.png" />
+                                </image>
+                            </ImageView>
+                        </graphic> 
+                        <tooltip>
+                            <Tooltip text="Редактировать вид доходов"/>
+                        </tooltip>                   
+                    </Button>
+                </VBox>
+
+            </GridPane>
+        </content>
+    </Tab>
+    <Tab text = "Виды расходов">
+        <content>
+        </content>
+    </Tab>
+</TabPane>

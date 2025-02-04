@@ -19,8 +19,6 @@ public class Navigator {
     @Autowired
     private ConfigurableApplicationContext applicationContext;
     
-    public final String LOGIN_PAGE = "FXML/LoginPage.fxml";
-    public final String REGISTRATION_PAGE = "FXML/RegistrationPage.fxml";
     public final String STYLES_SHEET = "FXML/cupertino-light.css";
 
     public void show(Object controller, String title) {
@@ -40,7 +38,7 @@ public class Navigator {
 
     }
 
-    private Parent loadFxml(Object controller) {
+    public Parent loadFxml(Object controller) {
         FxWeaver loader = applicationContext.getBean(FxWeaver.class);
         Parent root = loader.loadView(controller.getClass());
         root.getStylesheets().add(getClass().getClassLoader().getResource(STYLES_SHEET).toExternalForm());

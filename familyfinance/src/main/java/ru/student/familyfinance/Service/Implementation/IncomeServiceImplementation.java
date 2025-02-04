@@ -17,12 +17,12 @@ public class IncomeServiceImplementation implements IncomeService {
     private final IncomeRepository repository;
 
     @Override
-    public boolean addIncome(Income income) {
+    public Income addIncome(Income income) {
         if (income == null) {
-            return false;
+            return null;
         }
         Income result = repository.save(income);
-        return income.equals(result);
+        return income.equals(result) ? result : null;
     }
 
     @Override
@@ -43,12 +43,12 @@ public class IncomeServiceImplementation implements IncomeService {
     }
 
     @Override
-    public boolean editIncome(Income income) {
+    public Income editIncome(Income income) {
         if (income == null) {
-            return false;
+            return null;
         }
         Income result = repository.save(income);
-        return income.equals(result);
+        return income.equals(result) ? result : null;
     }
 
 }

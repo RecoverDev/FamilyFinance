@@ -66,27 +66,35 @@ public class IncomeController {
     }
 
     @Operation(summary = "Добавление новой категории дохода пользователя", tags = "Income Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Категория дохода успешно добавлена", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Категория дохода успешно добавлена", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = IncomeDTO.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при добавлении категории дохода пользователя" ,content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<HttpStatus> postIncome(@RequestBody IncomeDTO incomeDTO, @AuthenticationPrincipal Person person) {
+    public ResponseEntity<IncomeDTO> postIncome(@RequestBody IncomeDTO incomeDTO, @AuthenticationPrincipal Person person) {
         Income income = mapper.toIncome(incomeDTO);
         income.setPerson(person);
-        boolean result = service.addIncome(income);
-        return result ?  new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Income result = service.addIncome(income);
+        IncomeDTO response = mapper.toIncomeDTO(result);
+        return result != null ?  new ResponseEntity<>(response,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Изменение категории дохода пользователя", tags = "Income Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Категория дохода успешно изменена", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Категория дохода успешно изменена", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = IncomeDTO.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при изменении категории дохода пользователя" ,content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> putIncome(@RequestBody IncomeDTO incomeDTO, @AuthenticationPrincipal Person person) {
+    public ResponseEntity<IncomeDTO> putIncome(@RequestBody IncomeDTO incomeDTO, @AuthenticationPrincipal Person person) {
         Income income = mapper.toIncome(incomeDTO);
         income.setPerson(person);
-        boolean result = service.editIncome(income);
-        return result ?  new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Income result = service.editIncome(income);
+        IncomeDTO response = mapper.toIncomeDTO(result);
+        return result != null ?  new ResponseEntity<>(response,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Удаление категории дохода пользователя по ID", tags = "Income Controller")

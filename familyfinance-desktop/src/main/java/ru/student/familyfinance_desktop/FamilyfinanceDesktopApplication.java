@@ -26,7 +26,6 @@ public class FamilyfinanceDesktopApplication extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         navigator.setStage(stage);
-        //navigator.setApplicationContext(applicationContext);
         navigator.show(autorizateController,"Семейный бюджет.Авторизация");
     }
 

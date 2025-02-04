@@ -39,7 +39,7 @@ public class IncomeServiceTest {
     public void addIncomeTest() {
         Income income = new Income(1, new Person(), "Test Income");
         doReturn(income).when(repository).save(income);
-        assertThat(service.addIncome(income)).isTrue();
+        assertThat(service.addIncome(income)).isEqualTo(income);
         Mockito.verify(repository,Mockito.times(1)).save(income);
     }
 
@@ -48,7 +48,7 @@ public class IncomeServiceTest {
     public void editIncomeTest() {
         Income income = new Income(1, new Person(), "Test Income");
         doReturn(income).when(repository).save(income);
-        assertThat(service.editIncome(income)).isTrue();
+        assertThat(service.editIncome(income)).isEqualTo(income);
         Mockito.verify(repository,Mockito.times(1)).save(income);
     }
 

@@ -13,9 +13,9 @@ public interface IncomeService {
     /**
      * Добавление новой категории доходов
      * @param income - новая категория доходов
-     * @return - результат операции true - успех/false - неудача
+     * @return - сохраненный объект Income
      */
-    boolean addIncome(Income income);
+    Income addIncome(Income income);
 
     /**
      * Удаление категории доходов по идентификатору
@@ -41,7 +41,7 @@ public interface IncomeService {
     /**
      * Изменение категории доходов
      * @param expenses - изменяемая категория
-     * @return - результат операции true - успех/false - неудача
+     * @return - Отредактированный объект Income
      */
-    boolean editIncome(Income income);
+    Income editIncome(Income income);
 }

@@ -18,6 +18,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.Model.AutorizateData;
 import ru.student.familyfinance_desktop.Service.AutorizationService;
+import ru.student.familyfinance_desktop.Service.EnvironmentService;
 
 @Component
 @Setter
@@ -32,6 +33,9 @@ public class AutorizateController implements Initializable{
 
     @Autowired
     private AutorizationService service;
+
+    @Autowired
+    private EnvironmentService environmentService;
 
     @Autowired
     private Navigator navigator;
@@ -103,6 +107,7 @@ public class AutorizateController implements Initializable{
         }
 
         errorLabel.setText("");
+        environmentService.setEnvironment();
         //вызвать основное окно
         navigator.show(desktopController, "Семейный бюджет");
     }
