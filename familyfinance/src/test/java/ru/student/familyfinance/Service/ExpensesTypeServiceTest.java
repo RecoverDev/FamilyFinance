@@ -39,7 +39,7 @@ public class ExpensesTypeServiceTest {
     public void addExpensesTypeTest() {
         ExpensesType type = new ExpensesType(1,"Test expenses type");
         doReturn(type).when(repository).save(type);
-        assertThat(service.addExpensesType(type)).isTrue();
+        assertThat(service.addExpensesType(type)).isEqualTo(type);
         Mockito.verify(repository,Mockito.times(1)).save(type);
     }
 
@@ -78,7 +78,7 @@ public class ExpensesTypeServiceTest {
     public void editExpensesTypeTest() {
         ExpensesType type = new ExpensesType(1,"Test expenses type");
         doReturn(type).when(repository).save(type);
-        assertThat(service.editExpensesType(type)).isTrue();
+        assertThat(service.editExpensesType(type)).isEqualTo(type);
         Mockito.verify(repository,Mockito.times(1)).save(type);
 
     }

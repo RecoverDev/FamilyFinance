@@ -17,12 +17,12 @@ public class ExpensesServiceImplementation implements ExpensesService {
     private final ExpensesRepository repository;
 
     @Override
-    public boolean addExpenses(Expenses expenses) {
+    public Expenses addExpenses(Expenses expenses) {
         if (expenses == null) {
-            return false;
+            return null;
         }
         Expenses result = repository.save(expenses);
-        return expenses.equals(result);
+        return result;
     }
 
     @Override
@@ -43,12 +43,12 @@ public class ExpensesServiceImplementation implements ExpensesService {
     }
 
     @Override
-    public boolean editExpenses(Expenses expenses) {
+    public Expenses editExpenses(Expenses expenses) {
         if (expenses == null) {
-            return false;
+            return null;
         }
         Expenses result = repository.save(expenses);
-        return expenses.equals(result);
+        return result;
     }
 
 }

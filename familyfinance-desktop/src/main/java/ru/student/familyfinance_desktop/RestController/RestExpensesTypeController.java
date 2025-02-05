@@ -23,11 +23,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ru.student.familyfinance_desktop.Model.AutorizateData;
-import ru.student.familyfinance_desktop.Model.Income;
+import ru.student.familyfinance_desktop.Model.ExpensesType;
 
 @Component
-public class RestIncomeController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestIncomeController.class);
+public class RestExpensesTypeController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestExpensesTypeController.class);
 
     @Value("${backend.url}")
     private String url;
@@ -38,98 +38,97 @@ public class RestIncomeController {
     @Autowired
     private ObjectMapper mapper;
 
-
-    public List<Income> getIncomes() {
-        List<Income> result = null;
+    public List<ExpensesType> getExpensesTypes() {
+        List<ExpensesType> result = null;
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         HttpEntity<String> request = new HttpEntity<String>(headers);
-        ParameterizedTypeReference<List<Income>> responseType = new ParameterizedTypeReference<List<Income>>() {};
+        ParameterizedTypeReference<List<ExpensesType>> responseType = new ParameterizedTypeReference<List<ExpensesType>>() {};
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            ResponseEntity<List<Income>> response = restTemplate.exchange(url + "/incomes", HttpMethod.GET, request,responseType);
+            ResponseEntity<List<ExpensesType>> response = restTemplate.exchange(url + "/expensestypes", HttpMethod.GET, request,responseType);
 
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
-                result = (List<Income>)response.getBody();
+                result = (List<ExpensesType>)response.getBody();
             } else {
-                LOGGER.info("Список видов доходов не получен: " + response.getStatusCode());
+                LOGGER.info("Список типов расходов не получен: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка при получении списка видов доходов: " + e.getMessage());
+            LOGGER.info("Ошибка при получении списка типов расходов: " + e.getMessage());
         }
 
         return result;
     }
 
-    public Income getIncomeById(long id) {
+    public ExpensesType getExpensesTypeById(long id) {
         RestTemplate restTemplate = (new RestTemplateBuilder()).basicAuthentication(loginData.getUsername(), loginData.getPassword()).build();
-        ResponseEntity<Income> response = new ResponseEntity<>(HttpStatus.OK);
-        Income result = null;
+        ResponseEntity<ExpensesType> response = new ResponseEntity<>(HttpStatus.OK);
+        ExpensesType result = null;
         try {
-            response = restTemplate.getForEntity(url + "/incomes/{id}", Income.class, id);
+            response = restTemplate.getForEntity(url + "/expensestypes/{id}", ExpensesType.class, id);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = response.getBody();
             } else {
-                LOGGER.info("Ошибка получения вида доходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка получения типа расходов. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка получения вида доходов: " + e.getMessage());
+            LOGGER.info("Ошибка получения типа расходов: " + e.getMessage());
         }
 
         return result;
     }
 
-    public Income addIncome(Income income) {
+    public ExpensesType addExpensesType(ExpensesType expensesType) {
         RestTemplate restTemplate = (new RestTemplateBuilder()).basicAuthentication(loginData.getUsername(), loginData.getPassword()).build();
-        ResponseEntity<Income> response = new ResponseEntity<>(HttpStatus.OK);
-        Income result = null;
+        ResponseEntity<ExpensesType> response = new ResponseEntity<>(HttpStatus.OK);
+        ExpensesType result = null;
 
         try {
-            response = restTemplate.postForEntity(url + "/incomes", income, Income.class);
+            response = restTemplate.postForEntity(url + "/expensestypes", expensesType, ExpensesType.class);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = response.getBody();
             } else {
-                LOGGER.info("Ошибка сохранения нового вида доходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка сохранения нового типа расходов. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка сохранения нового вида доходов: " + e.getMessage());
+            LOGGER.info("Ошибка сохранения нового типа расходов: " + e.getMessage());
         }
 
         return result;
     }
 
-    public Income editIncome(Income income) {
+    public ExpensesType editExpensesType(ExpensesType expensesType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         headers.setContentType(MediaType.APPLICATION_JSON);
         String body = "";
         try {
-            body = mapper.writeValueAsString(income);
+            body = mapper.writeValueAsString(expensesType);
         } catch (JsonProcessingException e) {
             LOGGER.error("Ошибка преобразования объекта в JSON: ", e);
         }
         
         HttpEntity<String> request = new HttpEntity<String>(body,headers);
-        ParameterizedTypeReference<Income> responseType = new ParameterizedTypeReference<Income>() {};
+        ParameterizedTypeReference<ExpensesType> responseType = new ParameterizedTypeReference<ExpensesType>() {};
         RestTemplate restTemplate = new RestTemplate();
-        Income result = null;
+        ExpensesType result = null;
 
         try {
-            ResponseEntity<Income> response = restTemplate.exchange(url + "/incomes", HttpMethod.PUT, request,responseType,income);
+            ResponseEntity<ExpensesType> response = restTemplate.exchange(url + "/expensestypes", HttpMethod.PUT, request, responseType, expensesType);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = response.getBody();
             } else {
-                LOGGER.info("Ошибка изменения вида доходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка изменения типа расходов. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка изменения вида доходов: " + e.getMessage());
+            LOGGER.info("Ошибка изменения типа расходов: " + e.getMessage());
         }
 
         return result;
     }
 
-    public boolean deleteIncomeById(long id) {
+    public boolean deleteExpensesTypeById(long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -139,17 +138,18 @@ public class RestIncomeController {
         boolean result = false;
 
         try {
-            ResponseEntity<HttpStatus> response = restTemplate.exchange(url + "/incomes/{id}", HttpMethod.DELETE,request,HttpStatus.class,id);
+            ResponseEntity<HttpStatus> response = restTemplate.exchange(url + "/expensestypes/{id}", HttpMethod.DELETE,request,HttpStatus.class,id);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = true;
             } else {
-                LOGGER.info("Ошибка удаления вида доходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка удаления типа расходов. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка удаления вида доходов: " + e.getMessage());
+            LOGGER.info("Ошибка удаления типа расходов: " + e.getMessage());
         }
 
         return result;
     }
+
 
 }

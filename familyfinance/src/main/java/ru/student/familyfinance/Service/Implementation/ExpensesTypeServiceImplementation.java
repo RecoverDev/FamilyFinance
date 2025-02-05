@@ -16,12 +16,12 @@ public class ExpensesTypeServiceImplementation implements ExpensesTypeService {
     private final ExpensesTypeRepository repository;
     
     @Override
-    public boolean addExpensesType(ExpensesType expensesType) {
+    public ExpensesType addExpensesType(ExpensesType expensesType) {
         if (expensesType == null) {
-            return false;
+            return null;
         }
         ExpensesType result = repository.save(expensesType);
-        return expensesType.equals(result);
+        return result;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class ExpensesTypeServiceImplementation implements ExpensesTypeService {
     }
 
     @Override
-    public boolean editExpensesType(ExpensesType expensesType) {
+    public ExpensesType editExpensesType(ExpensesType expensesType) {
         if (expensesType == null) {
-            return false;
+            return null;
         }
         ExpensesType result = repository.save(expensesType);
-        return expensesType.equals(result);
+        return result;
     }
 
 }

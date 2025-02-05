@@ -12,9 +12,9 @@ public interface ExpensesTypeService {
     /**
      * Добавление нового типа категории расходов
      * @param expenses - новый тип категории расходов
-     * @return - результат операции true - успех/false - неудача
+     * @return - добавленный тип расходов
      */
-    boolean addExpensesType(ExpensesType expensesType);
+    ExpensesType addExpensesType(ExpensesType expensesType);
 
     /**
      * Удаление типа категории расхода по идентификатору
@@ -38,7 +38,7 @@ public interface ExpensesTypeService {
     /**
      * Изменение типа категории расходов
      * @param expenses - изменяемый тип категории расходов
-     * @return - результат операции true - успех/false - неудача
+     * @return - измененный тип расходов
      */
-    boolean editExpensesType(ExpensesType expensesType);
+    ExpensesType editExpensesType(ExpensesType expensesType);
 }

@@ -40,7 +40,7 @@ public class ExpensesServiceTest {
     public void addExpensesTest() {
         Expenses expenses = new Expenses(1, new Person(), "Test Expenses", new ExpensesType());
         doReturn(expenses).when(repository).save(expenses);
-        assertThat(service.addExpenses(expenses)).isTrue();
+        assertThat(service.addExpenses(expenses)).isEqualTo(expenses);
         Mockito.verify(repository,Mockito.times(1)).save(expenses);
     }
 
@@ -49,7 +49,7 @@ public class ExpensesServiceTest {
     public void editExpensesTest() {
         Expenses expenses = new Expenses(1, new Person(), "Test Expenses", new ExpensesType());
         doReturn(expenses).when(repository).save(expenses);
-        assertThat(service.editExpenses(expenses)).isTrue();
+        assertThat(service.editExpenses(expenses)).isEqualTo(expenses);
         Mockito.verify(repository,Mockito.times(1)).save(expenses);
     }
 

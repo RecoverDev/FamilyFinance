@@ -13,9 +13,9 @@ public interface ExpensesService {
     /**
      * Добавление новой категории расходов
      * @param expenses - новая категория расходов
-     * @return - результат операции true - успех/false - неудача
+     * @return - добавленный вид расходов
      */
-    boolean addExpenses(Expenses expenses);
+    Expenses addExpenses(Expenses expenses);
 
     /**
      * Удаление категории расхода по идентификатору
@@ -40,8 +40,8 @@ public interface ExpensesService {
     /**
      * Изменение категории расходов
      * @param expenses - изменяемая категория
-     * @return - результат операции true - успех/false - неудача
+     * @return - измененный вид расходов
      */
-    boolean editExpenses(Expenses expenses);
+    Expenses editExpenses(Expenses expenses);
 
 }

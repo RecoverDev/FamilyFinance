@@ -69,12 +69,15 @@ public class ExpensesController {
     }
 
     @Operation(summary = "Добавление новой категории расходов пользователя", tags = "Expenses Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Категория расходов успешно добавлена", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Категория расходов успешно добавлена", 
+                                        content = {@Content(mediaType = "application/json", 
+                                        schema = @Schema(implementation = ExpensesDTO.class))}),
                             @ApiResponse(responseCode = "404", description = "Неверный код ExpensesType_id", content = @Content),
                             @ApiResponse(responseCode = "304", description = "неудача при добавлении категории расходов пользователя", content = @Content)})
     @PostMapping
     @PreAuthorize("hasPole('ROLE_USER') or hasPole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> postExpenses(@RequestBody ExpensesDTO expensesDTO, @AuthenticationPrincipal Person person) {
+    public ResponseEntity<ExpensesDTO> postExpenses(@RequestBody ExpensesDTO expensesDTO, @AuthenticationPrincipal Person person) {
         Expenses expenses = mapper.toExpenses(expensesDTO);
         expenses.setPerson(person);
         ExpensesType expensesType = expensesTypeService.getExpensesTypeById(expensesDTO.getExpensesType_id());
@@ -82,17 +85,21 @@ public class ExpensesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         expenses.setExpensesType(expensesType);
-        boolean result = service.addExpenses(expenses);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Expenses result = service.addExpenses(expenses);
+        ExpensesDTO response = mapper.toExpensesDTO(result);
+        return result != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Обновление категории расходов пользователя", tags = "Expenses Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Категория расходов успешно обновлена", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Категория расходов успешно обновлена", 
+                                        content = {@Content(mediaType = "application/json", 
+                                        schema = @Schema(implementation = ExpensesDTO.class))}),
                             @ApiResponse(responseCode = "404", description = "Неверный код ExpensesType_id", content = @Content),
                             @ApiResponse(responseCode = "304", description = "неудача при обновлении категории расходов пользователя", content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> putExpenses(@RequestBody ExpensesDTO expensesDTO, @AuthenticationPrincipal Person person) {
+    public ResponseEntity<ExpensesDTO> putExpenses(@RequestBody ExpensesDTO expensesDTO, @AuthenticationPrincipal Person person) {
         Expenses expenses = mapper.toExpenses(expensesDTO);
         ExpensesType expensesType = expensesTypeService.getExpensesTypeById(expensesDTO.getExpensesType_id());
         if (expensesType == null) {
@@ -100,8 +107,9 @@ public class ExpensesController {
         }
         expenses.setPerson(person);
         expenses.setExpensesType(expensesType);
-        boolean result = service.editExpenses(expenses);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Expenses result = service.editExpenses(expenses);
+        ExpensesDTO response = mapper.toExpensesDTO(result);
+        return result != null ? new ResponseEntity<>(response,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     

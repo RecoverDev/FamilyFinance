@@ -57,23 +57,29 @@ public class ExpensesTypeController {
     }
 
     @Operation(summary = "Добавление нового типа расходов", tags = "Expenses Type Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Новый тип расходов успешно добавлен ", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Новый тип расходов успешно добавлен ", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ExpensesType.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при добавлении нового типа расходов" ,content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<HttpStatus> addExpensesType(@RequestBody ExpensesType expensesType) {
-        boolean result = service.addExpensesType(expensesType);
-        return result ?  new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    public ResponseEntity<ExpensesType> addExpensesType(@RequestBody ExpensesType expensesType) {
+        ExpensesType result = service.addExpensesType(expensesType);
+        return result != null ?  new ResponseEntity<>(result,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Изменение типа расходов", tags = "Expenses Type Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Тип расходов успешно изменен", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Тип расходов успешно изменен", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ExpensesType.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при изменении типа расходов" ,content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> putExpensesType(@RequestBody ExpensesType expensesType) {
-        boolean result = service.editExpensesType(expensesType);
-        return result ?  new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    public ResponseEntity<ExpensesType> putExpensesType(@RequestBody ExpensesType expensesType) {
+        ExpensesType result = service.editExpensesType(expensesType);
+        return result != null ?  new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Удаление типа расходов", tags = "Expenses Type Controller")
