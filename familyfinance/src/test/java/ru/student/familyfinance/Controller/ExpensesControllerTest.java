@@ -122,8 +122,9 @@ public class ExpensesControllerTest {
     @WithMockUser
     public void postExpensesTest() throws Exception {
         doReturn(listExpenses.get(0)).when(mapper).toExpenses(listExpensesDTO.get(0));
+        doReturn(listExpensesDTO.get(0)).when(mapper).toExpensesDTO(listExpenses.get(0));
         doReturn(listExpensesType.get(0)).when(expensesTypeService).getExpensesTypeById(1);
-        doReturn(true).when(service).addExpenses(listExpenses.get(0));
+        doReturn(listExpenses.get(0)).when(service).addExpenses(listExpenses.get(0));
         String json = jsonMapper.writeValueAsString(listExpensesDTO.get(0));
 
         mvc.perform(post("/expenses").principal(authenticationToken)
@@ -135,6 +136,7 @@ public class ExpensesControllerTest {
 
         Mockito.verify(service,Mockito.times(1)).addExpenses(listExpenses.get(0));
         Mockito.verify(mapper,Mockito.times(1)).toExpenses(listExpensesDTO.get(0));
+        Mockito.verify(mapper, Mockito.times(1)).toExpensesDTO(listExpenses.get(0));
         Mockito.verify(expensesTypeService, Mockito.times(1)).getExpensesTypeById(1);
     }
 
@@ -143,8 +145,9 @@ public class ExpensesControllerTest {
     @WithMockUser
     public void putExpensesTest() throws Exception {
         doReturn(listExpenses.get(0)).when(mapper).toExpenses(listExpensesDTO.get(0));
+        doReturn(listExpensesDTO.get(0)).when(mapper).toExpensesDTO(listExpenses.get(0));
         doReturn(listExpensesType.get(0)).when(expensesTypeService).getExpensesTypeById(1);
-        doReturn(true).when(service).editExpenses(listExpenses.get(0));
+        doReturn(listExpenses.get(0)).when(service).editExpenses(listExpenses.get(0));
         String json = jsonMapper.writeValueAsString(listExpensesDTO.get(0));
 
         mvc.perform(put("/expenses").principal(authenticationToken)
@@ -156,6 +159,7 @@ public class ExpensesControllerTest {
 
         Mockito.verify(service,Mockito.times(1)).editExpenses(listExpenses.get(0));
         Mockito.verify(mapper,Mockito.times(1)).toExpenses(listExpensesDTO.get(0));
+        Mockito.verify(mapper, Mockito.times(1)).toExpensesDTO(listExpenses.get(0));
         Mockito.verify(expensesTypeService, Mockito.times(1)).getExpensesTypeById(1);
     }
 

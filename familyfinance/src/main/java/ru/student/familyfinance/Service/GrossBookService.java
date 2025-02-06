@@ -5,6 +5,7 @@ import java.util.List;
 
 import ru.student.familyfinance.Model.GrossBook;
 import ru.student.familyfinance.Model.Person;
+import ru.student.familyfinance.Model.Target;
 
 /**
  * Сервис описывает действия с хранилищем записей о ежедневных операциях 
@@ -87,6 +88,14 @@ public interface GrossBookService {
      * @return - List<GrossBook>
      */
     List<GrossBook> getListTargetByPeriod(LocalDate begin, LocalDate end, Person person);
+
+    /**
+     * Получение всех записей о накоплении на цели указанные в списке
+     * @param targets - список искомых целей
+     * @param person - пользователь программы
+     * @return - список записей List<GrossBook>
+     */
+    List<GrossBook> getListTargetByScroll(List<Target> targets, Person person);
 
     /**
      * Изменение записи

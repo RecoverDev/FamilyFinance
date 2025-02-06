@@ -30,7 +30,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ru.student.familyfinance.Configuration.SecurityConfiguration;
 import ru.student.familyfinance.DTO.GrossBookDTO;
+import ru.student.familyfinance.DTO.TargetDTO;
 import ru.student.familyfinance.Mapper.MapperGrossBook;
+import ru.student.familyfinance.Mapper.MapperTarget;
 import ru.student.familyfinance.Model.Expenses;
 import ru.student.familyfinance.Model.ExpensesType;
 import ru.student.familyfinance.Model.GrossBook;
@@ -62,6 +64,9 @@ public class GrossBookControllerTest {
 
     @MockitoBean
     private MapperGrossBook mapper;
+
+    @MockitoBean
+    private MapperTarget targetMapper;
 
     @MockitoBean
     private PersonRepository personRepository;
@@ -189,6 +194,39 @@ public class GrossBookControllerTest {
         Mockito.verify(mapper, Mockito.times(1)).toListGrossBookDTO(result);
     }
 
+    @Test
+    @DisplayName("Получение всех записей о выполнении целей по заданному списку целей")
+    @WithMockUser
+    public void getTargetGrossBookByScroll() throws Exception {
+        List<Target> listTarget = List.of(new Target(1, person, "First Target", 100.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(2, person, "Second Target", 200.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(3, person, "Next Target", 300.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(4, person, "Last Target", 400.0, LocalDate.of(2024, 10, 1)));
+        List<TargetDTO> listTargetDTO = List.of(new TargetDTO(1, 1, "First Target", 100.0, LocalDate.of(2024, 10, 1)),
+                                                new TargetDTO(2, 1, "Second Target", 200.0, LocalDate.of(2024, 10, 1)),
+                                                new TargetDTO(3, 1, "Next Target", 300.0, LocalDate.of(2024, 10, 1)),
+                                                new TargetDTO(4, 1, "Last Target", 400.0, LocalDate.of(2024, 10, 1)));
+        List<GrossBook> result = listGrossBooks.stream().filter(p -> p.getTarget() != null).toList();
+        List<GrossBookDTO> resultDTO = listGrossBooksDTO.stream().filter(p -> p.getTarget_id() > 0).toList();
+        doReturn(listTarget).when(targetMapper).toListTargets(listTargetDTO);
+        doReturn(resultDTO).when(mapper).toListGrossBookDTO(result);
+        doReturn(result).when(service).getListTargetByScroll(listTarget, person);
+        String json = jsonMapper.writeValueAsString(listTargetDTO);
+        String response = jsonMapper.writeValueAsString(resultDTO);
+
+        mvc.perform(get("/grossbooks/target/list").principal(authenticationToken)
+                                       .contentType(MediaType.APPLICATION_JSON)
+                                       .accept(MediaType.APPLICATION_JSON)
+                                       .content(json))
+                                       .andDo(print())
+                                       .andExpect(status().isOk()).andExpect(content().json(response));
+
+        Mockito.verify(targetMapper, Mockito.times(1)).toListTargets(listTargetDTO);
+        Mockito.verify(mapper, Mockito.times(1)).toListGrossBookDTO(result);
+        Mockito.verify(service, Mockito.times(1)).getListTargetByScroll(listTarget, person);
+                                  
+    }
+
 
     private List<GrossBook> getListGrossBooks() {
         List<Income> listIncome = List.of(new Income(1, person, "First Income"),
@@ -208,10 +246,10 @@ public class GrossBookControllerTest {
                                               new Expenses(6, person, "Last Expenses", listExpensesType.get(2)));
 
 
-        List<Target> listTarget = List.of(new Target(1, person, "First Target", 100.0),
-                                          new Target(2, person, "Second Target", 200.0),
-                                          new Target(3, person, "Next Target", 300.0),
-                                          new Target(4, person, "Last Target", 400.0));
+        List<Target> listTarget = List.of(new Target(1, person, "First Target", 100.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(2, person, "Second Target", 200.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(3, person, "Next Target", 300.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(4, person, "Last Target", 400.0, LocalDate.of(2024, 10, 1)));
 
         LocalDate date = LocalDate.of(2024, 1, 1);
         List<GrossBook> result = List.of(new GrossBook(1, date, person, listIncome.get(0), null, null, 1000.0),

@@ -1,5 +1,7 @@
 package ru.student.familyfinance.Model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,6 +41,11 @@ public class Target implements Subject{
      * Сумма, необходимая для достижения цели
      */
     double summ;
+
+    /**
+     * Дата установки цели
+     */
+    LocalDate settingDate;
 
 
 }

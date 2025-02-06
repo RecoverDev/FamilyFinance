@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -64,14 +65,14 @@ public class TargetControllerTest {
         authenticationToken = new UsernamePasswordAuthenticationToken(person, null, person.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        listTarget = List.of(new Target(1, person, "First Target", 100.0),
-                             new Target(2, person, "Second Target", 200.0),
-                             new Target(3, person, "Next Target", 300.0),
-                             new Target(4, person, "Last Target", 400.0));
-        listTargetDTO = List.of(new TargetDTO(1, 1, "First Target", 100.0),
-                                new TargetDTO(2, 1, "Second Target", 200.0),
-                                new TargetDTO(3, 1, "Next Target", 300.0),
-                                new TargetDTO(4, 1, "Last Target", 400.0));
+        listTarget = List.of(new Target(1, person, "First Target", 100.0, LocalDate.of(2024, 10, 1)),
+                             new Target(2, person, "Second Target", 200.0, LocalDate.of(2024, 10, 1)),
+                             new Target(3, person, "Next Target", 300.0, LocalDate.of(2024, 10, 1)),
+                             new Target(4, person, "Last Target", 400.0, LocalDate.of(2024, 10, 1)));
+        listTargetDTO = List.of(new TargetDTO(1, 1, "First Target", 100.0, LocalDate.of(2024, 10, 1)),
+                                new TargetDTO(2, 1, "Second Target", 200.0, LocalDate.of(2024, 10, 1)),
+                                new TargetDTO(3, 1, "Next Target", 300.0, LocalDate.of(2024, 10, 1)),
+                                new TargetDTO(4, 1, "Last Target", 400.0, LocalDate.of(2024, 10, 1)));
     }
 
     @Test
@@ -105,7 +106,8 @@ public class TargetControllerTest {
     @WithMockUser
     public void postTargetTest() throws Exception {
         doReturn(listTarget.get(0)).when(mapper).toTarget(listTargetDTO.get(0));
-        doReturn(true).when(service).addTarget(listTarget.get(0));
+        doReturn(listTargetDTO.get(0)).when(mapper).toTargetDTO(listTarget.get(0));
+        doReturn(listTarget.get(0)).when(service).addTarget(listTarget.get(0));
         String json = jsonMapper.writeValueAsString(listTargetDTO.get(0));
 
         mvc.perform(post("/targets").principal(authenticationToken)
@@ -116,6 +118,7 @@ public class TargetControllerTest {
                                     .andExpect(status().isOk());
         Mockito.verify(service, Mockito.times(1)).addTarget(listTarget.get(0));
         Mockito.verify(mapper, Mockito.times(1)).toTarget(listTargetDTO.get(0));
+        Mockito.verify(mapper, Mockito.times(1)).toTargetDTO(listTarget.get(0));
     }
 
     @Test
@@ -123,7 +126,8 @@ public class TargetControllerTest {
     @WithMockUser
     public void putTargetTest() throws Exception {
         doReturn(listTarget.get(0)).when(mapper).toTarget(listTargetDTO.get(0));
-        doReturn(true).when(service).editTarget(listTarget.get(0));
+        doReturn(listTargetDTO.get(0)).when(mapper).toTargetDTO(listTarget.get(0));
+        doReturn(listTarget.get(0)).when(service).editTarget(listTarget.get(0));
         String json = jsonMapper.writeValueAsString(listTargetDTO.get(0));
 
         mvc.perform(put("/targets").principal(authenticationToken)
@@ -134,6 +138,7 @@ public class TargetControllerTest {
                                     .andExpect(status().isOk());
         Mockito.verify(service, Mockito.times(1)).editTarget(listTarget.get(0));
         Mockito.verify(mapper, Mockito.times(1)).toTarget(listTargetDTO.get(0));
+        Mockito.verify(mapper, Mockito.times(1)).toTargetDTO(listTarget.get(0));
     }
 
     @Test

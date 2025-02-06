@@ -17,12 +17,12 @@ public class TargetServiceImplementation implements TargetService {
     private final TargetRepository repository;
     
     @Override
-    public boolean addTarget(Target target) {
+    public Target addTarget(Target target) {
         if (target == null) {
-            return false;
+            return null;
         }
         Target result = repository.save(target);
-        return target.equals(result);
+        return result;
     }
 
     @Override
@@ -43,12 +43,12 @@ public class TargetServiceImplementation implements TargetService {
     }
 
     @Override
-    public boolean editTarget(Target target) {
+    public Target editTarget(Target target) {
         if (target == null) {
-            return false;
+            return null;
         }
         Target result = repository.save(target);
-        return target.equals(result);
+        return result;
     }
 
 }

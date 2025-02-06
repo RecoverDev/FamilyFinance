@@ -25,9 +25,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance.DTO.GrossBookDTO;
+import ru.student.familyfinance.DTO.TargetDTO;
 import ru.student.familyfinance.Mapper.MapperGrossBook;
+import ru.student.familyfinance.Mapper.MapperTarget;
 import ru.student.familyfinance.Model.GrossBook;
 import ru.student.familyfinance.Model.Person;
+import ru.student.familyfinance.Model.Target;
 import ru.student.familyfinance.Service.GrossBookService;
 
 @Tag(name = "GrossBook Controller", description = "API по работе с журналом фактических расходов и доходов пользователя")
@@ -38,6 +41,7 @@ public class GrossBookConrtoller {
     private final GrossBookService service;
     private final GrossBookBuilder builder;
     private final MapperGrossBook mapper;
+    private final MapperTarget targerMapper;
 
     @Operation(summary = "Получение всех записей об операциях пользователя за период", tags = "GrossBook Controller")
     @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
@@ -134,4 +138,20 @@ public class GrossBookConrtoller {
         List<GrossBookDTO> result = mapper.toListGrossBookDTO(grossBooks);
         return result.size() > 0 ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @Operation(summary = "Получение всех записей о целях пользователя входящий в заданный список", tags = "GrossBook Controller")
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Получены записи о целях пользователя",
+                                        content = {@Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = GrossBookDTO.class)))}),
+                            @ApiResponse(responseCode = "404", description = "Ошибка при получении списка записей о целях пользователя", content = @Content)})
+    @GetMapping("/target/list")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<GrossBookDTO>> getTargetByScroll(@AuthenticationPrincipal Person person, @RequestBody List<TargetDTO> targets) {
+        List<Target> requestTargets = targerMapper.toListTargets(targets);
+        List<GrossBook> result = service.getListTargetByScroll(requestTargets, person);
+        List<GrossBookDTO> response = mapper.toListGrossBookDTO(result);
+        return !response.isEmpty() ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

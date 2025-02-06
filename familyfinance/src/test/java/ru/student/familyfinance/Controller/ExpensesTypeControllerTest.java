@@ -81,7 +81,7 @@ public class ExpensesTypeControllerTest {
     public void postExpensesTypeTest() throws Exception {
         ExpensesType expensesType = new ExpensesType(1, "Test Expenses Type");
 
-        doReturn(true).when(service).addExpensesType(expensesType);
+        doReturn(expensesType).when(service).addExpensesType(expensesType);
 
         String json = mapper.writeValueAsString(expensesType);
         mvc.perform(post("/expensestypes").contentType(MediaType.APPLICATION_JSON)
@@ -98,7 +98,7 @@ public class ExpensesTypeControllerTest {
     public void putExpensesTypeTest() throws Exception {
         ExpensesType expensesType = new ExpensesType(1, "Test Expenses Type");
 
-        doReturn(true).when(service).editExpensesType(expensesType);
+        doReturn(expensesType).when(service).editExpensesType(expensesType);
 
         String json = mapper.writeValueAsString(expensesType);
         mvc.perform(put("/expensestypes").contentType(MediaType.APPLICATION_JSON)

@@ -172,4 +172,21 @@ public class GrossBookServiceTest {
         assertThat(service.getListTargetByPeriod(begin, end, person)).isEqualTo(List.of(list.get(2)));
         Mockito.verify(repository, Mockito.times(1)).findByPersonAndDateOfOperationBetween(person, begin, end);
     }
+
+    @Test
+    @DisplayName("Получение записей о целях по списку целей")
+    public void getListTargetByScrollTest() {
+        Person person = new Person();
+        List<Target> listTarget = List.of(new Target(1, person, "FirstTarget", 100.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(2, person, "Second Target", 200.0, LocalDate.of(2024,10,10)),
+                                          new Target(3, person, "Next Target", 300.0, LocalDate.of(2024,11,10)));
+        LocalDate dateOperation = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 15);
+        List<GrossBook> list = List.of(new GrossBook(1, dateOperation, person, null, null, listTarget.get(0), 300.0),
+                                        new GrossBook(2, dateOperation, person, null, null, listTarget.get(1), 200.0),
+                                        new GrossBook(3, dateOperation, person, null, null, listTarget.get(2), 100.0));
+
+        doReturn(list).when(repository).findByPersonAndTargetContains(person, listTarget);
+        assertThat(service.getListTargetByScroll(listTarget, person)).isEqualTo(list);
+        Mockito.verify(repository, Mockito.times(1)).findByPersonAndTargetContains(person, listTarget);
+    }
 }

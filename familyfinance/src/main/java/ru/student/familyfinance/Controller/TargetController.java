@@ -70,11 +70,12 @@ public class TargetController {
                             @ApiResponse(responseCode = "304", description = "Ошибка при добавлении цели пользователя" ,content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<HttpStatus> postTarget(@AuthenticationPrincipal Person person, @RequestBody TargetDTO targetDTO) {
+    public ResponseEntity<TargetDTO> postTarget(@AuthenticationPrincipal Person person, @RequestBody TargetDTO targetDTO) {
         Target target = mapper.toTarget(targetDTO);
         target.setPerson(person);
-        boolean result = service.addTarget(target);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Target result = service.addTarget(target);
+        TargetDTO response = mapper.toTargetDTO(result);
+        return result != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Изменение цели пользователя", tags = "Target Controller")
@@ -82,11 +83,12 @@ public class TargetController {
                             @ApiResponse(responseCode = "304", description = "Ошибка при изменении цели пользователя" ,content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> putTarget(@AuthenticationPrincipal Person person, @RequestBody TargetDTO targetDTO) {
+    public ResponseEntity<TargetDTO> putTarget(@AuthenticationPrincipal Person person, @RequestBody TargetDTO targetDTO) {
         Target target = mapper.toTarget(targetDTO);
         target.setPerson(person);
-        boolean result = service.editTarget(target);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Target result = service.editTarget(target);
+        TargetDTO response = mapper.toTargetDTO(result);
+        return result != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Удаление цели пользователя по ID", tags = "Target Controller")

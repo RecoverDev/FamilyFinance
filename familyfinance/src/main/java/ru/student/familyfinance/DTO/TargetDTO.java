@@ -1,5 +1,7 @@
 package ru.student.familyfinance.DTO;
 
+import java.time.LocalDate;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,4 +35,9 @@ public class TargetDTO {
     @Schema(name = "Summ", description = "Сумма, необходимая для достижения цели", example = "100000.00")
     double summ;
 
+    /**
+     * Дата установки цели
+     */
+    @Schema(name = "SettingDate", description = "Дата установки цели", example = "2024-12-31")
+    LocalDate settingDate;
 }

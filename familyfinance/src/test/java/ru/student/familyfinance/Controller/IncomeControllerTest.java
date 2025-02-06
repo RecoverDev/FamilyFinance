@@ -105,7 +105,8 @@ public class IncomeControllerTest {
     @WithMockUser
     public void postIncomeTest() throws Exception {
         doReturn(listIncome.get(0)).when(mapper).toIncome(listIncomeDTO.get(0));
-        doReturn(true).when(service).addIncome(listIncome.get(0));
+        doReturn(listIncomeDTO.get(0)).when(mapper).toIncomeDTO(listIncome.get(0));
+        doReturn(listIncome.get(0)).when(service).addIncome(listIncome.get(0));
         String json = jsonMapper.writeValueAsString(listIncomeDTO.get(0));
 
         mvc.perform(post("/incomes").principal(authenticationToken)
@@ -116,6 +117,7 @@ public class IncomeControllerTest {
                                     .andExpect(status().isOk());
         Mockito.verify(service, Mockito.times(1)).addIncome(listIncome.get(0));
         Mockito.verify(mapper, Mockito.times(1)).toIncome(listIncomeDTO.get(0));
+        Mockito.verify(mapper, Mockito.times(1)).toIncomeDTO(listIncome.get(0));
     }
 
     @Test
@@ -123,7 +125,8 @@ public class IncomeControllerTest {
     @WithMockUser
     public void putIncomeTest() throws Exception {
         doReturn(listIncome.get(0)).when(mapper).toIncome(listIncomeDTO.get(0));
-        doReturn(true).when(service).editIncome(listIncome.get(0));
+        doReturn(listIncomeDTO.get(0)).when(mapper).toIncomeDTO(listIncome.get(0));
+        doReturn(listIncome.get(0)).when(service).editIncome(listIncome.get(0));
         String json = jsonMapper.writeValueAsString(listIncomeDTO.get(0));
 
         mvc.perform(put("/incomes").principal(authenticationToken)
@@ -134,7 +137,8 @@ public class IncomeControllerTest {
                                     .andExpect(status().isOk());
         Mockito.verify(service, Mockito.times(1)).editIncome(listIncome.get(0));
         Mockito.verify(mapper, Mockito.times(1)).toIncome(listIncomeDTO.get(0));
-    }
+        Mockito.verify(mapper, Mockito.times(1)).toIncomeDTO(listIncome.get(0));
+                                }
 
     @Test
     @DisplayName("Удаление категории доходов по ID")

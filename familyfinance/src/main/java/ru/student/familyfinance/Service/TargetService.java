@@ -15,7 +15,7 @@ public interface TargetService {
      * @param target - новая цель
      * @return - результат операции true - успех/false - неудача
      */
-    boolean addTarget(Target target);
+    Target addTarget(Target target);
 
     /**
      * Удаление цели по идентификатору
@@ -43,5 +43,5 @@ public interface TargetService {
      * @param target - изменяемая цель
      * @return - результат операции true - успех/false - неудача
      */
-    boolean editTarget(Target target);
+    Target editTarget(Target target);
 }

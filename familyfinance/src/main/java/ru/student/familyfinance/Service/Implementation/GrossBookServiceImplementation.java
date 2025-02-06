@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance.Model.GrossBook;
 import ru.student.familyfinance.Model.Person;
+import ru.student.familyfinance.Model.Target;
 import ru.student.familyfinance.Repository.GrossBookRepository;
 import ru.student.familyfinance.Service.GrossBookService;
 
@@ -72,6 +73,12 @@ public class GrossBookServiceImplementation implements GrossBookService {
         List<GrossBook> result = (List<GrossBook>)repository.findByPersonAndDateOfOperationBetween(person, begin, end);
         return result.stream().filter(g -> g.getTarget() != null).toList();
     }
+
+    @Override
+    public List<GrossBook> getListTargetByScroll(List<Target> targets, Person person) {
+        return repository.findByPersonAndTargetContains(person, targets);
+    }
+
 
     @Override
     public boolean editGrossBook(GrossBook grossBook) {

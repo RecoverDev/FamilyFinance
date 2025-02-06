@@ -192,10 +192,10 @@ public class PlanControllerTest {
                                               new Expenses(6, person, "Last Expenses", listExpensesType.get(2)));
 
 
-        List<Target> listTarget = List.of(new Target(1, person, "First Target", 100.0),
-                                          new Target(2, person, "Second Target", 200.0),
-                                          new Target(3, person, "Next Target", 300.0),
-                                          new Target(4, person, "Last Target", 400.0));
+        List<Target> listTarget = List.of(new Target(1, person, "First Target", 100.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(2, person, "Second Target", 200.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(3, person, "Next Target", 300.0, LocalDate.of(2024, 10, 1)),
+                                          new Target(4, person, "Last Target", 400.0, LocalDate.of(2024, 10, 1)));
 
         LocalDate date = LocalDate.of(2024, 1, 1);
         List<Plan> result = List.of(new Plan(1, date, person, listIncome.get(0), null, null, 1000.0),

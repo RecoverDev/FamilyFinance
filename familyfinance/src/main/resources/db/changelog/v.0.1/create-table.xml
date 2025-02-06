@@ -50,6 +50,7 @@
             <constraints foreignKeyName="target_person_id_person_id" references="person(id)" deleteCascade="true"/>
          </column>
          <column name="summ" type="DOUBLE"/>
+         <column name="setting_date" type="DATE"/>
      </createTable>
      <createTable schemaName="public" tableName="plan" remark = "Планы пользователей по расходам/доходам на месяц">
          <column name="id" type="BIGINT" autoIncrement="true" >
