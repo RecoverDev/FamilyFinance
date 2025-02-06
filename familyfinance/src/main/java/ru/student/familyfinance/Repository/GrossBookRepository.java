@@ -15,6 +15,6 @@ public interface GrossBookRepository extends CrudRepository<GrossBook, Long>{
     
     List<GrossBook> findByPerson(Person person);
     List<GrossBook> findByPersonAndDateOfOperationBetween(Person person, LocalDate begin, LocalDate end);
-    List<GrossBook> findByPersonAndTargetContains(Person person, List<Target> targets);
+    List<GrossBook> findByPersonAndTargetIsIn(Person person, List<Target> targets);
 
 }

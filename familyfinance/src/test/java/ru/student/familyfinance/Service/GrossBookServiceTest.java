@@ -185,8 +185,8 @@ public class GrossBookServiceTest {
                                         new GrossBook(2, dateOperation, person, null, null, listTarget.get(1), 200.0),
                                         new GrossBook(3, dateOperation, person, null, null, listTarget.get(2), 100.0));
 
-        doReturn(list).when(repository).findByPersonAndTargetContains(person, listTarget);
+        doReturn(list).when(repository).findByPersonAndTargetIsIn(person, listTarget);
         assertThat(service.getListTargetByScroll(listTarget, person)).isEqualTo(list);
-        Mockito.verify(repository, Mockito.times(1)).findByPersonAndTargetContains(person, listTarget);
+        Mockito.verify(repository, Mockito.times(1)).findByPersonAndTargetIsIn(person, listTarget);
     }
 }

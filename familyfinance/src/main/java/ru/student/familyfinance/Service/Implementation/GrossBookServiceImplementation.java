@@ -76,7 +76,7 @@ public class GrossBookServiceImplementation implements GrossBookService {
 
     @Override
     public List<GrossBook> getListTargetByScroll(List<Target> targets, Person person) {
-        return repository.findByPersonAndTargetContains(person, targets);
+        return repository.findByPersonAndTargetIsIn(person, targets);
     }
 
 
