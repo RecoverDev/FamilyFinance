@@ -1,13 +1,13 @@
 package ru.student.familyfinance_desktop.Service.Implementation;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.Model.RegistrationPerson;
 import ru.student.familyfinance_desktop.RestController.RegistrateController;
 import ru.student.familyfinance_desktop.Service.RegistrationService;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class RegistratioServiceImplementation implements RegistrationService {
     private final RegistrateController controller;

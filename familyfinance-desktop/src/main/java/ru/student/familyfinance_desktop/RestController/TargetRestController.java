@@ -23,11 +23,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ru.student.familyfinance_desktop.Model.AutorizateData;
-import ru.student.familyfinance_desktop.Model.Expenses;
+import ru.student.familyfinance_desktop.Model.Target;
 
 @Component
-public class RestExpensesController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestExpensesController.class);
+public class TargetRestController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TargetRestController.class);
 
     @Value("${backend.url}")
     private String url;
@@ -39,97 +39,97 @@ public class RestExpensesController {
     private ObjectMapper mapper;
 
 
-    public List<Expenses> getExpenses() {
-        List<Expenses> result = null;
+    public List<Target> getTargets() {
+        List<Target> result = null;
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         HttpEntity<String> request = new HttpEntity<String>(headers);
-        ParameterizedTypeReference<List<Expenses>> responseType = new ParameterizedTypeReference<List<Expenses>>() {};
+        ParameterizedTypeReference<List<Target>> responseType = new ParameterizedTypeReference<List<Target>>() {};
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            ResponseEntity<List<Expenses>> response = restTemplate.exchange(url + "/expenses", HttpMethod.GET, request,responseType);
+            ResponseEntity<List<Target>> response = restTemplate.exchange(url + "/targets", HttpMethod.GET, request,responseType);
 
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
-                result = (List<Expenses>)response.getBody();
+                result = (List<Target>)response.getBody();
             } else {
-                LOGGER.info("Список видов расходов не получен: " + response.getStatusCode());
+                LOGGER.info("Список целей пользователя не получен: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка при получении списка видов расходов: " + e.getMessage());
+            LOGGER.info("Ошибка при получении списка целей пользователя: " + e.getMessage());
         }
 
         return result;
     }
 
-    public Expenses getExpensesById(long id) {
+    public Target getTargetById(long id) {
         RestTemplate restTemplate = (new RestTemplateBuilder()).basicAuthentication(loginData.getUsername(), loginData.getPassword()).build();
-        ResponseEntity<Expenses> response = new ResponseEntity<>(HttpStatus.OK);
-        Expenses result = null;
+        ResponseEntity<Target> response = new ResponseEntity<>(HttpStatus.OK);
+        Target result = null;
         try {
-            response = restTemplate.getForEntity(url + "/expenses/{id}", Expenses.class, id);
+            response = restTemplate.getForEntity(url + "/targets/{id}", Target.class, id);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = response.getBody();
             } else {
-                LOGGER.info("Ошибка получения вида расходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка получения цели пользователя. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка получения вида расходов: " + e.getMessage());
+            LOGGER.info("Ошибка получения цели пользователя: " + e.getMessage());
         }
 
         return result;
     }
 
-    public Expenses addExpenses(Expenses expenses) {
+    public Target addTarget(Target target) {
         RestTemplate restTemplate = (new RestTemplateBuilder()).basicAuthentication(loginData.getUsername(), loginData.getPassword()).build();
-        ResponseEntity<Expenses> response = new ResponseEntity<>(HttpStatus.OK);
-        Expenses result = null;
+        ResponseEntity<Target> response = new ResponseEntity<>(HttpStatus.OK);
+        Target result = null;
 
         try {
-            response = restTemplate.postForEntity(url + "/expenses", expenses, Expenses.class);
+            response = restTemplate.postForEntity(url + "/targets", target, Target.class);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = response.getBody();
             } else {
-                LOGGER.info("Ошибка сохранения нового вида расходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка сохранения новой цели пользователя. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка сохранения нового вида расходов: " + e.getMessage());
+            LOGGER.info("Ошибка сохранения новой цели пользователя: " + e.getMessage());
         }
 
         return result;
     }
 
-    public Expenses editExpenses(Expenses expenses) {
+    public Target editTarget(Target target) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         headers.setContentType(MediaType.APPLICATION_JSON);
         String body = "";
         try {
-            body = mapper.writeValueAsString(expenses);
+            body = mapper.writeValueAsString(target);
         } catch (JsonProcessingException e) {
             LOGGER.error("Ошибка преобразования объекта в JSON: ", e);
         }
         
         HttpEntity<String> request = new HttpEntity<String>(body,headers);
-        ParameterizedTypeReference<Expenses> responseType = new ParameterizedTypeReference<Expenses>() {};
+        ParameterizedTypeReference<Target> responseType = new ParameterizedTypeReference<Target>() {};
         RestTemplate restTemplate = new RestTemplate();
-        Expenses result = null;
+        Target result = null;
 
         try {
-            ResponseEntity<Expenses> response = restTemplate.exchange(url + "/expenses", HttpMethod.PUT, request,responseType,expenses);
+            ResponseEntity<Target> response = restTemplate.exchange(url + "/targets", HttpMethod.PUT, request,responseType, target);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = response.getBody();
             } else {
-                LOGGER.info("Ошибка изменения вида расходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка изменения цели пользователя. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка изменения вида расходов: " + e.getMessage());
+            LOGGER.info("Ошибка изменения цели пользователя: " + e.getMessage());
         }
 
         return result;
     }
 
-    public boolean deleteExpensesById(long id) {
+    public boolean deleteIncomeById(long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -139,14 +139,14 @@ public class RestExpensesController {
         boolean result = false;
 
         try {
-            ResponseEntity<HttpStatus> response = restTemplate.exchange(url + "/expenses/{id}", HttpMethod.DELETE,request,HttpStatus.class,id);
+            ResponseEntity<HttpStatus> response = restTemplate.exchange(url + "/targets/{id}", HttpMethod.DELETE,request,HttpStatus.class,id);
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = true;
             } else {
-                LOGGER.info("Ошибка удаления вида расходов. Код возврата: " + response.getStatusCode());
+                LOGGER.info("Ошибка удаления цели пользователя. Код возврата: " + response.getStatusCode());
             }
         } catch (RestClientException e) {
-            LOGGER.info("Ошибка удаления вида расходов: " + e.getMessage());
+            LOGGER.info("Ошибка удаления цели пользователя: " + e.getMessage());
         }
 
         return result;

@@ -78,6 +78,8 @@ public class DictionaryController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        incomeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        expensesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         setItemsToIncomeTable();
         setItemsToExpensesTable();
     }

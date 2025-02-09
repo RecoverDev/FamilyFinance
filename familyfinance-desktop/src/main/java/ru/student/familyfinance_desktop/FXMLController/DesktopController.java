@@ -23,6 +23,9 @@ public class DesktopController implements Initializable {
     @Autowired
     private DictionaryController dictionaryController;
 
+    @Autowired
+    private TargetTableController targetTableController;
+
     @FXML
     private TitledPane grossBook;
 
@@ -39,6 +42,9 @@ public class DesktopController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         Parent dictionaryPage = navigator.loadFxml(dictionaryController);
         dictionary.setContent(dictionaryPage);
+
+        Parent targetTablePage = navigator.loadFxml(targetTableController);
+        targets.setContent(targetTablePage);
 
     }
 

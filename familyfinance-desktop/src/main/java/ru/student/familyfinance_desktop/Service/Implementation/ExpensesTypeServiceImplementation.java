@@ -2,19 +2,19 @@ package ru.student.familyfinance_desktop.Service.Implementation;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.Model.ExpensesType;
 import ru.student.familyfinance_desktop.Repository.ExpensesTypeRepository;
-import ru.student.familyfinance_desktop.RestController.RestExpensesTypeController;
+import ru.student.familyfinance_desktop.RestController.ExpensesTypeRestController;
 import ru.student.familyfinance_desktop.Service.ExpensesTypeService;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class ExpensesTypeServiceImplementation implements ExpensesTypeService {
     private final ExpensesTypeRepository repository;
-    private final RestExpensesTypeController controller;
+    private final ExpensesTypeRestController controller;
 
     @Override
     public void setExpensesTypes() {

@@ -145,7 +145,7 @@ public class GrossBookConrtoller {
                                         content = {@Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = GrossBookDTO.class)))}),
                             @ApiResponse(responseCode = "404", description = "Ошибка при получении списка записей о целях пользователя", content = @Content)})
-    @GetMapping("/target/list")
+    @PostMapping("/target/list")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<GrossBookDTO>> getTargetByScroll(@AuthenticationPrincipal Person person, @RequestBody List<TargetDTO> targets) {
         List<Target> requestTargets = targerMapper.toListTargets(targets);

@@ -5,32 +5,32 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import ru.student.familyfinance_desktop.Model.Target;
+import ru.student.familyfinance_desktop.Model.GrossBook;
 import ru.student.familyfinance_desktop.Repository.Repository;
 
 @Component
-public class TargetRepositoryImplementation implements Repository<Target> {
-    private List<Target> collection = new ArrayList<>();
+public class GrossBookRepositoryImplementation implements Repository<GrossBook> {
+    private List<GrossBook> collection = new ArrayList<>();
 
     @Override
-    public void setCollection(List<Target> collection) {
+    public void setCollection(List<GrossBook> collection) {
         this.collection.removeAll(this.collection);
         this.collection.addAll(collection);
     }
 
     @Override
-    public List<Target> getCollection() {
+    public List<GrossBook> getCollection() {
         return this.collection;
     }
 
     @Override
-    public Target getItemById(long id) {
-        List<Target> result = this.collection.stream().filter(target -> target.getId() == id).toList();
-        return !result.isEmpty() ? result.getFirst() :null;
+    public GrossBook getItemById(long id) {
+        List<GrossBook> result = this.collection.stream().filter(grossBook -> grossBook.getId() == id).toList();
+        return !result.isEmpty() ? result.getFirst() : null;
     }
 
     @Override
-    public boolean addItem(Target item) {
+    public boolean addItem(GrossBook item) {
         if (item == null) {
             return false;
         }
@@ -38,8 +38,8 @@ public class TargetRepositoryImplementation implements Repository<Target> {
     }
 
     @Override
-    public boolean editItem(Target item) {
-        Target result = getItemById(item.getId());
+    public boolean editItem(GrossBook item) {
+        GrossBook result = getItemById(item.getId());
         int index = this.collection.size();
         if (result != null) {
             index = this.collection.indexOf(result);
@@ -49,7 +49,7 @@ public class TargetRepositoryImplementation implements Repository<Target> {
 
     @Override
     public boolean deleteItemById(long id) {
-        return this.collection.removeIf(target -> target.getId() == id);
+        return this.collection.removeIf(grossBook -> grossBook.getId() == id);
     }
 
 }

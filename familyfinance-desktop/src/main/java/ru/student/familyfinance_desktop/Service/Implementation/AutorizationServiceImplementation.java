@@ -1,7 +1,7 @@
 package ru.student.familyfinance_desktop.Service.Implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.Model.Person;
@@ -9,7 +9,7 @@ import ru.student.familyfinance_desktop.RestController.AutorizationController;
 import ru.student.familyfinance_desktop.Service.AutorizationService;
 
 @RequiredArgsConstructor
-@Component
+@Service
 public class AutorizationServiceImplementation implements AutorizationService {
     private final AutorizationController controller;
 

@@ -26,8 +26,8 @@ import ru.student.familyfinance_desktop.Model.AutorizateData;
 import ru.student.familyfinance_desktop.Model.ExpensesType;
 
 @Component
-public class RestExpensesTypeController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestExpensesTypeController.class);
+public class ExpensesTypeRestController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpensesTypeRestController.class);
 
     @Value("${backend.url}")
     private String url;

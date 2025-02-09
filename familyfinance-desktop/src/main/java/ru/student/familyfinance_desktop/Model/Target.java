@@ -38,5 +38,5 @@ public class Target {
     /**
      * Дата установки цели
      */
-    LocalDate settingDate;
+    LocalDate settingDate = LocalDate.now();
 }

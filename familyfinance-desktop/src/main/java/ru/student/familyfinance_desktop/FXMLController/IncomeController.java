@@ -69,7 +69,7 @@ public class IncomeController implements Initializable {
         income.setName(nameField.getText());
         income.setPerson_id(person.getId());
         Stage stage = (Stage)cancelButton.getScene().getWindow();
-        stage.close();;
+        stage.close();
     }
 
     @FXML
