@@ -214,7 +214,7 @@ public class GrossBookControllerTest {
         String json = jsonMapper.writeValueAsString(listTargetDTO);
         String response = jsonMapper.writeValueAsString(resultDTO);
 
-        mvc.perform(get("/grossbooks/target/list").principal(authenticationToken)
+        mvc.perform(post("/grossbooks/target/list").principal(authenticationToken)
                                        .contentType(MediaType.APPLICATION_JSON)
                                        .accept(MediaType.APPLICATION_JSON)
                                        .content(json))
