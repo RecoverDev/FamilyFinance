@@ -42,7 +42,7 @@ public class PlanServiceTest {
     public void addPlanTest() {
         Plan plan = new Plan(1, LocalDate.now(), new Person(), new Income(), null, null, 100.0);
         doReturn(plan).when(repository).save(plan);
-        assertThat(service.addPlan(plan)).isTrue();
+        assertThat(service.addPlan(plan)).isEqualTo(plan);
         Mockito.verify(repository,Mockito.times(1)).save(plan);
     }
 
@@ -51,7 +51,7 @@ public class PlanServiceTest {
     public void editPlanTest() {
         Plan plan = new Plan(1, LocalDate.now(), new Person(), new Income(), null, null, 100.0);
         doReturn(plan).when(repository).save(plan);
-        assertThat(service.editPlan(plan)).isTrue();
+        assertThat(service.editPlan(plan)).isEqualTo(plan);
         Mockito.verify(repository,Mockito.times(1)).save(plan);
     }
 

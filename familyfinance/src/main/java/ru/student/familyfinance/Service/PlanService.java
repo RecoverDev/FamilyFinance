@@ -14,9 +14,9 @@ public interface PlanService {
     /**
      * Добавление нового пункта план
      * @param person - новый пункт план
-     * @return - результат операции true - успех/false - неудача
+     * @return добавленный пункт плана
      */
-    boolean addPlan(Plan plan);
+    Plan addPlan(Plan plan);
 
     /**
      * Удаление пункта плана по идентификатору
@@ -60,8 +60,8 @@ public interface PlanService {
     /**
      * Изменение пункта плана
      * @param plan - изменяемый пункт плана
-     * @return - результат операции true - успех/false - неудача
+     * @return - отредактированный пункт плана
      */
-    boolean editPlan(Plan plan);
+    Plan editPlan(Plan plan);
 
 }

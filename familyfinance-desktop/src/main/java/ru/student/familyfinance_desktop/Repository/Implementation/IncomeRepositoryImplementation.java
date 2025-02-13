@@ -3,12 +3,12 @@ package ru.student.familyfinance_desktop.Repository.Implementation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import ru.student.familyfinance_desktop.Model.Income;
 import ru.student.familyfinance_desktop.Repository.IncomeRepository;
 
-@Component
+@Repository
 public class IncomeRepositoryImplementation implements IncomeRepository{
     private List<Income> incomes = new ArrayList<>();
 

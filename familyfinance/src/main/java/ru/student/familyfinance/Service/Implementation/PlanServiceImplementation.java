@@ -17,14 +17,14 @@ public class PlanServiceImplementation implements PlanService {
     private final PlanRepository repository;
     
     @Override
-    public boolean addPlan(Plan plan) {
+    public Plan addPlan(Plan plan) {
         if (plan == null) {
-            return false;
+            return null;
         }
         LocalDate planDate = LocalDate.of(plan.getDateOfOperation().getYear(), plan.getDateOfOperation().getMonthValue(), 1);
         plan.setDateOfOperation(planDate);
         Plan result = repository.save(plan);
-        return plan.equals(result);
+        return result;
     }
 
     @Override
@@ -58,11 +58,11 @@ public class PlanServiceImplementation implements PlanService {
     }
 
     @Override
-    public boolean editPlan(Plan plan) {
+    public Plan editPlan(Plan plan) {
         if (plan == null) {
-            return false;
+            return null;
         }
         Plan result = repository.save(plan);
-        return plan.equals(result);
+        return result;
     }
 }

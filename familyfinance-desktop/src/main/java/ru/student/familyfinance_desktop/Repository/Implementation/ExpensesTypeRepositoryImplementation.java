@@ -3,12 +3,12 @@ package ru.student.familyfinance_desktop.Repository.Implementation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import ru.student.familyfinance_desktop.Model.ExpensesType;
 import ru.student.familyfinance_desktop.Repository.ExpensesTypeRepository;
 
-@Component
+@Repository
 public class ExpensesTypeRepositoryImplementation implements ExpensesTypeRepository {
     private List<ExpensesType> expensesTypes = new ArrayList<>();
 

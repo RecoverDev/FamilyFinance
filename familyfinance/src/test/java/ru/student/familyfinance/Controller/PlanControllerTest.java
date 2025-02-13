@@ -92,8 +92,9 @@ public class PlanControllerTest {
     @DisplayName("Добавление пункта плана пользователя")
     @WithMockUser
     public void postPlanTest() throws Exception {
-        doReturn(true).when(service).addPlan(listPlans.get(0));
+        doReturn(listPlans.get(0)).when(service).addPlan(listPlans.get(0));
         doReturn(listPlans.get(0)).when(builder).buildPlan(listPlanDTO.get(0), person);
+        doReturn(listPlanDTO.get(0)).when(mapper).toPlanDTO(listPlans.get(0));
         String json = jsonMapper.writeValueAsString(listPlanDTO.get(0));
        
 
@@ -105,14 +106,16 @@ public class PlanControllerTest {
                                  .andExpect(status().isOk());
         Mockito.verify(service).addPlan(listPlans.get(0));
         Mockito.verify(builder).buildPlan(listPlanDTO.get(0), person);
+        Mockito.verify(mapper, Mockito.times(1)).toPlanDTO(listPlans.get(0));
     }
 
     @Test
     @DisplayName("Изменение пункта плана пользователя")
     @WithMockUser
     public void putPlanTest() throws Exception {
-        doReturn(true).when(service).editPlan(listPlans.get(0));
+        doReturn(listPlans.get(0)).when(service).editPlan(listPlans.get(0));
         doReturn(listPlans.get(0)).when(builder).buildPlan(listPlanDTO.get(0), person);
+        doReturn(listPlanDTO.get(0)).when(mapper).toPlanDTO(listPlans.get(0));
         String json = jsonMapper.writeValueAsString(listPlanDTO.get(0));
        
 
@@ -124,6 +127,7 @@ public class PlanControllerTest {
                                  .andExpect(status().isOk());
         Mockito.verify(service).editPlan(listPlans.get(0));
         Mockito.verify(builder).buildPlan(listPlanDTO.get(0), person);
+        Mockito.verify(mapper, Mockito.times(1)).toPlanDTO(listPlans.get(0));
     }
 
     @Test

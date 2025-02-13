@@ -55,15 +55,19 @@ public class PlanController {
     }
 
     @Operation(summary = "Добавление нового пункта плана пользователя", tags = "Plan Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Пункт плана успешно добавлен", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Пункт плана успешно добавлен", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = PlanDTO.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при добавлении пункта плана пользователя" ,content = @Content)})
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> postPlan(@AuthenticationPrincipal Person person, @RequestBody PlanDTO planDTO) {
+    public ResponseEntity<PlanDTO> postPlan(@AuthenticationPrincipal Person person, @RequestBody PlanDTO planDTO) {
         Plan plan = builder.buildPlan(planDTO, person);
 
-        boolean result = service.addPlan(plan);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Plan result = service.addPlan(plan);
+        PlanDTO response = mapper.toPlanDTO(result);
+        return result != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Удаление пункта плана пользователя", tags = "Plan Controller")
@@ -77,14 +81,18 @@ public class PlanController {
     }
 
     @Operation(summary = "Изменение пункта плана пользователя", tags = "Plan Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Пункт плана успешно изменен", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Пункт плана успешно изменен", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = PlanDTO.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при изменении пункта плана пользователя" ,content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> putPlan(@AuthenticationPrincipal Person person, @RequestBody PlanDTO planDTO) {
+    public ResponseEntity<PlanDTO> putPlan(@AuthenticationPrincipal Person person, @RequestBody PlanDTO planDTO) {
         Plan plan = builder.buildPlan(planDTO, person);
-        boolean result = service.editPlan(plan);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        Plan result = service.editPlan(plan);
+        PlanDTO response = mapper.toPlanDTO(result);
+        return result != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     
