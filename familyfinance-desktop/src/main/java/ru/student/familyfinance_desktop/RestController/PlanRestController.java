@@ -1,6 +1,7 @@
 package ru.student.familyfinance_desktop.RestController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class PlanRestController {
     private ObjectMapper mapper;
 
     public List<Plan> getPlans(LocalDate period) {
-        List<Plan> result = null;
+        List<Plan> result = new ArrayList<>();
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         HttpEntity<String> request = new HttpEntity<String>(headers);
@@ -48,7 +49,7 @@ public class PlanRestController {
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            ResponseEntity<List<Plan>> response = restTemplate.exchange(url + "/plans", HttpMethod.GET, request,responseType, period);
+            ResponseEntity<List<Plan>> response = restTemplate.exchange(url + "/plans/{date}", HttpMethod.GET, request,responseType, period);
 
             if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
                 result = (List<Plan>)response.getBody();

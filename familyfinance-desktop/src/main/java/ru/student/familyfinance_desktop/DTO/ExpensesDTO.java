@@ -28,4 +28,9 @@ public class ExpensesDTO {
     public String getExpensesType_name() { return this.expensesType_name.get(); }
     public void setExpensesType_name(String value) { this.expensesType_name.set(value); }
 
+    @Override
+    public String toString() {
+        return String.format("%s (%s)",this.getName(), this.getExpensesType_name());
+    }
+
 }

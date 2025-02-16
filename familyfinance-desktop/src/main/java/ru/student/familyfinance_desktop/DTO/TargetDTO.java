@@ -46,4 +46,9 @@ public class TargetDTO {
     public String getSettingDate() { return settingDate.get(); }
 
     public void setSettingDate(String value) { settingDate.set(value); }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

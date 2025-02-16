@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class TargetRestController {
 
 
     public List<Target> getTargets() {
-        List<Target> result = null;
+        List<Target> result = new ArrayList<>();
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         HttpEntity<String> request = new HttpEntity<String>(headers);

@@ -10,7 +10,7 @@
 
 <TabPane tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21"
     fx:controller="ru.student.familyfinance_desktop.FXMLController.DictionaryController">
-    <Tab text = "Виды доходов">
+    <Tab text = "Виды доходов" >
         <content>
             <GridPane alignment="center" hgap="2" vgap="1">
                 <padding>

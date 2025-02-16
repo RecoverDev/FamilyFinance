@@ -19,4 +19,9 @@ public class IncomeDTO {
     public String getName() { return name.get(); }
 
     public void setName(String value) { name.set(value); }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
