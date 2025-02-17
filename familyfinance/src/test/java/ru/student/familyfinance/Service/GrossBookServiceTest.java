@@ -44,7 +44,7 @@ public class GrossBookServiceTest {
         LocalDate dateOperation = LocalDate.now();
         GrossBook grossBook = new GrossBook(1, dateOperation, person, new Income(), null, null, 100.0);
         doReturn(grossBook).when(repository).save(grossBook);
-        assertThat(service.addGrossBook(grossBook)).isTrue();
+        assertThat(service.addGrossBook(grossBook)).isEqualTo(grossBook);
         Mockito.verify(repository,Mockito.times(1)).save(grossBook);
     }
 
@@ -55,7 +55,7 @@ public class GrossBookServiceTest {
         LocalDate dateOperation = LocalDate.now();
         GrossBook grossBook = new GrossBook(1, dateOperation, person, new Income(), null, null, 100.0);
         doReturn(grossBook).when(repository).save(grossBook);
-        assertThat(service.editGrossBook(grossBook)).isTrue();
+        assertThat(service.editGrossBook(grossBook)).isEqualTo(grossBook);
         Mockito.verify(repository,Mockito.times(1)).save(grossBook);
     }
 

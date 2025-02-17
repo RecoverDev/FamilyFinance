@@ -43,7 +43,6 @@ public class PlanTableController implements Initializable {
     @Autowired
     private WorkPeriod currentPeriod;
 
-
     @FXML
     private ComboBox<WorkPeriod> comboPeriod;
 
@@ -91,42 +90,31 @@ public class PlanTableController implements Initializable {
 
     @FXML
     private void addIncomeAction(ActionEvent event) {
-        Plan plan = new Plan();
-        planController.setAction(planController.INCOME);
-        planController.setPlan(plan);
-        navigator.showModal(planController, "Семейный бюджет. Планируем новый доход");
-
-        if (planController.isOkFlag()) {
-            service.addPlan(planController.getPlan());
-            setItemsPlanTable();
-        }
-    }
-
-    @FXML
-    private void addExpensesAction(ActionEvent event) {
-        Plan plan = new Plan();
-        planController.setAction(planController.EXPENSES);
-        planController.setPlan(plan);
-        navigator.showModal(planController, "Семейный бюджет. Планируем новые расходы");
-
-        if (planController.isOkFlag()) {
-            service.addPlan(planController.getPlan());
-            setItemsPlanTable();
-        }
+        addPlan(planController.INCOME);
     }
 
     @FXML
     private void addTargetAction(ActionEvent event) {
+        addPlan(planController.TARGET);
+    }
+
+    @FXML
+    private void addExpensesAction(ActionEvent event) {
+        addPlan(planController.EXPENSES);
+    }
+
+    private void addPlan(int mode) {
         Plan plan = new Plan();
-        planController.setAction(planController.TARGET);
+        planController.setAction(mode);
         planController.setPlan(plan);
-        navigator.showModal(planController, "Семейный бюджет. Планируем отложить на цель");
+        navigator.showModal(planController, "Семейный бюджет. Планируем месяц");
 
         if (planController.isOkFlag()) {
             service.addPlan(planController.getPlan());
             setItemsPlanTable();
         }
     }
+
 
     @FXML
     private void editRecordAction(ActionEvent event) {

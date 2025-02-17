@@ -15,9 +15,9 @@ public interface GrossBookService {
     /**
      * Добавление новой записи
      * @param grossBook - новая запись
-     * @return - результат операции true - успех/false - неудача
+     * @return - сохраненная запись
      */
-    boolean addGrossBook(GrossBook grossBook);
+    GrossBook addGrossBook(GrossBook grossBook);
 
     /**
      * Удаление записи по идентификатору
@@ -100,9 +100,9 @@ public interface GrossBookService {
     /**
      * Изменение записи
      * @param expenses - изменяемая запись
-     * @return - результат операции true - успех/false - неудача
+     * @return - измененная запись
      */
-    boolean editGrossBook(GrossBook grossBook);
+    GrossBook editGrossBook(GrossBook grossBook);
 
 
 }

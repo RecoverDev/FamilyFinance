@@ -101,8 +101,10 @@ public class GrossBookControllerTest {
     @DisplayName("Добавление новой записи в журнал пользователя")
     @WithMockUser
     public void postGrossBookTest() throws Exception {
-        doReturn(true).when(service).addGrossBook(listGrossBooks.get(0));
+        doReturn(listGrossBooks.get(0)).when(service).addGrossBook(listGrossBooks.get(0));
         doReturn(listGrossBooks.get(0)).when(builder).buildGrossBook(person, listGrossBooksDTO.get(0));
+        doReturn(listGrossBooksDTO.get(0)).when(mapper).toGrossBookDTO(listGrossBooks.get(0));
+
         String json = jsonMapper.writeValueAsString(listGrossBooksDTO.get(0));
 
         mvc.perform(post("/grossbooks").principal(authenticationToken)
@@ -113,14 +115,16 @@ public class GrossBookControllerTest {
                                        .andExpect(status().isOk());
         Mockito.verify(service, Mockito.times(1)).addGrossBook(listGrossBooks.get(0));
         Mockito.verify(builder, Mockito.times(1)).buildGrossBook(person, listGrossBooksDTO.get(0));
+        Mockito.verify(mapper, Mockito.times(1)).toGrossBookDTO(listGrossBooks.get(0));
     }
 
     @Test
     @DisplayName("Изменение записи в журнале пользователя")
     @WithMockUser
     public void putGrossBookTest() throws Exception {
-        doReturn(true).when(service).editGrossBook(listGrossBooks.get(0));
+        doReturn(listGrossBooks.get(0)).when(service).editGrossBook(listGrossBooks.get(0));
         doReturn(listGrossBooks.get(0)).when(builder).buildGrossBook(person, listGrossBooksDTO.get(0));
+        doReturn(listGrossBooksDTO.get(0)).when(mapper).toGrossBookDTO(listGrossBooks.get(0));
         String json = jsonMapper.writeValueAsString(listGrossBooksDTO.get(0));
 
         mvc.perform(put("/grossbooks").principal(authenticationToken)
@@ -131,6 +135,7 @@ public class GrossBookControllerTest {
                                        .andExpect(status().isOk());
         Mockito.verify(service, Mockito.times(1)).editGrossBook(listGrossBooks.get(0));
         Mockito.verify(builder, Mockito.times(1)).buildGrossBook(person, listGrossBooksDTO.get(0));
+        Mockito.verify(mapper, Mockito.times(1)).toGrossBookDTO(listGrossBooks.get(0));
     }
 
     @Test

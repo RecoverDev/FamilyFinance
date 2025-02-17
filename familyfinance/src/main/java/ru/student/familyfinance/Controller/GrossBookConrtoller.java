@@ -60,14 +60,18 @@ public class GrossBookConrtoller {
     }
 
     @Operation(summary = "Добавление новой записи в журнал операций пользователя", tags = "GrossBook Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "запись успешно добавлена", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "запись успешно добавлена", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = GrossBookDTO.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при добавлении записи об операции пользователя" ,content = @Content)})
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> postGrossBook(@AuthenticationPrincipal Person person, @RequestBody GrossBookDTO grossBookDTO) {
+    public ResponseEntity<GrossBookDTO> postGrossBook(@AuthenticationPrincipal Person person, @RequestBody GrossBookDTO grossBookDTO) {
         GrossBook grossBook = builder.buildGrossBook(person, grossBookDTO);
-        boolean result = service.addGrossBook(grossBook);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        GrossBook result = service.addGrossBook(grossBook);
+        GrossBookDTO response = mapper.toGrossBookDTO(result);
+        return result != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Изменение новой записи в журнал операций пользователя", tags = "GrossBook Controller")
@@ -75,10 +79,11 @@ public class GrossBookConrtoller {
                             @ApiResponse(responseCode = "304", description = "Ошибка при изменении записи об операции пользователя" ,content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<HttpStatus> putGrossBook(@AuthenticationPrincipal Person person, @RequestBody GrossBookDTO grossBookDTO) {
+    public ResponseEntity<GrossBookDTO> putGrossBook(@AuthenticationPrincipal Person person, @RequestBody GrossBookDTO grossBookDTO) {
         GrossBook grossBook = builder.buildGrossBook(person, grossBookDTO);
-        boolean result = service.editGrossBook(grossBook);
-        return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        GrossBook result = service.editGrossBook(grossBook);
+        GrossBookDTO response = mapper.toGrossBookDTO(result);
+        return result != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @Operation(summary = "Удаление записи в журнале операций пользователя", tags = "GrossBook Controller")

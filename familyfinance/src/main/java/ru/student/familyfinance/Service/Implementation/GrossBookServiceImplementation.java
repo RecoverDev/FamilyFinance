@@ -18,12 +18,12 @@ public class GrossBookServiceImplementation implements GrossBookService {
     private final GrossBookRepository repository;
     
     @Override
-    public boolean addGrossBook(GrossBook grossBook) {
+    public GrossBook addGrossBook(GrossBook grossBook) {
         if (grossBook == null) {
-            return false;
+            return null;
         }
         GrossBook result = repository.save(grossBook);
-        return grossBook.equals(result);
+        return result;
     }
 
     @Override
@@ -81,12 +81,12 @@ public class GrossBookServiceImplementation implements GrossBookService {
 
 
     @Override
-    public boolean editGrossBook(GrossBook grossBook) {
+    public GrossBook editGrossBook(GrossBook grossBook) {
         if (grossBook == null) {
-            return false;
+            return null;
         }
         GrossBook result = repository.save(grossBook);
-        return grossBook.equals(result);
+        return result;
     }
 
 }

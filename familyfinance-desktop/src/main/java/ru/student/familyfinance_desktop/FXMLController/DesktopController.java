@@ -29,6 +29,9 @@ public class DesktopController implements Initializable {
     @Autowired
     private PlanTableController planTableController;
 
+    @Autowired
+    private GrossBookTableController grossBookTableController;
+
     @FXML
     private TitledPane grossBook;
 
@@ -51,6 +54,9 @@ public class DesktopController implements Initializable {
 
         Parent planPage = navigator.loadFxml(planTableController);
         plans.setContent(planPage);
+
+        Parent grossBookPage = navigator.loadFxml(grossBookTableController);
+        grossBook.setContent(grossBookPage);
 
     }
 

@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -28,8 +29,8 @@ import ru.student.familyfinance_desktop.DTO.TargetDTO;
 import ru.student.familyfinance_desktop.Mapper.ExpensesMapper;
 import ru.student.familyfinance_desktop.Mapper.IncomeMapper;
 import ru.student.familyfinance_desktop.Mapper.TargetMapper;
+import ru.student.familyfinance_desktop.Model.GrossBook;
 import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.Plan;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;
 import ru.student.familyfinance_desktop.Service.ExpensesService;
 import ru.student.familyfinance_desktop.Service.IncomeService;
@@ -38,9 +39,9 @@ import ru.student.familyfinance_desktop.Service.TargetService;
 @Getter
 @Setter
 @Controller
-@FxmlView("PlanPage.fxml")
+@FxmlView("GrossBookPage.fxml")
 @RequiredArgsConstructor
-public class PlanController implements Initializable {
+public class GrossBookController implements Initializable{
     private final IncomeService incomeService;
     private final ExpensesService expensesService;
     private final TargetService targetService;
@@ -50,7 +51,7 @@ public class PlanController implements Initializable {
     private final TargetMapper targetMapper;
 
     private int action = this.INCOME;
-    private Plan plan;
+    private GrossBook grossBook;
     private boolean okFlag;
 
     public final int INCOME = 1;
@@ -62,6 +63,9 @@ public class PlanController implements Initializable {
 
     @Autowired
     private WorkPeriod currentPeriod;
+
+    @FXML
+    private DatePicker operationDatePicker;
 
     @FXML
     private Label labelList;
@@ -87,6 +91,8 @@ public class PlanController implements Initializable {
     @FXML
     private Button cancelButton;
 
+    
+    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         switch (action) {
@@ -133,7 +139,8 @@ public class PlanController implements Initializable {
             }
         });
 
-        summField.setText(Double.toString(plan.getSumm()));
+        summField.setText(Double.toString(grossBook.getSumm()));
+        operationDatePicker.setValue(grossBook.getDateOfOperation());
     }
 
     @FXML
@@ -144,18 +151,18 @@ public class PlanController implements Initializable {
         }
 
         switch (action) {
-            case INCOME -> plan.setIncome_id(listIncome.getValue().getId());
-            case EXPENSES -> plan.setExpenses_id(listExpenses.getValue().getId());
-            case TARGET -> plan.setTarget_id(listTarget.getValue().getId());
+            case INCOME -> grossBook.setIncome_id(listIncome.getValue().getId());
+            case EXPENSES -> grossBook.setExpenses_id(listExpenses.getValue().getId());
+            case TARGET -> grossBook.setTarget_id(listTarget.getValue().getId());
         }
-        plan.setDateOfOperation(currentPeriod.getCurrentPeriod());
-        plan.setSumm(Double.parseDouble(summField.getText()));
-        plan.setPerson_id(person.getId());
+        grossBook.setDateOfOperation(currentPeriod.getCurrentPeriod());
+        grossBook.setSumm(Double.parseDouble(summField.getText()));
+        grossBook.setPerson_id(person.getId());
+        grossBook.setDateOfOperation(operationDatePicker.getValue());
 
         okFlag = true;
         Stage stage = (Stage)cancelButton.getScene().getWindow();
         stage.close();
-
     }
 
     @FXML
@@ -168,7 +175,7 @@ public class PlanController implements Initializable {
     private void setItemsListIncome() {
         ObservableList<IncomeDTO> list = FXCollections.observableArrayList(incomeMapper.toListIncomeDTO(incomeService.getIncomes()));
         listIncome.setItems(list);
-        List<IncomeDTO> currentValue = list.stream().filter(i -> i.getId() == plan.getIncome_id()).toList();
+        List<IncomeDTO> currentValue = list.stream().filter(i -> i.getId() == grossBook.getIncome_id()).toList();
         if (currentValue.isEmpty()) {
             listIncome.setValue(list.get(0));
         } else {
@@ -179,7 +186,7 @@ public class PlanController implements Initializable {
     private void setItemsListExpenses() {
         ObservableList<ExpensesDTO> list = FXCollections.observableArrayList(expensesMapper.toListExpensesDTO(expensesService.getExpenses()));
         listExpenses.setItems(list);
-        List<ExpensesDTO> currentValue = list.stream().filter(e -> e.getId() == plan.getExpenses_id()).toList();
+        List<ExpensesDTO> currentValue = list.stream().filter(e -> e.getId() == grossBook.getExpenses_id()).toList();
         if (currentValue.isEmpty()) {
             listExpenses.setValue(list.get(0));
         } else {
@@ -190,7 +197,7 @@ public class PlanController implements Initializable {
     private void setItemsListTargets() {
         ObservableList<TargetDTO> list = FXCollections.observableArrayList(targetMapper.toListTargetDTO(targetService.getTargets()));
         listTarget.setItems(list);
-        List<TargetDTO> currentValue = list.stream().filter(t -> t.getId() == plan.getTarget_id()).toList();
+        List<TargetDTO> currentValue = list.stream().filter(t -> t.getId() == grossBook.getTarget_id()).toList();
         if (currentValue.isEmpty()) {
             listTarget.setValue(list.get(0));
         } else {

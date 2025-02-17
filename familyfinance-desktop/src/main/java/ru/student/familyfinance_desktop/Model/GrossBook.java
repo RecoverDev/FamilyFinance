@@ -17,7 +17,7 @@ public class GrossBook {
 
     long id;
 
-    LocalDate dateOfOperation;
+    LocalDate dateOfOperation = LocalDate.now();
 
     long person_id;
 
