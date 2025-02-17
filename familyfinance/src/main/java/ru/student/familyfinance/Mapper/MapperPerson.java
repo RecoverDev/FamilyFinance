@@ -4,19 +4,33 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.student.familyfinance.DTO.PersonDTO;
 import ru.student.familyfinance.Model.Person;
+import ru.student.familyfinance.Service.PersonService;
 
 @Mapper(componentModel = "spring")
-public interface MapperPerson {
+public abstract class MapperPerson {
 
-    PersonDTO toPersonDTO(Person person);
-    List<PersonDTO> toListPersonDTO(List<Person> persons);
+    @Autowired
+    protected PersonService personService;
 
-    @Mapping(target="password", expression="java(personDTO.getUsername() + \"_1234\")")
+    public abstract PersonDTO toPersonDTO(Person person);
+    public abstract List<PersonDTO> toListPersonDTO(List<Person> persons);
+
+    @Mapping(target="password", expression="java(getPassword(personDTO))")
     @Mapping(target = "authorities", ignore = true)
-    Person toPerson(PersonDTO personDTO);
+    public abstract Person toPerson(PersonDTO personDTO);
 
-    List<Person> toListPerson(List<PersonDTO> personsDTO);
+    public abstract List<Person> toListPerson(List<PersonDTO> personsDTO);
+
+    protected String getPassword(PersonDTO personDTO) {
+        Person person = personService.getPersonById(personDTO.getId());
+        if (person == null) {
+            return personDTO.getUsername() + "_1234";
+        } else {
+            return person.getPassword();
+        }
+    }
 }

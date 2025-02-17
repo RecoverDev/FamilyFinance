@@ -4,31 +4,69 @@
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Accordion xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.student.familyfinance_desktop.FXMLController.DesktopController"
-    prefHeight="600.0" prefWidth="800.0">
-    <panes>
-        <TitledPane fx:id="grossBook" animated="true" text="Мои доходы/расходы">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-        </TitledPane>
-        <TitledPane fx:id="plans" animated="true" text="Мои Планы">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-        </TitledPane>
-        <TitledPane fx:id="targets" animated="true" text="Мои цели">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-        </TitledPane>
-        <TitledPane fx:id="dictionary" animated="true" text="Мои справочники">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-        </TitledPane>
-    </panes>
-</Accordion>
+<GridPane xmlns="http://javafx.com/javafx/21" 
+          xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="ru.student.familyfinance_desktop.FXMLController.DesktopController" 
+          alignment="CENTER" hgap="2" vgap="2" >
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints prefWidth="60.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+    </rowConstraints>
+
+    <Label fx:id="userName" text="" style="-fx-font-weight: bold"
+           GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+
+    <Button fx:id="settingButton" onAction="#settingAction" text="" 
+            GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        </GridPane.margin>
+        <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@Images/cogwheel.png" />
+                </image>
+            </ImageView>
+        </graphic> 
+        <tooltip>
+            <Tooltip text="Настройка свойств пользователя"/>
+        </tooltip>                   
+    </Button>
+
+
+    <Accordion prefHeight="600.0" prefWidth="800.0"
+               GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.columnSpan="2">
+        <panes>
+            <TitledPane fx:id="grossBook" animated="true" text="Мои доходы/расходы">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+            </TitledPane>
+            <TitledPane fx:id="plans" animated="true" text="Мои Планы">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+            </TitledPane>
+            <TitledPane fx:id="targets" animated="true" text="Мои цели">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+            </TitledPane>
+            <TitledPane fx:id="dictionary" animated="true" text="Мои справочники">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+            </TitledPane>
+        </panes>
+    </Accordion>
+</GridPane>
+

@@ -6,13 +6,16 @@ import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
+import ru.student.familyfinance_desktop.Model.Person;
 
 @Component
 @FxmlView("DesktopPage.fxml")
@@ -32,6 +35,15 @@ public class DesktopController implements Initializable {
     @Autowired
     private GrossBookTableController grossBookTableController;
 
+    @Autowired
+    private SettingController settingController;
+
+    @Autowired
+    private Person person;
+
+    @FXML
+    private Label userName;
+
     @FXML
     private TitledPane grossBook;
 
@@ -46,6 +58,8 @@ public class DesktopController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        userName.setText(person.getFullName());
+
         Parent dictionaryPage = navigator.loadFxml(dictionaryController);
         dictionary.setContent(dictionaryPage);
 
@@ -60,4 +74,9 @@ public class DesktopController implements Initializable {
 
     }
 
+    @FXML
+    private void settingAction(ActionEvent event) {
+        navigator.showModal(settingController, "Свойства пользователя");
+        userName.setText(person.getFullName());
+    }
 }
