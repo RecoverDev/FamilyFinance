@@ -15,6 +15,7 @@ import javafx.scene.control.TitledPane;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
+import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
 import ru.student.familyfinance_desktop.Model.Person;
 
 @Component
@@ -39,6 +40,9 @@ public class DesktopController implements Initializable {
     private SettingController settingController;
 
     @Autowired
+    private StatisticController statisticController;
+
+    @Autowired
     private Person person;
 
     @FXML
@@ -56,6 +60,9 @@ public class DesktopController implements Initializable {
     @FXML
     private TitledPane dictionary;
 
+    @FXML
+    private TitledPane statistic;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         userName.setText(person.getFullName());
@@ -71,6 +78,9 @@ public class DesktopController implements Initializable {
 
         Parent grossBookPage = navigator.loadFxml(grossBookTableController);
         grossBook.setContent(grossBookPage);
+
+        Parent statisticPage = navigator.loadFxml(statisticController);
+        statistic.setContent(statisticPage);
 
     }
 

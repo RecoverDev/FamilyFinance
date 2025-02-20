@@ -3,9 +3,8 @@ package ru.student.familyfinance_desktop.FXMLController;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +14,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -129,10 +131,15 @@ public class GrossBookTableController implements Initializable{
         if (grossBookDTO == null) {
             return;
         }
-        System.setProperty("java.awt.headless", "false");
 
-        int option = JOptionPane.showConfirmDialog(null, "Удалить запись \"" + selectionModel.getSelectedItem().getDescription() + "\"", "Удаление записи", JOptionPane.YES_NO_OPTION);
-        if (option == JOptionPane.YES_OPTION) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText("Удаление записи");
+        alert.setContentText("Удалить запись \"" + selectionModel.getSelectedItem().getDescription() + "\"");
+        alert.setTitle("Внимание");
+        Optional<ButtonType> result = alert.showAndWait();
+        ButtonType response = result.get();
+
+        if (response == ButtonType.OK){
             service.deleteGrossBookById(selectionModel.getSelectedItem().getId());
             setItemsgrossBookTable();
         }

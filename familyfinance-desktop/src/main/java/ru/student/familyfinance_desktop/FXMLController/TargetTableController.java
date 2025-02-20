@@ -1,9 +1,8 @@
 package ru.student.familyfinance_desktop.FXMLController;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
@@ -104,11 +106,14 @@ public class TargetTableController implements Initializable{
             return;
         }
 
-        System.setProperty("java.awt.headless", "false");
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText("Удаление цели пользователя");
+        alert.setContentText("Удалить цель \"" + selectionModel.getSelectedItem().getName() + "\"");
+        alert.setTitle("Внимание");
+        Optional<ButtonType> result = alert.showAndWait();
+        ButtonType response = result.get();
 
-        int option = JOptionPane.showConfirmDialog(null, "Удалить цель \"" + selectionModel.getSelectedItem().getName() + "\"", "Удаление цели пользователя", JOptionPane.YES_NO_OPTION);
-
-        if (option == JOptionPane.YES_OPTION) {
+        if (response == ButtonType.OK){
             if (service.deleteTargetById(selectionModel.getSelectedItem().getId())) {
                 setItemsToTargetTable();
             }
