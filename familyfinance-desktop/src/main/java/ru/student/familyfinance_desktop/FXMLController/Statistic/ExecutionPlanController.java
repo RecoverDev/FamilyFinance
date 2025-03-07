@@ -1,6 +1,7 @@
 package ru.student.familyfinance_desktop.FXMLController.Statistic;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -13,42 +14,33 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.ComboBox;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;
 import ru.student.familyfinance_desktop.Service.StatisticService;
 
 @Controller
-@FxmlView("IncomeChartPage.fxml")
+@FxmlView("ExecutionPlanPage.fxml")
 @RequiredArgsConstructor
-public class IncomeChartController implements Initializable {
+public class ExecutionPlanController implements Initializable {
     private final StatisticService service;
 
     @Autowired
     private WorkPeriod currentPeriod;
 
     @FXML
-    private DatePicker beginDatePicker;
+    private ComboBox<WorkPeriod> comboPeriod;
 
     @FXML
-    private DatePicker endDatePicker;
-
-    @FXML
-    private CheckBox separateCheckBox;
-
-    @FXML
-    private LineChart<String, Double> incomeChart;
+    private BarChart<String, Double> executionPlanChart;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        beginDatePicker.setValue(currentPeriod.getCurrentPeriod().minusMonths(3));
-        endDatePicker.setValue(currentPeriod.getCurrentPeriod().plusDays(currentPeriod.getCurrentPeriod().lengthOfMonth() - 1));
+        setItemsComboPeriod();
         fillChart();
-
     }
 
     @FXML
@@ -57,7 +49,7 @@ public class IncomeChartController implements Initializable {
     }
 
     private void fillChart() {
-        Map<String, Map<String, Double>> kits = service.getIncomeStatistic(beginDatePicker.getValue(), endDatePicker.getValue(), separateCheckBox.isSelected());
+        Map<String, Map<String, Double>> kits = service.getBudget(comboPeriod.getValue().getBeginPeriod());
 
         ObservableList<XYChart.Series<String, Double>> data = FXCollections.observableArrayList();
 
@@ -70,8 +62,21 @@ public class IncomeChartController implements Initializable {
             data.add(series);
         }
 
-        incomeChart.getData().removeAll(incomeChart.getData());
-        incomeChart.getData().addAll(data);
+        executionPlanChart.getData().removeAll(executionPlanChart.getData());
+        executionPlanChart.getData().addAll(data);
+    }
+
+    private void setItemsComboPeriod() {
+        ObservableList<WorkPeriod> listPeriod = FXCollections.observableArrayList();
+
+        for (LocalDate i = currentPeriod.getCurrentPeriod().minusMonths(12); 
+                       i.isBefore(currentPeriod.getCurrentPeriod().plusMonths(12)); 
+                       i = i.plusMonths(1)) {
+            listPeriod.add(new WorkPeriod(i));
+        }
+
+        comboPeriod.setItems(listPeriod);
+        comboPeriod.setValue(currentPeriod);
     }
 
 }

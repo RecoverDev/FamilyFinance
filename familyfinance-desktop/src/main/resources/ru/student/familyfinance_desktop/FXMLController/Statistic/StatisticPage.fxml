@@ -27,12 +27,12 @@
               GridPane.columnIndex="0" 
               GridPane.rowIndex="0" 
               GridPane.halignment="CENTER" 
-              prefWidth="250">
+              maxWidth="250">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Статистика доходов"/>
                 <String fx:value="Статистика расходов"/>
-                <String fx:value="Three"/>
+                <String fx:value="Исполнение бюджета"/>
                 <String fx:value="Four"/>
                 <String fx:value="Five"/>
             </FXCollections>

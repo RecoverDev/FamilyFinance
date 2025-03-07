@@ -34,6 +34,15 @@ public interface PlanService {
     List<Plan> getPlans(Person person, LocalDate month);
 
     /**
+     * Получение списка пунктов плана пользователя за несколько месяцев
+     * @param person - пользователь
+     * @param begin - начало периода выборки
+     * @param end - конец периода выборки
+     * @return - List<Plan>
+     */
+    List<Plan> getPlansSeveralMonths(Person person, LocalDate begin, LocalDate end);
+
+    /**
      * Получение планируемой суммы дохода
      * @param person - пользователь
      * @param month - номер месяца

@@ -3,6 +3,7 @@ package ru.student.familyfinance.Service.Implementation;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.sql.ast.tree.expression.Over;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,14 @@ public class PlanServiceImplementation implements PlanService {
     public List<Plan> getPlans(Person person, LocalDate month) {
         LocalDate planDate = LocalDate.of(month.getYear(), month.getMonthValue(), 1);
         return (List<Plan>)repository.findByPersonAndDateOfOperation(person, planDate);
+    }
+
+    @Override
+    public List<Plan> getPlansSeveralMonths(Person person, LocalDate begin, LocalDate end) {
+        LocalDate beginDate = LocalDate.of(begin.getYear(), begin.getMonthValue(), 1);
+        LocalDate endDate = LocalDate.of(end.getYear(), end.getMonthValue(), end.lengthOfMonth());
+        return repository.findByPersonAndDateOfOperationBetween(person, beginDate, endDate);
+
     }
 
     @Override

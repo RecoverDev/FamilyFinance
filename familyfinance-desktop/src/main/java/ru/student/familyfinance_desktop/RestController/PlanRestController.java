@@ -63,6 +63,29 @@ public class PlanRestController {
         return result;
     }
 
+    public List<Plan> getPlansSeveralMonth(LocalDate begin, LocalDate end) {
+        List<Plan> result = new ArrayList<>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+        ParameterizedTypeReference<List<Plan>> responseType = new ParameterizedTypeReference<List<Plan>>() {};
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            ResponseEntity<List<Plan>> response = restTemplate.exchange(url + "/plans/{beginDate}/{endDate}", HttpMethod.GET, request,responseType, begin, end);
+
+            if (response.getStatusCode() == HttpStatusCode.valueOf(200)) {
+                result = (List<Plan>)response.getBody();
+            } else {
+                LOGGER.info("Список записей планов пользователя не получен: " + response.getStatusCode());
+            }
+        } catch (RestClientException e) {
+            LOGGER.info("Ошибка при получении списка записей планов пользователя: " + e.getMessage());
+        }
+
+        return result;
+    }
+
     public Plan getPlanById(long id) {
         RestTemplate restTemplate = (new RestTemplateBuilder()).basicAuthentication(loginData.getUsername(), loginData.getPassword()).build();
         ResponseEntity<Plan> response = new ResponseEntity<>(HttpStatus.OK);

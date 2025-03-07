@@ -23,9 +23,9 @@ import ru.student.familyfinance_desktop.Model.WorkPeriod;
 import ru.student.familyfinance_desktop.Service.StatisticService;
 
 @Controller
-@FxmlView("IncomeChartPage.fxml")
+@FxmlView("ExpensesChartPage.fxml")
 @RequiredArgsConstructor
-public class IncomeChartController implements Initializable {
+public class ExpensesChartController implements Initializable {
     private final StatisticService service;
 
     @Autowired
@@ -41,14 +41,14 @@ public class IncomeChartController implements Initializable {
     private CheckBox separateCheckBox;
 
     @FXML
-    private LineChart<String, Double> incomeChart;
+    private LineChart<String, Double> expensesChart;
 
+    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         beginDatePicker.setValue(currentPeriod.getCurrentPeriod().minusMonths(3));
         endDatePicker.setValue(currentPeriod.getCurrentPeriod().plusDays(currentPeriod.getCurrentPeriod().lengthOfMonth() - 1));
         fillChart();
-
     }
 
     @FXML
@@ -57,7 +57,7 @@ public class IncomeChartController implements Initializable {
     }
 
     private void fillChart() {
-        Map<String, Map<String, Double>> kits = service.getIncomeStatistic(beginDatePicker.getValue(), endDatePicker.getValue(), separateCheckBox.isSelected());
+        Map<String, Map<String, Double>> kits = service.getExpensesStatistic(beginDatePicker.getValue(), endDatePicker.getValue(), separateCheckBox.isSelected());
 
         ObservableList<XYChart.Series<String, Double>> data = FXCollections.observableArrayList();
 
@@ -70,8 +70,10 @@ public class IncomeChartController implements Initializable {
             data.add(series);
         }
 
-        incomeChart.getData().removeAll(incomeChart.getData());
-        incomeChart.getData().addAll(data);
+        expensesChart.getData().removeAll(expensesChart.getData());
+        expensesChart.getData().addAll(data);
     }
+
+
 
 }

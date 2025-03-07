@@ -54,6 +54,20 @@ public class PlanController {
         return result.size() > 0 ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Operation(summary = "Получение плана пользователя за несколько месяцев", tags = "Plan Controller")
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Получен план пользователя",
+                                        content = {@Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = PlanDTO.class)))}),
+                            @ApiResponse(responseCode = "404", description = "Ошибка при получении плана пользователя", content = @Content)})
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @GetMapping("/{beginDate}/{endDate}")
+    public ResponseEntity<List<PlanDTO>> getPlansSeveralMonths(@AuthenticationPrincipal Person person, @PathVariable(name="beginDate") LocalDate begin, @PathVariable(name="endDate") LocalDate end) {
+        List<Plan> result = service.getPlansSeveralMonths(person, begin, end);
+        List<PlanDTO> response = mapper.toListPlanDTO(result);
+        return result.size() > 0 ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @Operation(summary = "Добавление нового пункта плана пользователя", tags = "Plan Controller")
     @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
                                         description = "Пункт плана успешно добавлен", 

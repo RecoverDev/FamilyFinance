@@ -25,6 +25,12 @@ public class StatisticController implements Initializable {
     @Autowired
     private IncomeChartController incomeChartController;
 
+    @Autowired
+    private ExpensesChartController expensesChartController;
+
+    @Autowired
+    private ExecutionPlanController executionPlanController;
+
     @FXML
     private ListView<String> listChart;
 
@@ -43,6 +49,16 @@ public class StatisticController implements Initializable {
                     Parent stIncome = navigator.loadFxml(incomeChartController);
                     container.getChildren().removeAll(container.getChildren());
                     container.getChildren().add(stIncome);
+                }
+                case "Статистика расходов" -> {
+                    Parent stExpenses = navigator.loadFxml(expensesChartController);
+                    container.getChildren().removeAll(container.getChildren());
+                    container.getChildren().add(stExpenses);
+                }
+                case "Исполнение бюджета" -> {
+                    Parent stExecutionPlan = navigator.loadFxml(executionPlanController);
+                    container.getChildren().removeAll(container.getChildren());
+                    container.getChildren().add(stExecutionPlan);
                 }
             }
         });

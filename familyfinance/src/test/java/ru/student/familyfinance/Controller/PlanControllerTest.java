@@ -89,6 +89,19 @@ public class PlanControllerTest {
     }
 
     @Test
+    @DisplayName("Получение плана пользователя на несколько месяцев")
+    @WithMockUser
+    public void getPlansSeveralMonthsTest() throws Exception {
+        doReturn(listPlans).when(service).getPlansSeveralMonths(person, LocalDate.of(2024, 1, 1), LocalDate.of(2024, 3, 1));
+        doReturn(listPlanDTO).when(mapper).toListPlanDTO(listPlans);
+        String json = jsonMapper.writeValueAsString(listPlanDTO);
+
+        mvc.perform(get("/plans/2024-01-01/2024-03-01").principal(authenticationToken)).andExpect(status().isOk()).andExpect(content().json(json));
+        Mockito.verify(service, Mockito.times(1)).getPlansSeveralMonths(person, LocalDate.of(2024, 1, 1), LocalDate.of(2024, 3, 1));
+        Mockito.verify(mapper, Mockito.times(1)).toListPlanDTO(listPlans);
+    }
+
+    @Test
     @DisplayName("Добавление пункта плана пользователя")
     @WithMockUser
     public void postPlanTest() throws Exception {

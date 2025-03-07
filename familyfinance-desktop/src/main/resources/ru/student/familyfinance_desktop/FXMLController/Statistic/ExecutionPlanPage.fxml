@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21"
+    fx:controller="ru.student.familyfinance_desktop.FXMLController.Statistic.ExecutionPlanController">
+
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES"/>
+        <ColumnConstraints hgrow="SOMETIMES"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+    </rowConstraints>
+
+    <ComboBox fx:id="comboPeriod" GridPane.columnIndex="0" 
+                                  GridPane.rowIndex="0" 
+                                  GridPane.columnSpan="2" 
+                                  GridPane.halignment="RIGHT" 
+                                  prefWidth="300"
+                                  onAction="#actionFillButton"/>
+
+    <Button fx:id="fillButton" text="Сформировать"
+            GridPane.columnIndex="1" 
+            GridPane.rowIndex="1" 
+            GridPane.halignment="RIGHT"
+            onAction="#actionFillButton">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+    </Button>
+
+    <BarChart fx:id="executionPlanChart"
+              GridPane.columnIndex="0" GridPane.rowIndex="2" 
+              GridPane.columnSpan="2" 
+              GridPane.halignment="CENTER" >
+        <xAxis>
+            <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis side="LEFT" />
+        </yAxis>
+    </BarChart>
+
+</GridPane>

@@ -13,5 +13,7 @@ import ru.student.familyfinance.Model.Plan;
 public interface PlanRepository extends CrudRepository<Plan, Long>{
 
     List<Plan> findByPersonAndDateOfOperation(Person person, LocalDate dateOfOperation);
+    List<Plan> findByPersonAndDateOfOperationBetween(Person person, LocalDate beginPeriod, LocalDate endPeriod);
+
 
 }

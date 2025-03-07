@@ -79,6 +79,27 @@ public class PlanServiceTest {
 
     @Test
     @DisplayName("Получение планируемой суммы дохода за период")
+    public void getPlansSeveralMonthsTest() {
+        Person person = new Person();
+        LocalDate beginDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
+        LocalDate endDate = beginDate.plusMonths(2);
+        List<Plan> list = List.of(new Plan(1, beginDate, person, new Income(), null, null, 200.0),
+                                  new Plan(2, beginDate, person, null, new  Expenses(), null, 100.0),
+                                  new Plan(3, beginDate, person, null, null, new Target(), 100.0),
+                                  new Plan(4, beginDate.plusMonths(1), person, new Income(), null, null, 200.0),
+                                  new Plan(5, beginDate.plusMonths(1), person, null, new Expenses(), null, 100.0),
+                                  new Plan(6, beginDate.plusMonths(1), person, null, null, new Target(), 100.0),
+                                  new Plan(7, beginDate.plusMonths(2), person, new Income(), null, null, 200.0),
+                                  new Plan(8, beginDate.plusMonths(2), person, null, new Expenses(), null, 100.0),
+                                  new Plan(9, beginDate.plusMonths(2), person, null, null, new Target(), 100.0));
+        doReturn(list).when(repository).findByPersonAndDateOfOperationBetween(person, beginDate, endDate.plusDays(endDate.lengthOfMonth() - 1));
+        assertThat(service.getPlansSeveralMonths(person, beginDate,endDate)).isEqualTo(list);
+        Mockito.verify(repository,Mockito.times(1)).findByPersonAndDateOfOperationBetween(person, beginDate, endDate.plusDays(endDate.lengthOfMonth() - 1));
+    }
+
+
+    @Test
+    @DisplayName("Получение планируемой суммы дохода за месяц")
     public void getIncomePlanTest() {
         Person person = new Person();
         LocalDate datePlans = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
