@@ -26,6 +26,9 @@ public class PersonServiceImplementation implements PersonService {
         if (person == null) {
             return false;
         }
+        if (repository.findByUsername(person.getUsername()) != null) {
+            return false;
+        }
         Person result = repository.save(person);
         addReferences(person);
         return person.equals(result);
