@@ -7,6 +7,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.util.*?>
 
 <GridPane alignment="center" hgap="2" vgap="1" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21"
             fx:controller="ru.student.familyfinance_desktop.FXMLController.TargetTableController">
@@ -27,6 +28,7 @@
             <TableColumn fx:id="dateTarget" text="Дата постановки цели" />
             <TableColumn fx:id="summTarget" text="Сумма достижения цели" />
             <TableColumn fx:id="accumTarget" text="Накопленная сумма" />
+            <TableColumn fx:id="progressTarget" text="Прогресс" />
         </columns>
     </TableView>
 

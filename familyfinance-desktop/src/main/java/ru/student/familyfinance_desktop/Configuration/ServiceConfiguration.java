@@ -23,6 +23,4 @@ public class ServiceConfiguration {
         period.setCurrentPeriod(LocalDate.of(date.getYear(), date.getMonthValue(), 1));
         return period;
     }
-
-
 }

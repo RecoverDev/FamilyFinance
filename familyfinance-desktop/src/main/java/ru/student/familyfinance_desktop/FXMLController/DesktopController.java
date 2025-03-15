@@ -1,28 +1,48 @@
 package ru.student.familyfinance_desktop.FXMLController;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
+import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemGrossBook;
+import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemPlan;
 import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
 import ru.student.familyfinance_desktop.Model.Person;
+import ru.student.familyfinance_desktop.Model.WorkPeriod;
+import ru.student.familyfinance_desktop.Service.GrossBookService;
+import ru.student.familyfinance_desktop.Service.PlanService;
 
 @Component
 @FxmlView("DesktopPage.fxml")
 @RequiredArgsConstructor
 public class DesktopController implements Initializable {
     private final Navigator navigator;
+    private final GrossBookService grossBookService;
+    private final PlanService planService;
+
+    @Autowired
+    private ItemGrossBook itemGrossBook;
+
+    @Autowired
+    private ItemPlan itemPlan;
+
+    @Autowired
+    private WorkPeriod currentPeriod;
 
     @Autowired
     private DictionaryController dictionaryController;
@@ -46,6 +66,9 @@ public class DesktopController implements Initializable {
     private Person person;
 
     @FXML
+    private ComboBox<WorkPeriod> comboPeriod;
+
+    @FXML
     private Label userName;
 
     @FXML
@@ -67,6 +90,14 @@ public class DesktopController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         userName.setText(person.getFullName());
 
+        comboPeriod.valueProperty().addListener((observable, oldValue, newValue) -> {
+            currentPeriod.setCurrentPeriod(newValue.getCurrentPeriod());
+            grossBookService.setGrossBooks(currentPeriod.getBeginPeriod(), currentPeriod.getEndPeriod());
+            itemGrossBook.setListGrossBookDTO();
+            planService.setPlans(currentPeriod.getCurrentPeriod());
+            itemPlan.setListPlanDTO();
+        });
+
         Parent dictionaryPage = navigator.loadFxml(dictionaryController);
         dictionary.setContent(dictionaryPage);
 
@@ -80,13 +111,27 @@ public class DesktopController implements Initializable {
         grossBook.setContent(grossBookPage);
 
         Parent statisticPage = navigator.loadFxml(statisticController);
-        statistic.setContent(statisticPage);
+        statistic.setContent(statisticPage); 
 
+        setItemsComboPeriod();
     }
 
     @FXML
     private void settingAction(ActionEvent event) {
         navigator.showModal(settingController, "Свойства пользователя");
         userName.setText(person.getFullName());
+    }
+
+    private void setItemsComboPeriod() {
+        ObservableList<WorkPeriod> listPeriod = FXCollections.observableArrayList();
+
+        for (LocalDate i = currentPeriod.getCurrentPeriod().minusMonths(12); 
+                       i.isBefore(currentPeriod.getCurrentPeriod().plusMonths(12)); 
+                       i = i.plusMonths(1)) {
+            listPeriod.add(new WorkPeriod(i));
+        }
+
+        comboPeriod.setItems(listPeriod);
+        comboPeriod.setValue(currentPeriod);
     }
 }

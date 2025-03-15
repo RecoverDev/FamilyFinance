@@ -20,28 +20,16 @@
     <rowConstraints>
         <RowConstraints vgrow="SOMETIMES"/>
         <RowConstraints vgrow="SOMETIMES"/>
-        <RowConstraints vgrow="SOMETIMES"/>
     </rowConstraints>
 
-    <ComboBox fx:id="comboPeriod" GridPane.columnIndex="0" 
-                                  GridPane.rowIndex="0" 
-                                  GridPane.columnSpan="2" 
-                                  GridPane.halignment="RIGHT" 
-                                  prefWidth="300"
-                                  onAction="#reloadPlan">
-        <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="0.0" />
-        </GridPane.margin>
-    </ComboBox>
-
-    <TableView fx:id="planTable" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER">
+    <TableView fx:id="planTable" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER">
         <columns>
             <TableColumn fx:id="namePlan" text="Наименование пункта плана" />
             <TableColumn fx:id="summPlan" text="Сумма" />
         </columns>
     </TableView>
 
-    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT">
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT">
         <Label text="Доходы: " >
             <HBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -84,7 +72,7 @@
         </Label>
     </HBox>
 
-    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
 
         <Button fx:id="addIncomeButton" onAction="#addIncomeAction" text="" >
             <VBox.margin>

@@ -20,7 +20,7 @@ public class WorkPeriod {
     }
 
     public LocalDate getEndPeriod() {
-        return LocalDate.of(currentPeriod.getYear(), currentPeriod.getMonthValue(), currentPeriod.getMonth().maxLength());
+        return LocalDate.of(currentPeriod.getYear(), currentPeriod.getMonthValue(), currentPeriod.lengthOfMonth());
     }
 
     public boolean isInclude(LocalDate date) {

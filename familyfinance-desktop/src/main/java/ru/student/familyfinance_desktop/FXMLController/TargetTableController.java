@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
@@ -31,7 +32,7 @@ import ru.student.familyfinance_desktop.Service.TargetService;
 @Component
 @FxmlView("TargetTablePage.fxml")
 @RequiredArgsConstructor
-public class TargetTableController implements Initializable{
+public class TargetTableController implements Initializable {
     private final TargetService service;
     private final TargetMapper mapper;
 
@@ -57,6 +58,9 @@ public class TargetTableController implements Initializable{
     private TableColumn<TargetDTO, Double> accumTarget;
 
     @FXML
+    private TableColumn<TargetDTO, Double> progressTarget;
+
+    @FXML
     private Button addTargetButton;
 
     @FXML
@@ -68,6 +72,23 @@ public class TargetTableController implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         targetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
+        progressTarget.setCellFactory(param -> new TableCell<TargetDTO, Double>() {
+            private final TargetPercentCell cell = new TargetPercentCell();
+
+            @Override
+            protected void updateItem(Double value, boolean empty) {
+                super.updateItem(value, empty);
+                if (value == null || empty) {
+                    setGraphic(null);
+                } else {
+                    cell.setPercent(value);
+                    setGraphic(cell);
+                }
+            }
+        });
+
+        service.setTargets();
         setItemsToTargetTable();
     }
 
@@ -127,6 +148,7 @@ public class TargetTableController implements Initializable{
         dateTarget.setCellValueFactory(new PropertyValueFactory<>("settingDate"));
         summTarget.setCellValueFactory(new PropertyValueFactory<>("summ"));
         accumTarget.setCellValueFactory(new PropertyValueFactory<>("accumulateSumm"));
+        progressTarget.setCellValueFactory(new PropertyValueFactory<TargetDTO, Double>("percent"));
 
         targetTable.setItems(data);
     }

@@ -4,9 +4,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javafx.collections.FXCollections;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,11 +24,14 @@ import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.DTO.ExpensesDTO;
 import ru.student.familyfinance_desktop.DTO.IncomeDTO;
+import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemExpenses;
+import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemIncome;
 import ru.student.familyfinance_desktop.Mapper.ExpensesMapper;
 import ru.student.familyfinance_desktop.Mapper.IncomeMapper;
 import ru.student.familyfinance_desktop.Model.Expenses;
 import ru.student.familyfinance_desktop.Model.Income;
 import ru.student.familyfinance_desktop.Service.ExpensesService;
+import ru.student.familyfinance_desktop.Service.ExpensesTypeService;
 import ru.student.familyfinance_desktop.Service.IncomeService;
 
 @Component
@@ -38,11 +42,18 @@ public class DictionaryController implements Initializable {
     private final IncomeMapper incomeMapper;
     private final IncomeController incomeController;
 
+    private final ExpensesTypeService expensesTypeService;
     private final ExpensesMapper expensesMapper;
     private final ExpensesService expensesService;
     private final ExpensesController expensesController;
 
     private final Navigator navigator;
+
+    @Autowired
+    private ItemIncome itemIncome;
+
+    @Autowired
+    private ItemExpenses itemExpenses;
 
     @FXML
     private TableView<IncomeDTO> incomeTable;
@@ -82,6 +93,16 @@ public class DictionaryController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         incomeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         expensesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
+        incomeService.setIncomes();
+        itemIncome.setListIncome();
+        incomeTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<IncomeDTO>>(itemIncome.getListIncome()));
+
+        expensesTypeService.setExpensesTypes();
+        expensesService.setExpenses();
+        itemExpenses.setListExpensesDTO();
+        expensesTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<ExpensesDTO>>(itemExpenses.getLiExpensesDTO()));
+
         setItemsToIncomeTable();
         setItemsToExpensesTable();
     }
@@ -94,7 +115,7 @@ public class DictionaryController implements Initializable {
         if (incomeController.isOkFlag()) {
             incomeService.addIncome(income);
         }
-        setItemsToIncomeTable();
+        itemIncome.setListIncome();
     }
 
     @FXML
@@ -114,7 +135,7 @@ public class DictionaryController implements Initializable {
 
         if (response == ButtonType.OK){
             if (incomeService.deleteIncomeById(income.getId())) {
-                setItemsToIncomeTable();
+                itemIncome.setListIncome();
             }
         }
     }
@@ -131,8 +152,8 @@ public class DictionaryController implements Initializable {
         navigator.showModal(incomeController, "Семейный бюджет. Редактирование " + income.getName());
         if (incomeController.isOkFlag()) {
             incomeService.editIncome(income);
+            itemIncome.setListIncome();
         }
-        setItemsToIncomeTable();
     }
 
     @FXML
@@ -142,7 +163,7 @@ public class DictionaryController implements Initializable {
         navigator.showModal(expensesController, "Семейный бюджет. Добавление нового вида расходов");
         if (expensesController.isOkFlag()) {
             expensesService.addExpenses(expenses);
-            setItemsToExpensesTable();
+            itemExpenses.setListExpensesDTO();
         }
     }
 
@@ -158,7 +179,7 @@ public class DictionaryController implements Initializable {
         navigator.showModal(expensesController, "Семейный бюджет. Редактирование " + expenses.getName());
         if (expensesController.isOkFlag()) {
             expensesService.editExpenses(expenses);
-            setItemsToExpensesTable();
+            itemExpenses.setListExpensesDTO();
         }
     }
 
@@ -179,25 +200,17 @@ public class DictionaryController implements Initializable {
 
         if (response == ButtonType.OK){
             if (expensesService.deleteExpensesById(expenses.getId())) {
-                setItemsToExpensesTable();
+                itemExpenses.setListExpensesDTO();
             }
         }
     }
 
     private void setItemsToIncomeTable() {
-        ObservableList<IncomeDTO> data = FXCollections.observableArrayList(incomeMapper.toListIncomeDTO(incomeService.getIncomes()));
-
         nameIncome.setCellValueFactory(new PropertyValueFactory<>("name"));
-        incomeTable.setItems(data);
     }
 
     private void setItemsToExpensesTable() {
-        ObservableList<ExpensesDTO> data = FXCollections.observableArrayList(expensesMapper.toListExpensesDTO(expensesService.getExpenses()));
-
         nameExpenses.setCellValueFactory(new PropertyValueFactory<>("name"));
         typeExpenses.setCellValueFactory(new PropertyValueFactory<>("expensesType_name"));
-
-        expensesTable.setItems(data);
     }
-
 }

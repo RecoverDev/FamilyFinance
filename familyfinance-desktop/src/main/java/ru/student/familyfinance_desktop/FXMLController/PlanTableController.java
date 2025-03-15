@@ -1,15 +1,14 @@
 package ru.student.familyfinance_desktop.FXMLController;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javafx.collections.FXCollections;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -28,9 +26,9 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.DTO.PlanDTO;
+import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemPlan;
 import ru.student.familyfinance_desktop.Mapper.PlanMapper;
 import ru.student.familyfinance_desktop.Model.Plan;
-import ru.student.familyfinance_desktop.Model.WorkPeriod;
 import ru.student.familyfinance_desktop.Service.PlanService;
 
 @Controller
@@ -43,10 +41,7 @@ public class PlanTableController implements Initializable {
     private final Navigator navigator;
 
     @Autowired
-    private WorkPeriod currentPeriod;
-
-    @FXML
-    private ComboBox<WorkPeriod> comboPeriod;
+    private ItemPlan itemPlan;
 
     @FXML
     private TableView<PlanDTO> planTable;
@@ -71,6 +66,9 @@ public class PlanTableController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        planTable.itemsProperty()
+                 .bind(new SimpleObjectProperty<ObservableList<PlanDTO>>(itemPlan.getListPlanDTO()));
+
         planTable.setRowFactory(planTable -> new TableRow<>() {
             @Override
             protected void updateItem(PlanDTO item, boolean empty) {
@@ -85,8 +83,20 @@ public class PlanTableController implements Initializable {
             }
         });
 
+        itemPlan.getListPlanDTO().addListener(new ListChangeListener<PlanDTO>() {
+            @Override
+            public void onChanged(Change<? extends PlanDTO> c) {
+                double calcIncome = c.getList().stream().filter(l -> l.getType() == 1).mapToDouble(i -> i.getSumm()).sum();
+                summIncome.setText(String.format("%.2f р", calcIncome));
+                double calcExpenses = c.getList().stream().filter(l -> l.getType() == 2).mapToDouble(i -> i.getSumm()).sum();
+                summExpenses.setText(String.format("%.2f р", calcExpenses));
+                double calcTarget = c.getList().stream().filter(l -> l.getType() == 3).mapToDouble(i -> i.getSumm()).sum();
+                summTarget.setText(String.format("%.2f р", calcTarget));
+                summRemaider.setText(String.format("%.2f р", calcIncome - calcExpenses - calcTarget));
+            }
+        });
+
         planTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-        setItemsComboPeriod();
         setItemsPlanTable();
     }
 
@@ -113,7 +123,7 @@ public class PlanTableController implements Initializable {
 
         if (planController.isOkFlag()) {
             service.addPlan(planController.getPlan());
-            setItemsPlanTable();
+            itemPlan.setListPlanDTO();
         }
     }
 
@@ -132,7 +142,7 @@ public class PlanTableController implements Initializable {
 
         if (planController.isOkFlag()) {
             service.editPlan(planController.getPlan());
-            setItemsPlanTable();
+            itemPlan.setListPlanDTO();;
         }
     }
 
@@ -153,51 +163,13 @@ public class PlanTableController implements Initializable {
 
         if (response == ButtonType.OK){
             service.deletePlanById(selectionModel.getSelectedItem().getId());
-            setItemsPlanTable();
+            itemPlan.setListPlanDTO();
         }
-    }
-
-    @FXML
-    private void reloadPlan(ActionEvent event) {
-        LocalDate date = comboPeriod.getValue().getCurrentPeriod();
-        currentPeriod.setCurrentPeriod(date);
-        service.setPlans(date);
-        setItemsPlanTable();
-    }
-
-    private void setItemsComboPeriod() {
-        ObservableList<WorkPeriod> listPeriod = FXCollections.observableArrayList();
-
-        for (LocalDate i = currentPeriod.getCurrentPeriod().minusMonths(12); 
-                       i.isBefore(currentPeriod.getCurrentPeriod().plusMonths(12)); 
-                       i = i.plusMonths(1)) {
-            listPeriod.add(new WorkPeriod(i));
-        }
-
-        comboPeriod.setItems(listPeriod);
-        comboPeriod.setValue(currentPeriod);
     }
 
     private void setItemsPlanTable() {
-        List<Plan> listPlan = service.getPlans();
-        ObservableList<PlanDTO> listPlanDTO = FXCollections.observableArrayList(mapper.toListPlanDTO(listPlan));
 
         namePlan.setCellValueFactory(new PropertyValueFactory<>("description"));
         summPlan.setCellValueFactory(new PropertyValueFactory<>("summ"));
-
-        planTable.setItems(listPlanDTO);
-        calculateSumm(listPlanDTO);
     }
-
-    private void calculateSumm(List<PlanDTO> list) {
-        Double incomeResult = list.stream().filter(l -> l.getType() == 1).mapToDouble(i -> i.getSumm()).sum();
-        Double expensesResult = list.stream().filter(l -> l.getType() == 2).mapToDouble(i -> i.getSumm()).sum();
-        Double targetResult = list.stream().filter(l -> l.getType() == 3).mapToDouble(i -> i.getSumm()).sum();
-
-        summIncome.setText(Double.toString(incomeResult));
-        summExpenses.setText(Double.toString(expensesResult));
-        summTarget.setText(Double.toString(targetResult));
-        summRemaider.setText(Double.toString(incomeResult - expensesResult - targetResult));
-    }
-
 }

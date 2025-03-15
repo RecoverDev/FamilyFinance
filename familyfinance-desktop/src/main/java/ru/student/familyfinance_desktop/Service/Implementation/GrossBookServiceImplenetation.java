@@ -3,11 +3,13 @@ package ru.student.familyfinance_desktop.Service.Implementation;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.Model.GrossBook;
 import ru.student.familyfinance_desktop.Model.Target;
+import ru.student.familyfinance_desktop.Model.WorkPeriod;
 import ru.student.familyfinance_desktop.Repository.Repository;
 import ru.student.familyfinance_desktop.RestController.GrossBookRestController;
 import ru.student.familyfinance_desktop.Service.GrossBookService;
@@ -17,6 +19,9 @@ import ru.student.familyfinance_desktop.Service.GrossBookService;
 public class GrossBookServiceImplenetation implements GrossBookService {
     private final Repository<GrossBook> repository;
     private final GrossBookRestController controller;
+
+    @Autowired
+    WorkPeriod cuWorkPeriod;
 
 
     @Override
@@ -44,7 +49,10 @@ public class GrossBookServiceImplenetation implements GrossBookService {
         if (response == null) {
             return false;
         }
-        return repository.addItem(response);
+        if (cuWorkPeriod.isInclude(response.getDateOfOperation())) {
+            return repository.addItem(response);
+        }
+        return true;
     }
 
     @Override

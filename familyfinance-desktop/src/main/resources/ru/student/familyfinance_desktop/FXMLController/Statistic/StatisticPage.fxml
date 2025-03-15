@@ -26,7 +26,7 @@
     <ListView fx:id="listChart" 
               GridPane.columnIndex="0" 
               GridPane.rowIndex="0" 
-              GridPane.halignment="CENTER" 
+              GridPane.halignment="LEFT" 
               maxWidth="250">
         <items>
             <FXCollections fx:factory="observableArrayList">

@@ -31,6 +31,7 @@ public abstract class TargetMapper {
 
     @Mapping(target = "accumulateSumm", expression = "java(getCalculateAccumulateSumm(target))")
     @Mapping(target = "settingDate", expression = "java(dateToString(target))")
+    @Mapping(target = "percent", ignore = true)
     public abstract TargetDTO toTargetDTO(Target target);
 
     public abstract List<TargetDTO> toListTargetDTO(List<Target> targets);
