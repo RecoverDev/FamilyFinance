@@ -3,6 +3,9 @@ package ru.student.familyfinance_desktop.Service;
 import java.time.LocalDate;
 import java.util.Map;
 
+import javafx.util.Pair;
+import ru.student.familyfinance_desktop.Model.Expenses;
+
 /**
  * Сервис по расчету статистик
  */
@@ -32,4 +35,12 @@ public interface StatisticService {
      * @return - список данных
      */
     Map<String, Map<String, Double>> getBudget(LocalDate period);
+
+    /**
+     * Возвращает данные для визуализации выполнения графика расходов
+     * @param flag - разделять по видам расходов
+     * @param period - период, за который рассчитывается статистика
+     * @return - Map<String,Map<LocalDate, Pair<Double, Double>>> (дата окончания недели, потраченная сумма, максимально возможная сумма)
+     */
+    Map<String,Map<LocalDate, Pair<Double, Double>>> getExpensesShedule(LocalDate period, boolean flag);
 }

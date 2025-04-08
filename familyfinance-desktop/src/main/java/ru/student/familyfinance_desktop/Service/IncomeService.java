@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import ru.student.familyfinance_desktop.Model.Income;
@@ -48,4 +49,9 @@ public interface IncomeService {
      */
     boolean editIncome(Income income);
 
+    /**
+     * Установить слушателя на изменение репозотория IncomeRepository
+     * @param listener
+     */
+    void setRepositoryListener(PropertyChangeListener listener);
 }

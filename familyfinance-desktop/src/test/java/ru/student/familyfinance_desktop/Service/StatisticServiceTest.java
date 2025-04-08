@@ -16,15 +16,17 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javafx.util.Pair;
 import ru.student.familyfinance_desktop.Model.Expenses;
 import ru.student.familyfinance_desktop.Model.GrossBook;
 import ru.student.familyfinance_desktop.Model.Income;
 import ru.student.familyfinance_desktop.Model.Plan;
 import ru.student.familyfinance_desktop.Model.Target;
-import ru.student.familyfinance_desktop.Repository.IncomeRepository;
 import ru.student.familyfinance_desktop.Repository.Repository;
 import ru.student.familyfinance_desktop.Repository.Implementation.ExpensesRepositoryImplementation;
+import ru.student.familyfinance_desktop.Repository.Implementation.GrossBookRepositoryImplementation;
 import ru.student.familyfinance_desktop.Repository.Implementation.IncomeRepositoryImplementation;
+import ru.student.familyfinance_desktop.Repository.Implementation.PlanRepositoryImplementation;
 import ru.student.familyfinance_desktop.Repository.Implementation.TargetRepositoryImplementation;
 import ru.student.familyfinance_desktop.RestController.GrossBookRestController;
 import ru.student.familyfinance_desktop.RestController.PlanRestController;
@@ -32,22 +34,24 @@ import ru.student.familyfinance_desktop.Service.Implementation.StatisticServiceI
 
 @ExtendWith(MockitoExtension.class)
 public class StatisticServiceTest {
-    private IncomeRepository incomeRepository = new IncomeRepositoryImplementation();
+    private Repository<Income> incomeRepository = new IncomeRepositoryImplementation();
     private Repository<Expenses> expensesRepository = new ExpensesRepositoryImplementation();
     private Repository<Target> targetRepository = new TargetRepositoryImplementation();
+    private Repository<Plan> planRepository = new PlanRepositoryImplementation();
+    private Repository<GrossBook> grossbookRepository = new GrossBookRepositoryImplementation();
 
     @Mock
     private GrossBookRestController grossBookController;
 
     @Mock
     private PlanRestController planController;
-    
+
     private StatisticService service;
 
     @BeforeEach
     private void init() {
         MockitoAnnotations.openMocks(this);
-        service = new StatisticServiceImplementation(grossBookController, planController, incomeRepository, expensesRepository, targetRepository);
+        service = new StatisticServiceImplementation(grossBookController, planController, incomeRepository, expensesRepository, targetRepository, planRepository, grossbookRepository);
         getListIncome();
         getListExpenses();
         getListTargets();
@@ -137,11 +141,29 @@ public class StatisticServiceTest {
         Mockito.verify(planController, Mockito.times(1)).getPlansSeveralMonth(begin, end);
     }
 
+    @Test
+    @DisplayName("График расходов")
+    public void ExpensesSheduleTest() {
+        grossbookRepository.setCollection(getListGrossBook());
+        planRepository.setCollection(getListPlans());
+        LocalDate date = LocalDate.of(2025, 2, 1);
+        Map<LocalDate, Pair<Double, Double>> progress = Map.ofEntries(Map.entry(LocalDate.of(2025,2,8), new Pair<Double, Double>(800.0,800.0)),
+                                                                    Map.entry(LocalDate.of(2025,2,15), new Pair<Double, Double>(0.0,0.0)),
+                                                                    Map.entry(LocalDate.of(2025,2,22), new Pair<Double, Double>(0.0,0.0)),
+                                                                    Map.entry(LocalDate.of(2025,2,28), new Pair<Double, Double>(0.0,0.0)));
+        
+        Map<String,Map<LocalDate, Pair<Double, Double>>> result = Map.ofEntries(Map.entry("Расходы", progress));
+        Map<String,Map<LocalDate, Pair<Double, Double>>> response = service.getExpensesShedule(date, false);
+
+        assertThat(response).isEqualTo(result);
+        
+    }
+
     private void getListIncome() {
         List.of(new Income(1, 1, "Заработная плата"),
                        new Income(2, 1, "Пенсия"),
                        new Income(3, 1, "Процент от вкладов"))
-        .forEach(i -> incomeRepository.addIncome(i));
+        .forEach(i -> incomeRepository.addItem(i));
     }
 
     private void getListExpenses() {

@@ -67,6 +67,8 @@ public class GrossBookTableController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        service.setRepositoryListener((event) -> itemGrossBook.setListGrossBookDTO());
+
         grossBookTable.itemsProperty()
                       .bindBidirectional(new SimpleObjectProperty<ObservableList<GrossBookDTO>>(itemGrossBook.getListGrossBookDTO()));
 
@@ -130,7 +132,6 @@ public class GrossBookTableController implements Initializable{
 
         if (grossBookController.isOkFlag()) {
             service.editGrossBook(grossBookController.getGrossBook());
-            itemGrossBook.setListGrossBookDTO();
         }
     }
 
@@ -151,7 +152,6 @@ public class GrossBookTableController implements Initializable{
 
         if (response == ButtonType.OK){
             service.deleteGrossBookById(selectionModel.getSelectedItem().getId());
-            itemGrossBook.setListGrossBookDTO();
         }
     }
 
@@ -163,7 +163,6 @@ public class GrossBookTableController implements Initializable{
 
         if (grossBookController.isOkFlag()) {
             service.addGrossBook(grossBookController.getGrossBook());
-            itemGrossBook.setListGrossBookDTO();
         }
     }
 

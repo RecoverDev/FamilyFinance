@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service.Implementation;
 
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -78,6 +79,11 @@ public class GrossBookServiceImplenetation implements GrossBookService {
     @Override
     public List<GrossBook> getGrossBookByScroll(List<Target> targets) {
         return controller.getGrossBookByScroll(targets);
+    }
+
+    @Override
+    public void setRepositoryListener(PropertyChangeListener listener) {
+        repository.addListener(listener);
     }
 
 }

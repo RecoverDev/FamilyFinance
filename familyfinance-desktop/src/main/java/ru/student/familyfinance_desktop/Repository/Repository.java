@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Repository;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 /**
@@ -46,5 +47,11 @@ public interface Repository<T> {
      * @return - true - успех/false - неудача
      */
     boolean deleteItemById(long id);
+
+    /**
+     * Установить слушателя на изменение репозотория
+     * @param listener
+     */
+    void addListener(PropertyChangeListener listener);
 
 }

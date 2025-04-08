@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service;
 
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,5 +50,11 @@ public interface PlanService {
      * @return - true - успех/false - неудача
      */
     boolean deletePlanById(long id);
+
+    /**
+     * Установить слушателя на изменение репозотория PlanReporitory
+     * @param listener
+     */
+    void setRepositoryListener(PropertyChangeListener listener);
 
 }

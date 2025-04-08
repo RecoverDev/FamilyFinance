@@ -94,14 +94,14 @@ public class DictionaryController implements Initializable {
         incomeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         expensesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        incomeService.setIncomes();
-        itemIncome.setListIncome();
+        incomeService.setRepositoryListener((event) -> itemIncome.setListIncome());
         incomeTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<IncomeDTO>>(itemIncome.getListIncome()));
+        incomeService.setIncomes();
 
         expensesTypeService.setExpensesTypes();
-        expensesService.setExpenses();
-        itemExpenses.setListExpensesDTO();
+        expensesService.setRepositoryListener((event) -> itemExpenses.setListExpensesDTO());
         expensesTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<ExpensesDTO>>(itemExpenses.getLiExpensesDTO()));
+        expensesService.setExpenses();
 
         setItemsToIncomeTable();
         setItemsToExpensesTable();
@@ -115,7 +115,6 @@ public class DictionaryController implements Initializable {
         if (incomeController.isOkFlag()) {
             incomeService.addIncome(income);
         }
-        itemIncome.setListIncome();
     }
 
     @FXML
@@ -134,9 +133,7 @@ public class DictionaryController implements Initializable {
         ButtonType response = result.get();
 
         if (response == ButtonType.OK){
-            if (incomeService.deleteIncomeById(income.getId())) {
-                itemIncome.setListIncome();
-            }
+            incomeService.deleteIncomeById(income.getId());
         }
     }
 
@@ -152,7 +149,6 @@ public class DictionaryController implements Initializable {
         navigator.showModal(incomeController, "Семейный бюджет. Редактирование " + income.getName());
         if (incomeController.isOkFlag()) {
             incomeService.editIncome(income);
-            itemIncome.setListIncome();
         }
     }
 
@@ -163,7 +159,6 @@ public class DictionaryController implements Initializable {
         navigator.showModal(expensesController, "Семейный бюджет. Добавление нового вида расходов");
         if (expensesController.isOkFlag()) {
             expensesService.addExpenses(expenses);
-            itemExpenses.setListExpensesDTO();
         }
     }
 
@@ -179,7 +174,6 @@ public class DictionaryController implements Initializable {
         navigator.showModal(expensesController, "Семейный бюджет. Редактирование " + expenses.getName());
         if (expensesController.isOkFlag()) {
             expensesService.editExpenses(expenses);
-            itemExpenses.setListExpensesDTO();
         }
     }
 
@@ -199,9 +193,7 @@ public class DictionaryController implements Initializable {
         ButtonType response = result.get();
 
         if (response == ButtonType.OK){
-            if (expensesService.deleteExpensesById(expenses.getId())) {
-                itemExpenses.setListExpensesDTO();
-            }
+            expensesService.deleteExpensesById(expenses.getId());
         }
     }
 

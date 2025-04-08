@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import ru.student.familyfinance_desktop.Model.Expenses;
@@ -48,4 +49,9 @@ public interface ExpensesService {
      */
     boolean deleteExpensesById(long id);
 
+    /**
+     * Установить слушателя на изменение репозотория ExpensesReporitory
+     * @param listener
+     */
+    void setRepositoryListener(PropertyChangeListener listener);
 }

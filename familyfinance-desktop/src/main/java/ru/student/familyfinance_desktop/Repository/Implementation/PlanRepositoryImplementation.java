@@ -1,5 +1,7 @@
 package ru.student.familyfinance_desktop.Repository.Implementation;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,19 @@ import ru.student.familyfinance_desktop.Repository.Repository;
 @Component
 public class PlanRepositoryImplementation implements Repository<Plan> {
     private List<Plan> collection = new ArrayList<>();
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @Override
+    public void addListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
 
     @Override
     public void setCollection(List<Plan> collection) {
+        List<Plan> oldValue = List.copyOf(this.collection);
         this.collection.removeAll(this.collection);
         this.collection.addAll(collection);
+        pcs.firePropertyChange("collection", oldValue, this.collection);
     }
 
     @Override
@@ -31,7 +41,10 @@ public class PlanRepositoryImplementation implements Repository<Plan> {
 
     @Override
     public boolean addItem(Plan item) {
-        return this.collection.add(item);
+        List<Plan> oldValue = List.copyOf(this.collection);
+        boolean result = this.collection.add(item);
+        pcs.firePropertyChange("collection", oldValue, this.collection);
+        return result;
     }
 
     @Override
@@ -41,12 +54,17 @@ public class PlanRepositoryImplementation implements Repository<Plan> {
         if (plan != null) {
             index = this.collection.indexOf(plan);
         }
-        return this.collection.set(index, item).equals(plan);
+        List<Plan> oldValue = List.copyOf(this.collection);
+        boolean isEqual =  this.collection.set(index, item).equals(plan);
+        pcs.firePropertyChange("collection", oldValue, this.collection);
+        return isEqual;
     }
 
     @Override
     public boolean deleteItemById(long id) {
-        return this.collection.removeIf(plan -> plan.getId() == id);
+        List<Plan> oldValue = List.copyOf(this.collection);
+        boolean result = this.collection.removeIf(plan -> plan.getId() == id);
+        pcs.firePropertyChange("collection", oldValue, this.collection);
+        return result;
     }
-
 }

@@ -33,8 +33,7 @@
                 <String fx:value="Статистика доходов"/>
                 <String fx:value="Статистика расходов"/>
                 <String fx:value="Исполнение бюджета"/>
-                <String fx:value="Four"/>
-                <String fx:value="Five"/>
+                <String fx:value="График расходов"/>
             </FXCollections>
         </items>
     </ListView>

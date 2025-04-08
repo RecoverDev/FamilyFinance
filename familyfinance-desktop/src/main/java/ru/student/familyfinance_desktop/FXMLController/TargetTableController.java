@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javafx.collections.FXCollections;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.DTO.TargetDTO;
+import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemTarget;
 import ru.student.familyfinance_desktop.Mapper.TargetMapper;
 import ru.student.familyfinance_desktop.Model.Target;
 import ru.student.familyfinance_desktop.Service.TargetService;
@@ -35,6 +36,7 @@ import ru.student.familyfinance_desktop.Service.TargetService;
 public class TargetTableController implements Initializable {
     private final TargetService service;
     private final TargetMapper mapper;
+    private final ItemTarget itemTarget;
 
     @Autowired
     private TargetController targetController;
@@ -73,6 +75,10 @@ public class TargetTableController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         targetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
+        service.setRepositoryListener((event) -> itemTarget.setListTargetDTO());
+        targetTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<TargetDTO>>(itemTarget.getListTargetDTO()));
+        service.setTargets();
+
         progressTarget.setCellFactory(param -> new TableCell<TargetDTO, Double>() {
             private final TargetPercentCell cell = new TargetPercentCell();
 
@@ -88,7 +94,6 @@ public class TargetTableController implements Initializable {
             }
         });
 
-        service.setTargets();
         setItemsToTargetTable();
     }
 
@@ -100,7 +105,6 @@ public class TargetTableController implements Initializable {
         navigator.showModal(targetController, "Семейный бюджет. Новая цель");
         if (targetController.isOkFlag()) {
             service.addTarget(targetController.getTarget());
-            setItemsToTargetTable();
         }
     }
 
@@ -116,7 +120,6 @@ public class TargetTableController implements Initializable {
         navigator.showModal(targetController, "Семейный бюджет. редактирование цели: " + target.getName());
         if (targetController.isOkFlag()) {
             service.editTarget(targetController.getTarget());
-            setItemsToTargetTable();
         }
     }
 
@@ -135,22 +138,16 @@ public class TargetTableController implements Initializable {
         ButtonType response = result.get();
 
         if (response == ButtonType.OK){
-            if (service.deleteTargetById(selectionModel.getSelectedItem().getId())) {
-                setItemsToTargetTable();
-            }
+            service.deleteTargetById(selectionModel.getSelectedItem().getId());
         }
     }
 
     private void setItemsToTargetTable() {
-        ObservableList<TargetDTO> data = FXCollections.observableArrayList(mapper.toListTargetDTO(service.getTargets()));
-
         nameTarget.setCellValueFactory(new PropertyValueFactory<>("name"));
         dateTarget.setCellValueFactory(new PropertyValueFactory<>("settingDate"));
         summTarget.setCellValueFactory(new PropertyValueFactory<>("summ"));
         accumTarget.setCellValueFactory(new PropertyValueFactory<>("accumulateSumm"));
         progressTarget.setCellValueFactory(new PropertyValueFactory<TargetDTO, Double>("percent"));
-
-        targetTable.setItems(data);
     }
 
 }

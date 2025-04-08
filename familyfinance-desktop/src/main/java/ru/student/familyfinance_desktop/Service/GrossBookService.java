@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service;
 
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -58,5 +59,11 @@ public interface GrossBookService {
      * @return - список записей List<GrossBook>
      */
     List<GrossBook> getGrossBookByScroll(List<Target> targets);
+
+    /**
+     * Установить слушателя на изменение репозотория GrossBookReporitory
+     * @param listener
+     */
+    void setRepositoryListener(PropertyChangeListener listener);
 
 }

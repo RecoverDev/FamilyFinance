@@ -66,6 +66,8 @@ public class PlanTableController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        service.setRepositoryListener((event) -> itemPlan.setListPlanDTO());
+
         planTable.itemsProperty()
                  .bind(new SimpleObjectProperty<ObservableList<PlanDTO>>(itemPlan.getListPlanDTO()));
 
@@ -123,7 +125,6 @@ public class PlanTableController implements Initializable {
 
         if (planController.isOkFlag()) {
             service.addPlan(planController.getPlan());
-            itemPlan.setListPlanDTO();
         }
     }
 
@@ -142,7 +143,6 @@ public class PlanTableController implements Initializable {
 
         if (planController.isOkFlag()) {
             service.editPlan(planController.getPlan());
-            itemPlan.setListPlanDTO();;
         }
     }
 
@@ -163,7 +163,6 @@ public class PlanTableController implements Initializable {
 
         if (response == ButtonType.OK){
             service.deletePlanById(selectionModel.getSelectedItem().getId());
-            itemPlan.setListPlanDTO();
         }
     }
 

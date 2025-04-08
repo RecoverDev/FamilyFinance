@@ -19,8 +19,6 @@ import javafx.scene.control.TitledPane;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
-import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemGrossBook;
-import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemPlan;
 import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
 import ru.student.familyfinance_desktop.Model.Person;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;
@@ -34,12 +32,6 @@ public class DesktopController implements Initializable {
     private final Navigator navigator;
     private final GrossBookService grossBookService;
     private final PlanService planService;
-
-    @Autowired
-    private ItemGrossBook itemGrossBook;
-
-    @Autowired
-    private ItemPlan itemPlan;
 
     @Autowired
     private WorkPeriod currentPeriod;
@@ -93,9 +85,7 @@ public class DesktopController implements Initializable {
         comboPeriod.valueProperty().addListener((observable, oldValue, newValue) -> {
             currentPeriod.setCurrentPeriod(newValue.getCurrentPeriod());
             grossBookService.setGrossBooks(currentPeriod.getBeginPeriod(), currentPeriod.getEndPeriod());
-            itemGrossBook.setListGrossBookDTO();
             planService.setPlans(currentPeriod.getCurrentPeriod());
-            itemPlan.setListPlanDTO();
         });
 
         Parent dictionaryPage = navigator.loadFxml(dictionaryController);

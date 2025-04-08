@@ -31,6 +31,9 @@ public class StatisticController implements Initializable {
     @Autowired
     private ExecutionPlanController executionPlanController;
 
+    @Autowired
+    private GraphicExpensesController graphicExpensesController;
+
     @FXML
     private ListView<String> listChart;
 
@@ -60,9 +63,12 @@ public class StatisticController implements Initializable {
                     container.getChildren().removeAll(container.getChildren());
                     container.getChildren().add(stExecutionPlan);
                 }
+                case "График расходов" -> {
+                    Parent stGraphicExpenses = navigator.loadFxml(graphicExpensesController);
+                    container.getChildren().removeAll(container.getChildren());
+                    container.getChildren().add(stGraphicExpenses);
+                }
             }
         });
-
     }
-
 }

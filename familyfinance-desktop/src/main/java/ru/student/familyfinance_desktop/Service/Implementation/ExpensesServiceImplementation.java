@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service.Implementation;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -61,4 +62,8 @@ public class ExpensesServiceImplementation implements ExpensesService {
         return false;
     }
 
+    @Override
+    public void setRepositoryListener(PropertyChangeListener listener) {
+        repository.addListener(listener);
+    }
 }

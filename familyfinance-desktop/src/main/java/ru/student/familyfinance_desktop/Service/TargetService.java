@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import ru.student.familyfinance_desktop.Model.Target;
@@ -47,5 +48,12 @@ public interface TargetService {
      * @return - true - успех/false - неудача
      */
     boolean deleteTargetById(long id);
+
+    /**
+     * Установить слушателя на изменение репозотория TargetReporitory
+     * @param listener
+     */
+    void setRepositoryListener(PropertyChangeListener listener);
+    
 
 }
