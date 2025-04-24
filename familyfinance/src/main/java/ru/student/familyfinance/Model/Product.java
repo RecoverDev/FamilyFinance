@@ -1,7 +1,5 @@
 package ru.student.familyfinance.Model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Класс описывает цели семьи для сбережения средств
+ * Класс описывает товар, который необходимо купить
  */
 @Setter
 @Getter
@@ -22,30 +20,26 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Target implements Subject{
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     /**
-     * Пользователь, которому принадлежит запись
+     * Наименование товара
+     */
+    String name;
+
+    /**
+     * Полльзователь, которому принадлежит товар
      */
     @OneToOne
     Person person;
-    /**
-     * Наименование цели
-     */
-    String name;
-    /**
-     * Сумма, необходимая для достижения цели
-     */
-    double summ;
 
     /**
-     * Дата установки цели
+     * Вид расходов
      */
-    LocalDate settingDate;
-
-
+    @OneToOne
+    Expenses expenses;
 }

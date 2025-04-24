@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import javafx.util.Pair;
-import ru.student.familyfinance_desktop.Model.Expenses;
 
 /**
  * Сервис по расчету статистик
