@@ -61,7 +61,8 @@ public class BasketServiceImplementation implements BasketService {
     @Override
     public boolean makePurchase(Person person, List<Pair<Basket, Double>> purchase) {
 
-        Map<Expenses,Double> expenses = purchase.stream().collect(Collectors.groupingBy(p -> p.getFirst().getProduct().getExpenses(),HashMap::new,Collectors.summingDouble(p -> p.getSecond())));
+        Map<Expenses,Double> expenses = purchase.stream()
+                                                .collect(Collectors.groupingBy(p -> p.getFirst().getProduct().getExpenses(),HashMap::new,Collectors.summingDouble(p -> p.getSecond())));
 
         for (Map.Entry<Expenses,Double> entry : expenses.entrySet()) {
             GrossBook grossBook = new GrossBook(0, LocalDate.now(), person, null, entry.getKey(), null, entry.getValue());
