@@ -1,0 +1,47 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+   <changeSet id="2.0" author="recover">
+     <createTable schemaName="public" tableName="product" remark = "Товары которые покупает пользователь">
+         <column name="id" type="BIGINT" autoIncrement="true" >
+            <constraints primaryKey="true" primaryKeyName="target_pkey"/>
+         </column>
+         <column name="name" type="VARCHAR(255)"/>
+         <column name="person_id" type="BIGINT">
+            <constraints foreignKeyName="product_person_id_person_id" references="person(id)" deleteCascade="true"/>
+         </column>
+         <column name="expenses_id" type="BIGINT">
+            <constraints foreignKeyName="product_expenses_id_expenses_id" references="expenses(id)" deleteCascade="true"/>
+         </column>
+     </createTable>
+
+     <createTable schemaName="public" tableName="shop" remark = "Магазины которыми пользуется пользователь">
+         <column name="id" type="BIGINT" autoIncrement="true" >
+            <constraints primaryKey="true" primaryKeyName="target_pkey"/>
+         </column>
+         <column name="name" type="VARCHAR(255)"/>
+         <column name="person_id" type="BIGINT">
+            <constraints foreignKeyName="shop_person_id_person_id" references="person(id)" deleteCascade="true"/>
+         </column>
+     </createTable>
+
+     <createTable schemaName="public" tableName="basket" remark = "Закупки пользователя">
+         <column name="id" type="BIGINT" autoIncrement="true" >
+            <constraints primaryKey="true" primaryKeyName="target_pkey"/>
+         </column>
+         <column name="person_id" type="BIGINT">
+            <constraints foreignKeyName="basket_person_id_person_id" references="person(id)" deleteCascade="true"/>
+         </column>
+         <column name="shop_id" type="BIGINT">
+            <constraints foreignKeyName="basket_shop_id_shop_id" references="shop(id)" deleteCascade="true"/>
+         </column>
+         <column name="product_id" type="BIGINT">
+            <constraints foreignKeyName="basket_product_id_product_id" references="product(id)" deleteCascade="true"/>
+         </column>
+     </createTable>
+
+   </changeSet>
+</databaseChangeLog>

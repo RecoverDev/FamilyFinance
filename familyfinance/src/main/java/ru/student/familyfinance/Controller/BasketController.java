@@ -39,11 +39,11 @@ public class BasketController {
     private final MapperBasket  mapper;
 
     @Operation(summary = "Получение списка покупок пользователя", tags = "Basket Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", 
                                         description = "Получен список покупок пользователя",
                                         content = {@Content(mediaType = "application/json",
                                         array = @ArraySchema(schema = @Schema(implementation = BasketDTO.class)))}),
-                            @ApiResponse(responseCode = "404", description = "Ошибка при получении списка покупок пользователя", content = @Content)})
+                           @ApiResponse(responseCode = "404", description = "Ошибка при получении списка покупок пользователя", content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<BasketDTO>> getBaskets(@AuthenticationPrincipal Person person) {
@@ -53,11 +53,11 @@ public class BasketController {
     }
 
     @Operation(summary = "Получение запланированной покупки пользователя по ID", tags = "Basket Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", 
                                         description = "Получена зпланированная покупка пользователя",
                                         content = {@Content(mediaType = "application/json",
                                         schema = @Schema(implementation = BasketDTO.class))}),
-                            @ApiResponse(responseCode = "404", description = "Закупка польвателя с таким ID не найден", content = @Content)})
+                           @ApiResponse(responseCode = "404", description = "Закупка польвателя с таким ID не найден", content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<BasketDTO> getBasketById(@PathVariable(name="id") long id) {
@@ -67,11 +67,11 @@ public class BasketController {
     }
 
     @Operation(summary = "Добавление новой закупки пользователя", tags = "Basket Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", 
                                         description = "Закупка успешно добавлена", 
                                         content = {@Content(mediaType = "application/json",
                                         schema = @Schema(implementation = BasketDTO.class))}),
-                            @ApiResponse(responseCode = "304", description = "Ошибка при добавлении закупки пользователя" ,content = @Content)})
+                           @ApiResponse(responseCode = "304", description = "Ошибка при добавлении закупки пользователя" ,content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<BasketDTO> postShop(@RequestBody BasketDTO basketDTO) {
@@ -82,11 +82,11 @@ public class BasketController {
     }
 
     @Operation(summary = "Изменение закупки пользователя", tags = "Basket Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", 
                                         description = "Закупка успешно изменена", 
                                         content = {@Content(mediaType = "application/json",
                                         schema = @Schema(implementation = BasketDTO.class))}),
-                            @ApiResponse(responseCode = "304", description = "Ошибка при изменении закупки пользователя" ,content = @Content)})
+                           @ApiResponse(responseCode = "304", description = "Ошибка при изменении закупки пользователя" ,content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<BasketDTO> putShop(@RequestBody BasketDTO basketDTO) {
@@ -97,8 +97,8 @@ public class BasketController {
     }
 
     @Operation(summary = "Удаление закупки пользователя по ID", tags = "Basket Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Магазин успешно удален", content = @Content),
-                            @ApiResponse(responseCode = "304", description = "Ошибка при удалении магазина пользователя" ,content = @Content)})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Закупка успешно удален", content = @Content),
+                           @ApiResponse(responseCode = "304", description = "Ошибка при удалении закупки пользователя" ,content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable(name="id") long id) {
@@ -106,6 +106,9 @@ public class BasketController {
         return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
+    @Operation(summary = "Формирование расходных операций из списка покупок пользователя", tags = "Basket Controller")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Расходная операция успешно создана", content = @Content),
+                           @ApiResponse(responseCode = "304", description = "Ошибка при расходной операции пользователя" ,content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/purchase")
     public ResponseEntity<HttpStatus> createPurchase(@AuthenticationPrincipal Person person, @RequestBody List<Pair<BasketDTO,Double>> list) {
@@ -113,5 +116,4 @@ public class BasketController {
         boolean result = service.makePurchase(person, purchases);
         return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
-
 }
