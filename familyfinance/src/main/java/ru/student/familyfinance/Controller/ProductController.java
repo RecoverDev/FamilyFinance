@@ -41,7 +41,7 @@ public class ProductController {
     @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
                                         description = "Получен список товаров пользователя",
                                         content = {@Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = ProductDTO.class)))}),
+                                        array = @ArraySchema(schema = @Schema(implementation = ProductDTO.class)))}),
                             @ApiResponse(responseCode = "404", description = "Ошибка при получении списка товаров пользователя", content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping
@@ -55,7 +55,7 @@ public class ProductController {
     @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
                                         description = "Получен товар пользователя",
                                         content = {@Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ProductDTO.class))}),
+                                        schema = @Schema(implementation = ProductDTO.class))}),
                             @ApiResponse(responseCode = "404", description = "Товар польвателя с таким ID не найден", content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
@@ -66,7 +66,10 @@ public class ProductController {
     }
 
     @Operation(summary = "Добавление нового товара пользователя", tags = "Product Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Товар успешно добавлен", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Товар успешно добавлен", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ProductDTO.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при добавлении товара пользователя" ,content = @Content)})
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping
@@ -78,7 +81,10 @@ public class ProductController {
     }
 
     @Operation(summary = "Изменение товара пользователя", tags = "Product Controller")
-    @ApiResponses(value = {@ApiResponse(responseCode =  "200", description = "Товар успешно изменен", content = @Content),
+    @ApiResponses(value = {@ApiResponse(responseCode =  "200", 
+                                        description = "Товар успешно изменен", 
+                                        content = {@Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ProductDTO.class))}),
                             @ApiResponse(responseCode = "304", description = "Ошибка при изменении товара пользователя" ,content = @Content)})
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
