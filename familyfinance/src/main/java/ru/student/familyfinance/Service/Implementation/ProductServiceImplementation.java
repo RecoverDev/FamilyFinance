@@ -38,7 +38,7 @@ public class ProductServiceImplementation implements ProductService{
     }
 
     @Override
-    public Product geProductById(long id) {
+    public Product getProductById(long id) {
         Optional<Product> result = repository.findById(id);
         return result.isPresent() ? result.get() : null;
     }

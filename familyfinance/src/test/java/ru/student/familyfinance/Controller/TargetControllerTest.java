@@ -142,7 +142,7 @@ public class TargetControllerTest {
     }
 
     @Test
-    @DisplayName("Удаление цули пользователя по ID")
+    @DisplayName("Удаление цели пользователя по ID")
     @WithMockUser
     public void deleteTargetTest() throws Exception {
         doReturn(true).when(service).removeTarget(1);

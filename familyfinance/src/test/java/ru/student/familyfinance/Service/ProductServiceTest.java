@@ -73,7 +73,7 @@ public class ProductServiceTest {
         Expenses expenses = new Expenses();
         Product product = new Product(7, "Test Product", person, expenses);
         doReturn(Optional.of(product)).when(repository).findById(7L);
-        assertThat(service.geProductById(7L)).isEqualTo(product);
+        assertThat(service.getProductById(7L)).isEqualTo(product);
         Mockito.verify(repository, Mockito.times(1)).findById(7L);
     }
 

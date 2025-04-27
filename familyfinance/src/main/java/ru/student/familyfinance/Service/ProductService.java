@@ -43,5 +43,5 @@ public interface ProductService {
      * @param id - идентификатор товара
      * @return - найденный товар или NULL
      */
-    Product geProductById(long id);
+    Product getProductById(long id);
 }

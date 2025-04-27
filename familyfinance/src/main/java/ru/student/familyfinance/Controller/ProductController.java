@@ -60,7 +60,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable(name="id") long id) {
-        Product product = service.geProductById(id);
+        Product product = service.getProductById(id);
         ProductDTO response = mapper.toProductDTO(product);
         return response != null ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

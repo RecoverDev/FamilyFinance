@@ -7,7 +7,7 @@
    <changeSet id="2.0" author="recover">
      <createTable schemaName="public" tableName="product" remark = "Товары которые покупает пользователь">
          <column name="id" type="BIGINT" autoIncrement="true" >
-            <constraints primaryKey="true" primaryKeyName="target_pkey"/>
+            <constraints primaryKey="true" primaryKeyName="product_pkey"/>
          </column>
          <column name="name" type="VARCHAR(255)"/>
          <column name="person_id" type="BIGINT">
@@ -20,7 +20,7 @@
 
      <createTable schemaName="public" tableName="shop" remark = "Магазины которыми пользуется пользователь">
          <column name="id" type="BIGINT" autoIncrement="true" >
-            <constraints primaryKey="true" primaryKeyName="target_pkey"/>
+            <constraints primaryKey="true" primaryKeyName="shop_pkey"/>
          </column>
          <column name="name" type="VARCHAR(255)"/>
          <column name="person_id" type="BIGINT">
@@ -30,7 +30,7 @@
 
      <createTable schemaName="public" tableName="basket" remark = "Закупки пользователя">
          <column name="id" type="BIGINT" autoIncrement="true" >
-            <constraints primaryKey="true" primaryKeyName="target_pkey"/>
+            <constraints primaryKey="true" primaryKeyName="basket_pkey"/>
          </column>
          <column name="person_id" type="BIGINT">
             <constraints foreignKeyName="basket_person_id_person_id" references="person(id)" deleteCascade="true"/>

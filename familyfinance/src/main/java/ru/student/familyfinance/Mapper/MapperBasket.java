@@ -46,7 +46,7 @@ public abstract class MapperBasket {
     }
 
     protected Product getProduct(long id) {
-        return productService.geProductById(id);
+        return productService.getProductById(id);
     }
 
     protected Shop getShop(long id) {
