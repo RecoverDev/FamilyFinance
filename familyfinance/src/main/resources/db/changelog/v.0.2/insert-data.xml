@@ -25,32 +25,32 @@
         <insert  schemaName="public" tableName="product">
             <column name="name" value="Молоко" />
             <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
-            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания')"/>
+            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания' and person_id = (SELECT id FROM person WHERE username = 'common'))"/>
         </insert>
         <insert  schemaName="public" tableName="product">
             <column name="name" value="Хлеб" />
             <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
-            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания')"/>
+            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания' and person_id = (SELECT id FROM person WHERE username = 'common'))"/>
         </insert>
         <insert  schemaName="public" tableName="product">
             <column name="name" value="Сметана" />
             <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
-            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания')"/>
+            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания' and person_id = (SELECT id FROM person WHERE username = 'common'))"/>
         </insert>
         <insert  schemaName="public" tableName="product">
             <column name="name" value="Творог" />
             <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
-            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания')"/>
+            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания' and person_id = (SELECT id FROM person WHERE username = 'common'))"/>
         </insert>
         <insert  schemaName="public" tableName="product">
             <column name="name" value="Масло" />
             <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
-            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания')"/>
+            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания' and person_id = (SELECT id FROM person WHERE username = 'common'))"/>
         </insert>
         <insert  schemaName="public" tableName="product">
             <column name="name" value="Томаты" />
             <column name="person_id" valueComputed = "(SELECT id FROM person WHERE username = 'common')"/>
-            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания')"/>
+            <column name="expenses_id" valueComputed = "(SELECT id FROM expenses WHERE name = 'Продукты питания' and person_id = (SELECT id FROM person WHERE username = 'common'))"/>
         </insert>
 
    </changeSet>
