@@ -12,7 +12,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "Terget DTO", description = "Товар для формирования списка покупок")
+@Schema(name = "Product DTO", description = "Товар для формирования списка покупок")
 public class ProductDTO {
 
     @Schema(name = "ID", description = "Идентификатор товара", example = "1")
