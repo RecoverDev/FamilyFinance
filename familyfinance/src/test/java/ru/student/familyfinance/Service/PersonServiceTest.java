@@ -19,6 +19,8 @@ import ru.student.familyfinance.Model.Person;
 import ru.student.familyfinance.Repository.ExpensesRepository;
 import ru.student.familyfinance.Repository.IncomeRepository;
 import ru.student.familyfinance.Repository.PersonRepository;
+import ru.student.familyfinance.Repository.ProductRepository;
+import ru.student.familyfinance.Repository.ShopRepository;
 import ru.student.familyfinance.Service.Implementation.PersonServiceImplementation;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,12 +35,18 @@ public class PersonServiceTest {
     @Mock
     ExpensesRepository expensesRepository;
 
+    @Mock
+    ProductRepository productRepository;
+
+    @Mock
+    ShopRepository shopRepository;
+
     PersonService service;
 
     @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
-        service = new PersonServiceImplementation(personRepository, incomeRepository, expensesRepository);
+        service = new PersonServiceImplementation(personRepository, incomeRepository, expensesRepository, shopRepository, productRepository);
     }
 
     @Test

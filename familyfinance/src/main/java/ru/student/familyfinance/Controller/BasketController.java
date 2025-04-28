@@ -28,7 +28,9 @@ import ru.student.familyfinance.DTO.BasketDTO;
 import ru.student.familyfinance.Mapper.MapperBasket;
 import ru.student.familyfinance.Model.Basket;
 import ru.student.familyfinance.Model.Person;
+import ru.student.familyfinance.Model.Shop;
 import ru.student.familyfinance.Service.BasketService;
+import ru.student.familyfinance.Service.ShopService;
 
 @Tag(name = "Basket Controller", description = "API по работе с закупками пользователя")
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ import ru.student.familyfinance.Service.BasketService;
 @RequestMapping("/baskets")
 public class BasketController {
     private final BasketService service;
+    public final ShopService shopService;
     private final MapperBasket  mapper;
 
     @Operation(summary = "Получение списка покупок пользователя", tags = "Basket Controller")
@@ -105,6 +108,22 @@ public class BasketController {
         boolean result = service.removeBasket(id);
         return result ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
+
+    @Operation(summary = "Получение списка товаров по ID магазина пользователя", tags = "Basket Controller")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", 
+                                        description = "Получен список покупок пользователя",
+                                        content = {@Content(mediaType = "application/json",
+                                        array = @ArraySchema(schema = @Schema(implementation = BasketDTO.class)))}),
+                           @ApiResponse(responseCode = "404", description = "Ошибка при получении списка покупок пользователя", content = @Content)})
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @GetMapping("/shop/{id}")
+    public ResponseEntity<List<BasketDTO>> getBasketByShop(@AuthenticationPrincipal Person person, @PathVariable(name="id") long id) {
+        Shop shop = shopService.getShopById(id);
+        List<Basket> baskets = service.getBasketByShop(person, shop);
+        List<BasketDTO> response = mapper.toListBasketDTO(baskets);
+        return response.size() != 0 ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 
     @Operation(summary = "Формирование расходных операций из списка покупок пользователя", tags = "Basket Controller")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Расходная операция успешно создана", content = @Content),

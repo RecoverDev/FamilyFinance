@@ -9,9 +9,13 @@ import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance.Model.Expenses;
 import ru.student.familyfinance.Model.Income;
 import ru.student.familyfinance.Model.Person;
+import ru.student.familyfinance.Model.Product;
+import ru.student.familyfinance.Model.Shop;
 import ru.student.familyfinance.Repository.ExpensesRepository;
 import ru.student.familyfinance.Repository.IncomeRepository;
 import ru.student.familyfinance.Repository.PersonRepository;
+import ru.student.familyfinance.Repository.ProductRepository;
+import ru.student.familyfinance.Repository.ShopRepository;
 import ru.student.familyfinance.Service.PersonService;
 
 @Service
@@ -20,6 +24,8 @@ public class PersonServiceImplementation implements PersonService {
     private final PersonRepository repository;
     private final IncomeRepository incomeRepository;
     private final ExpensesRepository expensesRepository;
+    private final ShopRepository shopRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public boolean addPerson(Person person) {
@@ -76,6 +82,13 @@ public class PersonServiceImplementation implements PersonService {
         List<Expenses> personExpenses = expenses.stream().map(e -> new Expenses(0, person, e.getName(), e.getExpensesType())).toList();
         expensesRepository.saveAll(personExpenses);
         
+        List<Product> products = productRepository.findByPerson(commonPerson);
+        List<Product> personProducts = products.stream().map(p -> new Product(0, p.getName(), person, p.getExpenses())).toList();
+        productRepository.saveAll(personProducts);
+
+        List<Shop> shops = shopRepository.findByPerson(commonPerson);
+        List<Shop> personShops = shops.stream().map(s -> new Shop(0, s.getName(), person)).toList();
+        shopRepository.saveAll(personShops);
     }
 
 }
