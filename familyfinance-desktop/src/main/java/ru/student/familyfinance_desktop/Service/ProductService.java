@@ -1,5 +1,6 @@
 package ru.student.familyfinance_desktop.Service;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import ru.student.familyfinance_desktop.Model.Product;
@@ -34,8 +35,23 @@ public interface ProductService {
      */
     boolean addProduct(Product product);
 
+    /**
+     * Изменение товара
+     * @param product - изменяемый товар
+     * @return - измененный товар Product
+     */
     boolean editProduct(Product product);
 
+    /**
+     * Удаление товара по идентификатору
+     * @param id - идентификатор удаляемого товара
+     * @return - true - успех/false - неудача
+     */
     boolean deleteProductById(long id);
 
+    /**
+     * Установить слушателя на изменение репозотория ShopRepository
+     * @param listener
+     */
+    void setRepositoryListener(PropertyChangeListener listener);
 }

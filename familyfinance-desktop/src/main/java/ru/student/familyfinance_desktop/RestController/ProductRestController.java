@@ -129,7 +129,7 @@ public class ProductRestController {
         return result;
     }
 
-    public boolean deleteShopById(long id) {
+    public boolean deleteProductById(long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(loginData.getUsername(), loginData.getPassword());
         headers.setContentType(MediaType.APPLICATION_JSON);
