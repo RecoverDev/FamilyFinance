@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21"
+    fx:controller="ru.student.familyfinance_desktop.FXMLController.Dictionary.DictionaryController">
+    <Tab fx:id = "IncomeTab" text = "Виды доходов" />
+    <Tab fx:id = "ExpensesTab" text = "Виды расходов" />
+    <Tab fx:id = "ProductTab" text = "Товары" />
+</TabPane>

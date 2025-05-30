@@ -6,7 +6,7 @@ import java.util.List;
 import ru.student.familyfinance_desktop.Model.Shop;
 
 /**
- * Сервис по работе сос списком магазинов пользователя
+ * Сервис по работе со списком магазинов пользователя
  */
 public interface ShopService {
 

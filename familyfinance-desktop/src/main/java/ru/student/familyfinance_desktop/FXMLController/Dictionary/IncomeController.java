@@ -1,4 +1,4 @@
-package ru.student.familyfinance_desktop.FXMLController;
+package ru.student.familyfinance_desktop.FXMLController.Dictionary;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -19,6 +19,7 @@ import javafx.scene.control.TitledPane;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
+import ru.student.familyfinance_desktop.FXMLController.Dictionary.DictionaryController;
 import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
 import ru.student.familyfinance_desktop.Model.Person;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;

@@ -1,6 +1,7 @@
-package ru.student.familyfinance_desktop.FXMLController;
+package ru.student.familyfinance_desktop.FXMLController.Dictionary;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +18,34 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
-import ru.student.familyfinance_desktop.Model.Expenses;
-import ru.student.familyfinance_desktop.Model.ExpensesType;
+import ru.student.familyfinance_desktop.DTO.ExpensesDTO;
+import ru.student.familyfinance_desktop.Mapper.ExpensesMapper;
 import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Service.ExpensesTypeService;
+import ru.student.familyfinance_desktop.Model.Product;
+import ru.student.familyfinance_desktop.Service.ExpensesService;
 
 @Getter
 @Setter
 @Component
-@FxmlView("ExpensesPage.fxml")
-public class ExpensesController implements Initializable {
-    private Expenses expenses;
+@FxmlView("ProductPage.fxml")
+public class ProductController implements Initializable {
+    private Product product;
     private boolean okFlag;
 
+    @Autowired
+    private ExpensesService expensesService;
 
     @Autowired
-    private ExpensesTypeService service;
+    private ExpensesMapper expensesMapper;
 
     @Autowired
     private Person person;
-
 
     @FXML
     private TextField nameField;
 
     @FXML
-    private ComboBox<ExpensesType> typeExpenses;
+    private ComboBox<ExpensesDTO> typeExpenses;
 
     @FXML
     private Button okButton;
@@ -50,24 +53,27 @@ public class ExpensesController implements Initializable {
     @FXML
     private Button cancelButton;
 
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        nameField.setText(expenses.getName());
-        ObservableList<ExpensesType> data = FXCollections.observableArrayList(service.getExpensesTypes());
+        nameField.setText(product.getName());
+        List<ExpensesDTO> list = expensesMapper.toListExpensesDTO(expensesService.getExpenses());
+        ObservableList<ExpensesDTO> data = FXCollections.observableArrayList(list);
         typeExpenses.setItems(data);
-        if (expenses.getExpensesType_id() > 0) {
-            typeExpenses.setValue(service.getExpensesTypeById(expenses.getExpensesType_id()));
-        } else {
-            typeExpenses.setValue(service.getExpensesTypes().get(0));
+
+        ExpensesDTO currentValue = expensesMapper.toExpensesDTO(expensesService.getExpensesById(0));
+
+        if (product.getExpenses_id() > 0) {
+            currentValue = expensesMapper.toExpensesDTO(expensesService.getExpensesById(product.getExpenses_id()));
         }
+
+        typeExpenses.setValue(currentValue);
     }
 
     @FXML
     private void saveAction() {
-        expenses.setName(nameField.getText());
-        expenses.setExpensesType_id(typeExpenses.getValue().getId());
-        expenses.setPerson_id(person.getId());
+        product.setName(nameField.getText());
+        product.setExpenses_id(typeExpenses.getValue().getId());
+        product.setPerson_id(person.getId());
         okFlag = true;
         Stage stage = (Stage)cancelButton.getScene().getWindow();
         stage.close();;
@@ -79,5 +85,4 @@ public class ExpensesController implements Initializable {
         Stage stage = (Stage)cancelButton.getScene().getWindow();
         stage.close();;
     }
-
 }
