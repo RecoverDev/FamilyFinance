@@ -13,4 +13,5 @@
     <Tab fx:id = "IncomeTab" text = "Виды доходов" />
     <Tab fx:id = "ExpensesTab" text = "Виды расходов" />
     <Tab fx:id = "ProductTab" text = "Товары" />
+    <Tab fx:id = "ShopTab" text = "Магазины" />
 </TabPane>

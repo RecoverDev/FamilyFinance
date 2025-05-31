@@ -92,7 +92,7 @@ public class ProductTabController implements Initializable {
         productController.setProduct(product);
         navigator.showModal(productController, "Семейный бюджет. Редактирование товара " + product.getName());
         if (productController.isOkFlag()) {
-            service.addProduct(product);
+            service.editProduct(product);
         }
     }
 

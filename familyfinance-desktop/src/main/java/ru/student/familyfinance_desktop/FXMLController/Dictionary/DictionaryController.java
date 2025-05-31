@@ -30,6 +30,9 @@ public class DictionaryController implements Initializable {
     @Autowired
     private ProductTabController productTabController;
 
+    @Autowired
+    private ShopTabController shopTabController;
+
     @FXML
     private Tab IncomeTab;
 
@@ -38,6 +41,9 @@ public class DictionaryController implements Initializable {
 
     @FXML
     private Tab ProductTab;
+
+    @FXML
+    private Tab ShopTab;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -50,5 +56,8 @@ public class DictionaryController implements Initializable {
 
         Parent productPage = navigator.loadFxml(productTabController);
         ProductTab.setContent(productPage);
+
+        Parent shopPage = navigator.loadFxml(shopTabController);
+        ShopTab.setContent(shopPage);
     }
 }
