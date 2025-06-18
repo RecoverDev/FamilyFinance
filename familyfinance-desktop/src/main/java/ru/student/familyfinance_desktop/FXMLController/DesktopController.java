@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.FXMLController.Dictionary.DictionaryController;
+import ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesController;
 import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
 import ru.student.familyfinance_desktop.Model.Person;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;
@@ -56,6 +57,9 @@ public class DesktopController implements Initializable {
     private StatisticController statisticController;
 
     @Autowired
+    private PurchasesController purchasesController;
+
+    @Autowired
     private Person person;
 
     @FXML
@@ -78,6 +82,9 @@ public class DesktopController implements Initializable {
 
     @FXML
     private TitledPane statistic;
+
+    @FXML
+    private TitledPane purchases;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -103,6 +110,9 @@ public class DesktopController implements Initializable {
 
         Parent statisticPage = navigator.loadFxml(statisticController);
         statistic.setContent(statisticPage); 
+
+        Parent purchasesPage = navigator.loadFxml(purchasesController);
+        purchases.setContent(purchasesPage);
 
         setItemsComboPeriod();
     }

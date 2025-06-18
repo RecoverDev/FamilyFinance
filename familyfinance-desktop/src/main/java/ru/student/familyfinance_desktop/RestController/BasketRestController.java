@@ -177,7 +177,7 @@ public class BasketRestController {
         return result;
     }
 
-    public boolean postPurchase(List<Pair<BasketDTO,Double>> list) {
+    public boolean postPurchase(List<Pair<Basket,Double>> list) {
         boolean result = false;
 
         HttpHeaders headers = new HttpHeaders();

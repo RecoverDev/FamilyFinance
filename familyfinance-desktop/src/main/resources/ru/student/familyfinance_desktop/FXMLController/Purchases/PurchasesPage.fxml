@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/21" 
+          xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesController" 
+          alignment="CENTER" hgap="2" vgap="2">
+</GridPane>
