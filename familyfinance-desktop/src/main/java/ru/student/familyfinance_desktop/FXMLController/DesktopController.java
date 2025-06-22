@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.FXMLController.Dictionary.DictionaryController;
-import ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesController;
+import ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesTabController;
 import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
 import ru.student.familyfinance_desktop.Model.Person;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;
@@ -57,7 +57,7 @@ public class DesktopController implements Initializable {
     private StatisticController statisticController;
 
     @Autowired
-    private PurchasesController purchasesController;
+    private PurchasesTabController purchasesController;
 
     @Autowired
     private Person person;

@@ -65,8 +65,8 @@ public class ProductTabController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        service.setRepositoryListener((event) -> itemProduct.setListExpensesDTO());
-        productTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<ProductDTO>>(itemProduct.getLiExpensesDTO()));
+        service.setRepositoryListener((event) -> itemProduct.setListProductDTO());
+        productTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<ProductDTO>>(itemProduct.getLiProductDTO()));
         service.setProducts();
 
         setItemsToProductTable();
@@ -114,7 +114,6 @@ public class ProductTabController implements Initializable {
         if (response == ButtonType.OK) {
             service.deleteProductById(product.getId());
         }
-
     }
 
 

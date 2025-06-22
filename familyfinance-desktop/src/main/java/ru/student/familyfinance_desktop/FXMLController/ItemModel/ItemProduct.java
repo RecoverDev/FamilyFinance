@@ -17,11 +17,11 @@ public class ItemProduct {
 
     private ObservableList<ProductDTO> listProductDTO = FXCollections.observableArrayList();
 
-    public ObservableList<ProductDTO> getLiExpensesDTO() {
+    public ObservableList<ProductDTO> getLiProductDTO() {
         return listProductDTO;
     }
 
-    public void setListExpensesDTO() {
+    public void setListProductDTO() {
         listProductDTO.setAll(mapper.toListProductDTO(service.getProducts()));
     }
 

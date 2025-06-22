@@ -12,4 +12,46 @@
           xmlns:fx="http://javafx.com/fxml/1" 
           fx:controller="ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesController" 
           alignment="CENTER" hgap="2" vgap="2">
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5" />
+    </padding>
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+        </rowConstraints>
+
+        <Label text="Товар:" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
+        <ComboBox fx:id="comboBasket" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="300.0">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </ComboBox>
+
+        <Label text="Магазин:" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="RIGHT"/>
+        <ComboBox fx:id="comboShop" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="300.0">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </ComboBox>
+
+        <Button fx:id="okButton" onAction="#saveAction" prefWidth="100.0" text="Сохранить" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Button>
+
+        <Button fx:id="cancelButton" onAction="#cancelAction" prefWidth="100.0" text="Отмена" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Button>
+        <Label fx:id="errorLabel" style="-fx-text-fill: red; -fx-font-style: italic" text=""
+            GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.columnSpan="2"/>
+
 </GridPane>

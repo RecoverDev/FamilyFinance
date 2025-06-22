@@ -24,7 +24,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.util.Pair;
-import ru.student.familyfinance_desktop.DTO.BasketDTO;
 import ru.student.familyfinance_desktop.Model.AutorizateData;
 import ru.student.familyfinance_desktop.Model.Basket;
 
