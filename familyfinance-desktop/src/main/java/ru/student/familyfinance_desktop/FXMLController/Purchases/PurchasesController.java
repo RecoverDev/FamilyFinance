@@ -17,10 +17,12 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
+import ru.student.familyfinance_desktop.DTO.ProductDTO;
+import ru.student.familyfinance_desktop.DTO.ShopDTO;
+import ru.student.familyfinance_desktop.Mapper.ProductMapper;
+import ru.student.familyfinance_desktop.Mapper.ShopMapper;
 import ru.student.familyfinance_desktop.Model.Basket;
 import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.Product;
-import ru.student.familyfinance_desktop.Model.Shop;
 import ru.student.familyfinance_desktop.Service.ProductService;
 import ru.student.familyfinance_desktop.Service.ShopService;
 
@@ -36,16 +38,22 @@ public class PurchasesController implements Initializable{
     private Person person;
 
     @Autowired
+    private ProductMapper productMapper;
+
+    @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ShopMapper shopMapper;
 
     @Autowired
     private ShopService shopService;
 
     @FXML
-    private ComboBox<Product> comboBasket;
+    private ComboBox<ProductDTO> comboBasket;
 
     @FXML
-    private ComboBox<Shop> comboShop;
+    private ComboBox<ShopDTO> comboShop;
 
     @FXML
     private Button okButton;
@@ -55,16 +63,16 @@ public class PurchasesController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        ObservableList<Product> products = FXCollections.observableArrayList(productService.getProducts());
+        ObservableList<ProductDTO> products = FXCollections.observableArrayList(productMapper.toListProductDTO(productService.getProducts()));
         comboBasket.setItems(products);
         if (basket.getProduct_id() > 0) {
-            comboBasket.setValue(productService.getProductById(basket.getProduct_id()));
+            comboBasket.setValue(productMapper.toProductDTO(productService.getProductById(basket.getProduct_id())));
         }
 
-        ObservableList<Shop> shops = FXCollections.observableArrayList(shopService.getShops());
+        ObservableList<ShopDTO> shops = FXCollections.observableArrayList(shopMapper.toListShopDTO(shopService.getShops()));
         comboShop.setItems(shops);
         if (basket.getShop_id() > 0) {
-            comboShop.setValue(shopService.getShopById(basket.getShop_id()));
+            comboShop.setValue(shopMapper.toShopDTO(shopService.getShopById(basket.getShop_id())));
         }
     }
 

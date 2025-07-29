@@ -43,6 +43,9 @@ public class PurchasesTabController implements Initializable{
     @Autowired
     private PurchasesController purchasesController;
 
+    @Autowired
+    private PurchasesFilterController purchasesFilterController;
+
 
     @FXML
     private TableView<BasketDTO> basketTable;
@@ -67,7 +70,8 @@ public class PurchasesTabController implements Initializable{
         basketTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         service.setRepositoryListener((event) -> itemBasket.setListBasketDTO());
-        basketTable.itemsProperty().bind(new SimpleObjectProperty<ObservableList<BasketDTO>>(itemBasket.getListBasketDTO()));
+        basketTable.itemsProperty()
+                   .bind(new SimpleObjectProperty<ObservableList<BasketDTO>>(itemBasket.getListBasketDTO()));
         service.setBaskets();
 
         setItemToBasketTable();
@@ -93,7 +97,7 @@ public class PurchasesTabController implements Initializable{
         purchasesController.setBasket(basket);
         navigator.showModal(purchasesController, "Семейный бюджет. Редактирование товара" + selectionModel.getSelectedItem().getProductName());
         if (purchasesController.isOkFlag()) {
-            service.addBasket(purchasesController.getBasket());
+            service.editBasket(purchasesController.getBasket());
         }
     }
 
@@ -113,6 +117,11 @@ public class PurchasesTabController implements Initializable{
         if (response ==ButtonType.OK) {
             service.removeBasketById(basket.getId());
         }
+    }
+
+    @FXML
+    private void basketFilterAction(ActionEvent event) {
+        navigator.showModal(purchasesFilterController, "Покупки");
     }
     
     private void setItemToBasketTable() {

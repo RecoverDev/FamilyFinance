@@ -22,6 +22,6 @@ public class ItemBasket {
     }
 
     public void setListBasketDTO() {
-        listBasketDTO.addAll(mapper.toListBasketDTO(service.getBaskets()));
+        listBasketDTO.setAll(mapper.toListBasketDTO(service.getBaskets()));
     }
 }

@@ -25,4 +25,9 @@ public class ProductDTO {
     public String getExpensesName() { return this.expensesName.get(); }
     public void setExpensesName(String value) { this.expensesName.set(value); }
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 }

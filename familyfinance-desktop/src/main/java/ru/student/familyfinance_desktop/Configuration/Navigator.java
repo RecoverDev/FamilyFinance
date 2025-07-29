@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxWeaver;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 @Setter
 @Component
@@ -46,5 +47,8 @@ public class Navigator {
         return root;
     }
 
-
+    public boolean setIcon(String name) {
+        Image icon = new Image(getClass().getResourceAsStream(name));
+        return this.stage.getIcons().add(icon);
+    }
 }

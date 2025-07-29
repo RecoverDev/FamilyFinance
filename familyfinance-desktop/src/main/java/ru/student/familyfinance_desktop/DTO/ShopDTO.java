@@ -18,4 +18,9 @@ public class ShopDTO {
     public String getName() { return this.name.get(); }
     public void setName(String value) { this.name.set(value); }
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 }

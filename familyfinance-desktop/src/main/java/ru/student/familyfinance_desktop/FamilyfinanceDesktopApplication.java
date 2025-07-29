@@ -12,6 +12,7 @@ import ru.student.familyfinance_desktop.Configuration.Navigator;
 
 @SpringBootApplication
 public class FamilyfinanceDesktopApplication extends Application{
+    private static String APPLICATION_ICON = "/Images/money.png";
 	
 	@Autowired
 	private Navigator navigator;
@@ -26,6 +27,7 @@ public class FamilyfinanceDesktopApplication extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         navigator.setStage(stage);
+        navigator.setIcon(APPLICATION_ICON);
         navigator.show(autorizateController,"Семейный бюджет.Авторизация");
     }
 
@@ -39,6 +41,4 @@ public class FamilyfinanceDesktopApplication extends Application{
     public void stop() {
         Platform.exit();
     }
-
-
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/21" 
+          xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesFilterController" 
+          alignment="CENTER" hgap="2" vgap="2">
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5" />
+    </padding>
+        <columnConstraints>
+            <ColumnConstraints prefWidth = "200"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow = "SOMETIMES"/>
+            <RowConstraints prefHeight = "50.0"/>
+        </rowConstraints>
+
+        <ListView fx:id = "ListShops" 
+                  GridPane.columnIndex="0" 
+                  GridPane.rowIndex="0" >
+        </ListView>
+
+        <TableView fx:id = "TableBaskets" 
+                  GridPane.columnIndex="1" 
+                  GridPane.rowIndex="0">
+            <columns>
+                <TableColumn fx:id = "checkBasket" prefWidth = "50" resizable = "false" text = "" />
+                <TableColumn fx:id = "nameBasket" text = "Наименование товара" />
+                <TableColumn fx:id = "summBasket" prefWidth = "150" resizable = "false" text = "Потраченная сумма" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="showAllButton" onAction="#showAllAction" prefWidth="100.0" text="Все товары" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Button>
+
+</GridPane>
