@@ -19,11 +19,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.data.util.Pair;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javafx.util.Pair;
+//import javafx.util.Pair;
 import ru.student.familyfinance_desktop.Model.AutorizateData;
 import ru.student.familyfinance_desktop.Model.Basket;
 

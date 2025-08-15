@@ -3,7 +3,8 @@ package ru.student.familyfinance_desktop.Service;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javafx.util.Pair;
+//import javafx.util.Pair;
+import org.springframework.data.util.Pair;
 import ru.student.familyfinance_desktop.Model.Basket;
 
 /**

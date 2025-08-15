@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import javafx.util.Pair;
+import org.springframework.data.util.Pair;
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.Model.Basket;
 import ru.student.familyfinance_desktop.Repository.Repository;
@@ -81,8 +81,9 @@ public class BasketServiceImplementation implements BasketService{
     public boolean makePurchase(List<Pair<Basket,Double>> baskets) {
         if (controller.postPurchase(baskets)) {
             for (Pair<Basket,Double> pair : baskets) {
-                repository.deleteItemById(pair.getKey().getId());
+                controller.deleteBasketById(pair.getFirst().getId());
             }
+            repository.setCollection(controller.getBaskets());
             return true;
         }
         return false;

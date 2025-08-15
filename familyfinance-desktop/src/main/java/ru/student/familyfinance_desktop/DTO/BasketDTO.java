@@ -37,8 +37,13 @@ public class BasketDTO {
     public String getShopName() { return this.shopName.get(); }
     public void setShopName(String value) { this.shopName.set(value); }
 
-    public String getSumm() { return Double.toString(this.summ.get()); }
-    public void setSumm(String value) { double res = Double.parseDouble(value); this.summ.setValue(res); }
+    public String getSumm() { 
+        return Double.toString(this.summ.get()); 
+    }
+    public void setSumm(String value) { 
+        double res = Double.parseDouble(value); 
+        this.summ.setValue(res); 
+    }
     public boolean getSelectItem() { return this.selectItem.get(); }
     public void setSelectItem(boolean value) { this.selectItem.set(value); }
 }

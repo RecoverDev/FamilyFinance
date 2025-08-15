@@ -33,6 +33,8 @@ public abstract class BasketMapper {
 
     @Mapping(target = "productName", expression = "java(productService.getProductById(basket.getProduct_id()).getName())")
     @Mapping(target = "shopName", expression = "java(shopService.getShopById(basket.getShop_id()).getName())")
+    @Mapping(target = "summ", expression = "java(\"0.0\")")
+    @Mapping(target = "selectItem", expression = "java(true)")
     public abstract BasketDTO toBasketDTO(Basket basket);
 
     public abstract List<BasketDTO> toListBasketDTO(List<Basket> listBasket);
