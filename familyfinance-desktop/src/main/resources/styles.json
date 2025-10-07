@@ -1,0 +1,37 @@
+[
+    {
+        "description":"Cupertino (темная)",
+        "fileName":"FXML/cupertino-dark.css",
+        "defaultStyle":false
+    },
+    {
+        "description":"Cupertino (светлая)",
+        "fileName":"FXML/cupertino-light.css",
+        "defaultStyle":true
+    },
+    {
+        "description":"Дракула",
+        "fileName":"FXML/dracula.css",
+        "defaultStyle":false
+    },
+    {
+        "description":"Север (темная)",
+        "fileName":"FXML/nord-dark.css",
+        "defaultStyle":false
+    },
+    {
+        "description":"Север (светлая)",
+        "fileName":"FXML/nord-light.css",
+        "defaultStyle":false
+    },
+    {
+        "description":"Премьер (темная)",
+        "fileName":"FXML/primer-dark.css",
+        "defaultStyle":false
+    },
+    {
+        "description":"Премьер (светлая)",
+        "fileName":"FXML/primer-light.css",
+        "defaultStyle":false
+    }
+]

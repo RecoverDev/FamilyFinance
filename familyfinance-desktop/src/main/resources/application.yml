@@ -11,3 +11,5 @@ logging:
     name: 'log.json'
 backend:
   url: 'http://localhost:8080'
+styles:
+  file: 'styles.json'

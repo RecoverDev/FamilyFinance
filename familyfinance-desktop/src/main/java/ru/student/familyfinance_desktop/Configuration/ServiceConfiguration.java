@@ -2,6 +2,7 @@ package ru.student.familyfinance_desktop.Configuration;
 
 import java.time.LocalDate;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -23,4 +24,10 @@ public class ServiceConfiguration {
         period.setCurrentPeriod(LocalDate.of(date.getYear(), date.getMonthValue(), 1));
         return period;
     }
+
+    @Bean
+    @Value("${styles.file}")
+    public String nameStyleFile( String nameFile) {
+        return nameFile;
+    } 
 }

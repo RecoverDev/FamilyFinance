@@ -9,6 +9,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxWeaver;
+import ru.student.familyfinance_desktop.StyleManager.StyleManager;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
@@ -19,8 +20,10 @@ public class Navigator {
 
     @Autowired
     private ConfigurableApplicationContext applicationContext;
-    
-    public final String STYLES_SHEET = "FXML/cupertino-light.css";
+
+    @Autowired
+    private StyleManager styleManager;
+
 
     public void show(Object controller, String title) {
         Scene scene = new Scene(loadFxml(controller));
@@ -36,13 +39,13 @@ public class Navigator {
         modalStage.setScene(scene);
         modalStage.setTitle(title);
         modalStage.showAndWait();
-
     }
 
     public Parent loadFxml(Object controller) {
+        String nameStyle = styleManager.getCurrentStyle();
         FxWeaver loader = applicationContext.getBean(FxWeaver.class);
         Parent root = loader.loadView(controller.getClass());
-        root.getStylesheets().add(getClass().getClassLoader().getResource(STYLES_SHEET).toExternalForm());
+        root.getStylesheets().add(getClass().getClassLoader().getResource(nameStyle).toExternalForm());
 
         return root;
     }

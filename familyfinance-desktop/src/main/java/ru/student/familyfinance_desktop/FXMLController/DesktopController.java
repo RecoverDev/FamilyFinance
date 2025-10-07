@@ -2,6 +2,7 @@ package ru.student.familyfinance_desktop.FXMLController;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import ru.student.familyfinance_desktop.Model.Person;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;
 import ru.student.familyfinance_desktop.Service.GrossBookService;
 import ru.student.familyfinance_desktop.Service.PlanService;
+import ru.student.familyfinance_desktop.StyleManager.Style;
+import ru.student.familyfinance_desktop.StyleManager.StyleManager;
 
 @Component
 @FxmlView("DesktopPage.fxml")
@@ -62,6 +65,9 @@ public class DesktopController implements Initializable {
     @Autowired
     private Person person;
 
+    @Autowired
+    private StyleManager styleManager;
+
     @FXML
     private ComboBox<WorkPeriod> comboPeriod;
 
@@ -85,6 +91,9 @@ public class DesktopController implements Initializable {
 
     @FXML
     private TitledPane purchases;
+
+    @FXML
+    private ComboBox<Style> comboStyle;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -115,6 +124,8 @@ public class DesktopController implements Initializable {
         purchases.setContent(purchasesPage);
 
         setItemsComboPeriod();
+
+        setItemComboStyle();
     }
 
     @FXML
@@ -134,5 +145,21 @@ public class DesktopController implements Initializable {
 
         comboPeriod.setItems(listPeriod);
         comboPeriod.setValue(currentPeriod);
+    }
+
+    private void setItemComboStyle() {
+        List<Style> styles = styleManager.getStyleList();
+
+        comboStyle.setItems(FXCollections.observableArrayList(styleManager.getStyleList()));
+        comboStyle.setValue(styles.get(styleManager.getPositionCurrentStyle()));
+        comboStyle.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int index = styleManager.getPositionCurrentStyle();
+            if (index > 0) {
+                styles.get(index).setDefaultStyle(false);
+            }
+            index = styles.indexOf(newValue);
+            styles.get(index).setDefaultStyle(true);
+            styleManager.setStyleList(styles);
+        });
     }
 }

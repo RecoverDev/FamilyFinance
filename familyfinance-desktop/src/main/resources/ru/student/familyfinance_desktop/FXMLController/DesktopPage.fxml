@@ -15,19 +15,48 @@
 
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="SOMETIMES" />
         <ColumnConstraints prefWidth="60.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="60"/>
         <RowConstraints maxHeight="60"/>
         <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="60"/>
     </rowConstraints>
 
+    <ComboBox fx:id="comboPeriod" GridPane.columnIndex="0" 
+                                  GridPane.rowIndex="0" 
+                                  GridPane.halignment="LEFT" 
+                                  prefWidth="300">
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        </GridPane.margin>
+    </ComboBox>
+
+    <HBox GridPane.rowIndex = "3" GridPane.columnIndex = "0" GridPane.halignment = "LEFT"  GridPane.valignment = "CENTER">
+        <Label text="Оформление:" >
+            <HBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin>
+        </Label>
+
+        <ComboBox fx:id = "comboStyle" prefWidth = "300">
+            <HBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin>
+        </ComboBox>
+
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        </GridPane.margin>
+    </HBox>
+
     <Label fx:id="userName" text="" style="-fx-font-weight: bold"
-           GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+           GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
 
     <Button fx:id="settingButton" onAction="#settingAction" text="" 
-            GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+            GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
         <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
         </GridPane.margin>
@@ -43,18 +72,8 @@
         </tooltip>                   
     </Button>
 
-    <ComboBox fx:id="comboPeriod" GridPane.columnIndex="0" 
-                                  GridPane.rowIndex="0" 
-                                  GridPane.halignment="LEFT" 
-                                  prefWidth="300">
-        <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-        </GridPane.margin>
-    </ComboBox>
-
-
     <Accordion prefHeight="600.0" prefWidth="800.0"
-               GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.columnSpan="2">
+               GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.columnSpan="3">
         <panes>
             <TitledPane fx:id="grossBook" animated="true" text="Мои доходы/расходы" >
                 <content>
