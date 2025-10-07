@@ -64,7 +64,7 @@ public class AutorizateController implements Initializable{
                 nameField.setTooltip(new Tooltip("Имя пользователя не может быть пустым"));
                 errorLabel.setText("Имя пользователя не может быть пустым");
             } else {
-                nameField.setStyle("-fx-text-fill: -fx-text-background-color");
+                nameField.setStyle("-fx-text-fill: -color-fg-default");
                 nameField.setTooltip(new Tooltip(""));
                 errorLabel.setText("");
             }
@@ -76,7 +76,7 @@ public class AutorizateController implements Initializable{
                 passwordField.setTooltip(new Tooltip("Пароль не может быть пустым"));
                 errorLabel.setText("Пароль не может быть пустым");
             } else {
-                passwordField.setStyle("-fx-text-fill: -fx-text-background-color");
+                passwordField.setStyle("-fx-text-fill: -color-fg-default");
                 passwordField.setTooltip(new Tooltip(""));
                 errorLabel.setText("");
             }
