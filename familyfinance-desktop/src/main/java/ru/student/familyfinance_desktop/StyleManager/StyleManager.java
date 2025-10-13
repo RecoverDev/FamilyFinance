@@ -53,4 +53,9 @@ public class StyleManager {
         List<Style> result = list.stream().filter(s -> s.isDefaultStyle()).toList();
         return result.size() == 0 ? -1 : list.indexOf(result.getFirst());
     }
+
+    public List<Style> getActiveStyles() {
+        List<Style> list = this.getStyleList();
+        return list.stream().filter(s -> s.isDefaultStyle()).toList();
+    }
 }

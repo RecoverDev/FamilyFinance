@@ -148,17 +148,16 @@ public class DesktopController implements Initializable {
     }
 
     private void setItemComboStyle() {
-        List<Style> styles = styleManager.getStyleList();
 
         comboStyle.setItems(FXCollections.observableArrayList(styleManager.getStyleList()));
-        comboStyle.setValue(styles.get(styleManager.getPositionCurrentStyle()));
+        comboStyle.setValue(styleManager.getActiveStyles().getFirst());
         comboStyle.valueProperty().addListener((observable, oldValue, newValue) -> {
-            int index = styleManager.getPositionCurrentStyle();
-            if (index > 0) {
-                styles.get(index).setDefaultStyle(false);
+            List<Style> styles = styleManager.getStyleList();
+            for (Style style : styles) {
+                style.setDefaultStyle(false);
             }
-            index = styles.indexOf(newValue);
-            styles.get(index).setDefaultStyle(true);
+            Style style = styles.stream().filter(s -> s.getDescription().equals(newValue.getDescription())).findFirst().get();
+            style.setDefaultStyle(true);
             styleManager.setStyleList(styles);
         });
     }
