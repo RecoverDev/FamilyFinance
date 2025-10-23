@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import ru.student.familyfinance_desktop.FXMLController.AutorizateController;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 
 @SpringBootApplication
@@ -17,8 +16,9 @@ public class FamilyfinanceDesktopApplication extends Application{
 	@Autowired
 	private Navigator navigator;
 
-	@Autowired
-	private AutorizateController autorizateController;
+    @Autowired
+    private AuthService service;
+
 
 	public static void main(String[] args) {
 		Application.launch();
@@ -28,7 +28,9 @@ public class FamilyfinanceDesktopApplication extends Application{
     public void start(Stage stage) throws Exception {
         navigator.setStage(stage);
         navigator.setIcon(APPLICATION_ICON);
-        navigator.show(autorizateController,"Семейный бюджет.Авторизация");
+        if (!service.startAuthProcess()) {
+            this.stop();
+        }
     }
 
     @Override

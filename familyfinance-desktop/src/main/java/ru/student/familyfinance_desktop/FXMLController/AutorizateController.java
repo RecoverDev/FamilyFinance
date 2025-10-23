@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -54,6 +55,9 @@ public class AutorizateController implements Initializable{
 
     @FXML
     private Label errorLabel;
+
+    @FXML
+    private CheckBox checkboxSave;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {

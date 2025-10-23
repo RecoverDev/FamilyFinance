@@ -13,3 +13,6 @@ backend:
   url: 'http://localhost:8080'
 styles:
   file: 'styles.json'
+counter:
+  max-count: 5
+  timeout-minutes: 10
