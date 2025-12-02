@@ -16,7 +16,6 @@ public class StorageImplementation implements Storage{
     private static final String SECRET_KEY = "your-256-bit-secret-key-length32"; // Замените на свой ключ!
     private static final String ALGORITHM = "AES";
 
-
     @Override
     public boolean saveCreditional(String name, String value) {
         boolean result = true;
@@ -43,13 +42,13 @@ public class StorageImplementation implements Storage{
         prefs.remove(name);
     }    
 
-    private String encrypt(String data) throws Exception {
+    private static String encrypt(String data) throws Exception {
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(SECRET_KEY.getBytes(), ALGORITHM));
         return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes()));
     }
 
-    private String decrypt(String encryptedData) {
+    private static String decrypt(String encryptedData) {
         if (encryptedData.isEmpty()) return "";
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);

@@ -14,16 +14,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.stage.Stage;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.Model.AutorizateData;
+import ru.student.familyfinance_desktop.SecurityManager.Counter;
 import ru.student.familyfinance_desktop.Service.AutorizationService;
+import ru.student.familyfinance_desktop.Storage.Storage;
 
 @Component
 @Setter
 @FxmlView("LoginPage.fxml")
 public class AutorizateController implements Initializable{
+
+    @Autowired
+    private Storage storage;
 
     @Autowired
     private RegistrationController registrationController;
@@ -39,6 +45,9 @@ public class AutorizateController implements Initializable{
 
     @Autowired
     private AutorizateData loginData;
+
+    @Autowired
+    private Counter counter;
 
 
     @FXML
@@ -61,6 +70,10 @@ public class AutorizateController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+
+        if (counter.remaining() == 0) {
+            this.exitAction();
+        }
 
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (nameField.getText().isEmpty()) {
@@ -89,6 +102,10 @@ public class AutorizateController implements Initializable{
 
     @FXML
     public void loginAction() {
+        if (counter.remaining() == 0) {
+            this.exitAction();
+        }
+
         if (nameField.getText().isEmpty()) {
             errorLabel.setText("Имя пользователя не определено");
             return;
@@ -97,23 +114,33 @@ public class AutorizateController implements Initializable{
             errorLabel.setText("Поле с паролем пользователя не может быть пустым");
             return;
         }
+
         loginData.setUsername(nameField.getText());
         loginData.setPassword(passwordField.getText());
+
+        // navigator.setResult(true);
         boolean result = service.autorizate();
 
         if (!result) {
-            errorLabel.setText("Ошибка авторизации пользователя");
+            counter.inc();
+            errorLabel.setText("Осталось попыток " + counter.remaining());
             return;
+        } else {
+            //если есть на то указание - сохраним данные
+            if (checkboxSave.isSelected()) {
+                storage.saveCreditional("login", nameField.getText());
+                storage.saveCreditional("password", passwordField.getText());
+            }
+            //вызвать основное окно
+            navigator.show(desktopController, "Семейный бюджет");
         }
 
-        errorLabel.setText("");
-        //вызвать основное окно
-        navigator.show(desktopController, "Семейный бюджет");
     }
 
     @FXML
     public void exitAction() {
-        System.exit(0);
+        Stage stage = (Stage)cancelButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

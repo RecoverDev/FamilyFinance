@@ -37,31 +37,19 @@ public class AuthService {
             return false;
         }
 
-        while (counter.remaining() > 0) {
+        //попробуем найти сохраненные данные
+        String login = storage.loadCreditional("login");
+        String password = storage.loadCreditional("password");
 
-            //попробуем найти сохраненные данные
-            String login = storage.loadCreditional("login");
-            String password = storage.loadCreditional("password");
-
-            //если не нашли сохраненные данные, запрашиваем у пользователя
-            if (login.isEmpty()) {
-                navigator.show(autorizateController,"Семейный бюджет.Авторизация");
-            }
-
-            //пробуем авторизоваться
-            loginData.setUsername(login);
-            loginData.setPassword(password);
-            if (service.autorizate()) {
-                break;
-            }
-            counter.inc();
-        }
-
-        if (counter.remaining() > 0) {
+        //пробуем авторизоваться
+        loginData.setUsername(login);
+        loginData.setPassword(password);
+        if (service.autorizate()) {
             navigator.show(desktopController, "Семейный бюджет");
-            return true;
+        } else {
+            navigator.show(autorizateController,"Семейный бюджет.Авторизация");
         }
-        return false;
+        return true;
     }
 
 }

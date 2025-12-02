@@ -13,12 +13,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class JsonConverter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonConverter.class);
-
-    @Autowired
-    private  ObjectMapper jsonMapper;
+    private final ObjectMapper jsonMapper;
     
     
     public String toJsonString(List<Style> styles) {

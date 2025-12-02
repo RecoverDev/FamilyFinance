@@ -75,7 +75,7 @@ public class StyleManagerTest {
 
     @BeforeEach
     private void init() {
-        styleManager = new StyleManager();
+        styleManager = new StyleManager(jsonConverterMock, fileManager);
     }
 
     @Test

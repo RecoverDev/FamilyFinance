@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 @Component
 public class Navigator {
     private Stage stage;
+    private boolean result;
 
     @Autowired
     private ConfigurableApplicationContext applicationContext;
@@ -54,4 +55,6 @@ public class Navigator {
         Image icon = new Image(getClass().getResourceAsStream(name));
         return this.stage.getIcons().add(icon);
     }
+
+    public boolean getResult() { return result; }
 }

@@ -5,21 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.net.URISyntaxException;
 
 import org.json.JSONException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class FileManagerTest {
-
-    @Value("${styles.file}")
-    private String nameFile;
-
-    @Autowired
     private FileManager fileManager;
 
     private String json = """
@@ -60,6 +52,13 @@ public class FileManagerTest {
                 "defaultStyle":false
             }
         ]""";
+
+    private String nameFile = "styles.json";
+     
+    @BeforeEach
+    private void init() {
+        fileManager = new FileManager();
+    }
 
     @Test
     @DisplayName("Сохранение списка в формате JSON в файл")

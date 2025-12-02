@@ -12,6 +12,7 @@ import ru.student.familyfinance_desktop.Storage.Storage;
 @Setter
 @Component
 public class Counter {
+    private final Storage storage;
     
     @Value("${counter.max-count}")
     private int maxCount;
@@ -23,10 +24,10 @@ public class Counter {
 
     private LocalDateTime blockTime = LocalDateTime.now();
 
-    @Autowired
-    private Storage storage;
 
-    public Counter() {
+    public Counter(Storage storage) {
+        this.storage = storage;
+
         String store = "";
         store = storage.loadCreditional("currentCount");
         if (!store.isEmpty()) {
@@ -49,7 +50,7 @@ public class Counter {
     }
 
     public int remaining() {
-        return this.maxCount - this.currentCount;
+        return Math.max(this.maxCount - this.currentCount,0);
     }
 
     public boolean isBlocked() {

@@ -5,14 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.json.JSONException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class JsonConverterTest {
     private List<Style> styles = List.of(new Style("Cupertino (темная)", "FXML/cupertino-dark.css", false),
                                          new Style("Cupertino (светлая)", "FXML/cupertino-light.css", true),
@@ -61,8 +62,12 @@ public class JsonConverterTest {
             }
         ]""";
 
-    @Autowired
     private JsonConverter jsonConverter;
+
+    @BeforeEach
+    private void init() {
+        jsonConverter = new JsonConverter(new ObjectMapper());
+    }
 
     @Test
     @DisplayName("Преобразование списка стилей в JSON")
