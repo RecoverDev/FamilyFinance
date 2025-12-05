@@ -21,15 +21,11 @@ import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.Model.AutorizateData;
 import ru.student.familyfinance_desktop.SecurityManager.Counter;
 import ru.student.familyfinance_desktop.Service.AutorizationService;
-import ru.student.familyfinance_desktop.Storage.Storage;
 
 @Component
 @Setter
 @FxmlView("LoginPage.fxml")
 public class AutorizateController implements Initializable{
-
-    @Autowired
-    private Storage storage;
 
     @Autowired
     private RegistrationController registrationController;
@@ -128,8 +124,7 @@ public class AutorizateController implements Initializable{
         } else {
             //если есть на то указание - сохраним данные
             if (checkboxSave.isSelected()) {
-                storage.saveCreditional("login", nameField.getText());
-                storage.saveCreditional("password", passwordField.getText());
+                loginData.saveParams();
             }
             //вызвать основное окно
             navigator.show(desktopController, "Семейный бюджет");

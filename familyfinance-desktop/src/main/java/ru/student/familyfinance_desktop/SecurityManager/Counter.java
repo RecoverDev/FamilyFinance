@@ -2,7 +2,6 @@ package ru.student.familyfinance_desktop.SecurityManager;
 
 import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

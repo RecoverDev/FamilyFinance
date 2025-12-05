@@ -52,11 +52,27 @@
         </GridPane.margin>
     </HBox>
 
-    <Label fx:id="userName" text="" style="-fx-font-weight: bold"
-           GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+    <Label fx:id="userName" text="" style="-fx-font-weight: bold" 
+            GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER"/>
+    <Button fx:id = "logoutButton" onAction = "#logoutAction" text = "" 
+            GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        </GridPane.margin>
+        <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@Images/door.png" />
+                </image>
+            </ImageView>
+        </graphic> 
+        <tooltip>
+            <Tooltip text="Завершение сеанса пользователя"/>
+        </tooltip>                   
+    </Button>
 
     <Button fx:id="settingButton" onAction="#settingAction" text="" 
-            GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+            GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
         <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
         </GridPane.margin>

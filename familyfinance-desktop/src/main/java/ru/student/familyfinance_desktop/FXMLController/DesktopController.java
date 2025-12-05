@@ -17,12 +17,14 @@ import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.FXMLController.Dictionary.DictionaryController;
 import ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesTabController;
 import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
+import ru.student.familyfinance_desktop.Model.AutorizateData;
 import ru.student.familyfinance_desktop.Model.Person;
 import ru.student.familyfinance_desktop.Model.WorkPeriod;
 import ru.student.familyfinance_desktop.Service.GrossBookService;
@@ -37,6 +39,7 @@ public class DesktopController implements Initializable {
     private final Navigator navigator;
     private final GrossBookService grossBookService;
     private final PlanService planService;
+    private final AutorizateData loginData;
 
     @Autowired
     private WorkPeriod currentPeriod;
@@ -132,6 +135,13 @@ public class DesktopController implements Initializable {
     private void settingAction(ActionEvent event) {
         navigator.showModal(settingController, "Свойства пользователя");
         userName.setText(person.getFullName());
+    }
+
+    @FXML
+    private void logoutAction(ActionEvent event) {
+        loginData.removeParams();
+        Stage stage = (Stage)userName.getScene().getWindow();
+        stage.close();
     }
 
     private void setItemsComboPeriod() {

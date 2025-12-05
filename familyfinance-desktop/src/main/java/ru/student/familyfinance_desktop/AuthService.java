@@ -10,12 +10,10 @@ import ru.student.familyfinance_desktop.FXMLController.DesktopController;
 import ru.student.familyfinance_desktop.Model.AutorizateData;
 import ru.student.familyfinance_desktop.SecurityManager.Counter;
 import ru.student.familyfinance_desktop.Service.AutorizationService;
-import ru.student.familyfinance_desktop.Storage.Storage;
 
 @Component
 @RequiredArgsConstructor
 public class AuthService {
-    private final Storage storage;
     private final Counter counter;
     private final Navigator navigator;
     private final AutorizationService service;
@@ -37,13 +35,9 @@ public class AuthService {
             return false;
         }
 
-        //попробуем найти сохраненные данные
-        String login = storage.loadCreditional("login");
-        String password = storage.loadCreditional("password");
 
         //пробуем авторизоваться
-        loginData.setUsername(login);
-        loginData.setPassword(password);
+        loginData.loadParams();
         if (service.autorizate()) {
             navigator.show(desktopController, "Семейный бюджет");
         } else {
