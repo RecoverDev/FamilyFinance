@@ -131,6 +131,7 @@
 			<plugin>
 				<groupId>com.akathist.maven.plugins.launch4j</groupId>
 				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>2.6.0</version>
 				<executions>
 					<execution>
 						<id>plugin-loader</id>
@@ -144,18 +145,19 @@
 							<jar>${project.build.directory}/${project.artifactId}.jar</jar>
 							<errTitle>${product.title}</errTitle>
 							<icon>${project.basedir}/src/main/resources/images/money.ico</icon>
-							<classPath>
+							<!-- Не определяем главный класс.Пусть Spring Boot скажет какой класс запустить -->
+							<!-- <classPath>
 								<mainClass>ru.student.familyfinance_desktop.FamilyfinanceDesktopApplication</mainClass>
-								<addDependencies>true</addDependencies>
-								<preCp>anything</preCp>
-							</classPath>
+							</classPath> -->
 							<jre>
-								<minVersion>${jdkVersion}</minVersion>
+								<minVersion>21</minVersion>
+								<initialHeapSize>128</initialHeapSize>
+								<maxHeapSize>512</maxHeapSize>
 							</jre>
 							<versionInfo>
 								<fileVersion>${project.version}</fileVersion>
 								<txtFileVersion>${project.version}</txtFileVersion>
-								<fileDescription>Desktop версия программы "Семейный бюджет" (FamilyFinance)</fileDescription>
+								<fileDescription>Desktop application Family Finance</fileDescription>
 								<copyright>Copyright © 2025 ${product.company}</copyright>
 								<productVersion>
 									${project.version}
