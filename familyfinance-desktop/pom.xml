@@ -127,62 +127,69 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>com.akathist.maven.plugins.launch4j</groupId>
-				<artifactId>launch4j-maven-plugin</artifactId>
-				<version>2.6.0</version>
-				<executions>
-					<execution>
-						<id>plugin-loader</id>
-						<phase>package</phase>
-						<goals>
-							<goal>launch4j</goal>
-						</goals>
-						<configuration>
-							<headerType>gui</headerType>
-							<outfile>${project.build.directory}/${exeFileName}.exe</outfile>
-							<jar>${project.build.directory}/${project.artifactId}.jar</jar>
-							<errTitle>${product.title}</errTitle>
-							<icon>${project.basedir}/src/main/resources/images/money.ico</icon>
-							<!-- Не определяем главный класс.Пусть Spring Boot скажет какой класс запустить -->
-							<!-- <classPath>
-								<mainClass>ru.student.familyfinance_desktop.FamilyfinanceDesktopApplication</mainClass>
-							</classPath> -->
-							<jre>
-								<minVersion>21</minVersion>
-								<initialHeapSize>128</initialHeapSize>
-								<maxHeapSize>512</maxHeapSize>
-							</jre>
-							<versionInfo>
-								<fileVersion>${project.version}</fileVersion>
-								<txtFileVersion>${project.version}</txtFileVersion>
-								<fileDescription>Desktop application Family Finance</fileDescription>
-								<copyright>Copyright © 2025 ${product.company}</copyright>
-								<productVersion>
-									${project.version}
-								</productVersion>
-								<txtProductVersion>
-									${project.version}
-								</txtProductVersion>
-								<companyName>
-									${product.company}
-								</companyName>
-								<productName>
-									${product.title}
-								</productName>
-								<internalName>
-									${exeFileName}
-								</internalName>
-								<originalFilename>
-									${exeFileName}.exe
-								</originalFilename>
-							</versionInfo>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>			
-
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>Windows</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.akathist.maven.plugins.launch4j</groupId>
+						<artifactId>launch4j-maven-plugin</artifactId>
+						<version>2.6.0</version>
+						<executions>
+							<execution>
+								<id>plugin-loader</id>
+								<phase>package</phase>
+								<goals>
+									<goal>launch4j</goal>
+								</goals>
+								<configuration>
+									<headerType>gui</headerType>
+									<outfile>${project.build.directory}/${exeFileName}.exe</outfile>
+									<jar>${project.build.directory}/${project.artifactId}.jar</jar>
+									<errTitle>${product.title}</errTitle>
+									<icon>${project.basedir}/src/main/resources/images/money.ico</icon>
+									<!-- Не определяем главный класс.Пусть Spring Boot скажет какой класс запустить -->
+									<!-- <classPath>
+										<mainClass>ru.student.familyfinance_desktop.FamilyfinanceDesktopApplication</mainClass>
+									</classPath> -->
+									<jre>
+										<minVersion>21</minVersion>
+										<initialHeapSize>128</initialHeapSize>
+										<maxHeapSize>512</maxHeapSize>
+									</jre>
+									<versionInfo>
+										<fileVersion>${project.version}</fileVersion>
+										<txtFileVersion>${project.version}</txtFileVersion>
+										<fileDescription>Desktop application Family Finance</fileDescription>
+										<copyright>Copyright © 2025 </copyright>
+										<productVersion>${project.version}</productVersion>
+										<txtProductVersion>${project.version}</txtProductVersion>
+										<productName>${product.title}</productName>
+										<internalName>${exeFileName}</internalName>
+										<originalFilename>${exeFileName}.exe</originalFilename>
+									</versionInfo>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>Linux</id>
+			<activation>
+				<os>
+					<family>Linux</family>
+				</os>
+			</activation>
+		</profile>
+	</profiles>
 </project>
