@@ -31,6 +31,7 @@
 		<javafx.version>22</javafx.version>
 		<weaver.version>2.0.1</weaver.version>
 		<httpclient.version>5.5.1</httpclient.version>
+		<mapstruct.version>1.6.3</mapstruct.version>
 		<exeFileName>familyfinance</exeFileName>
 	</properties>
 	<dependencies>
@@ -81,13 +82,18 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.6.3</version>
+			<version>${mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- <dependency>
+			<groupId>ru.student</groupId>
+			<artifactId>familyfinance-service</artifactId>
+			<version>0.0.0.1</version>
+		</dependency> -->
 	</dependencies>
 
 	<build>

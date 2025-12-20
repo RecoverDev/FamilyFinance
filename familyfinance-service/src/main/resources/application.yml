@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: 'Family Finance - service'
+logging:
+  structured:
+    format:
+      file: 'ecs'
+  file:
+    name: 'log.json'
+backend:
+  url: 'http://localhost:8080'
+counter:
+  max-count: 5
+  timeout-minutes: 10
