@@ -15,12 +15,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
+import org.springframework.data.util.Pair;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import ru.student.familyfinance_desktop.FXMLController.ItemModel.GraphicExpensesCell;
-import ru.student.familyfinance_desktop.Model.WorkPeriod;
-import ru.student.familyfinance_desktop.Service.StatisticService;
+import ru.student.familyfinance_service.Model.WorkPeriod;
+import ru.student.familyfinance_service.Service.StatisticService;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,8 +58,8 @@ public class GraphicExpensesController implements Initializable {
             GridPane.setColumnIndex(vbox, Boolean.valueOf(i%2 == 0).compareTo(false));
             vbox.getChildren().add(new Label(graphic.getKey()));
             for (Entry<LocalDate, Pair<Double, Double>> week : graphic.getValue().entrySet()) {
-                GraphicExpensesCell weekGraphic = new GraphicExpensesCell(week.getKey(), week.getValue().getValue());
-                weekGraphic.setValue(week.getValue().getKey());
+                GraphicExpensesCell weekGraphic = new GraphicExpensesCell(week.getKey(), week.getValue().getSecond());
+                weekGraphic.setValue(week.getValue().getFirst());
                 vbox.getChildren().add(weekGraphic);
             }
             ++i;

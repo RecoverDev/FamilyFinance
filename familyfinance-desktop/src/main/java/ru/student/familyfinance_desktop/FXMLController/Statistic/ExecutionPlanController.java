@@ -19,8 +19,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
-import ru.student.familyfinance_desktop.Model.WorkPeriod;
-import ru.student.familyfinance_desktop.Service.StatisticService;
+import ru.student.familyfinance_service.Model.WorkPeriod;
+import ru.student.familyfinance_service.Service.StatisticService;
 
 @Controller
 @FxmlView("ExecutionPlanPage.fxml")

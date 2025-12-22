@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.FXMLController.AutorizateController;
 import ru.student.familyfinance_desktop.FXMLController.DesktopController;
-import ru.student.familyfinance_desktop.Model.AutorizateData;
+import ru.student.familyfinance_service.Model.AutorizateData;
 import ru.student.familyfinance_desktop.SecurityManager.Counter;
-import ru.student.familyfinance_desktop.Service.AutorizationService;
+import ru.student.familyfinance_service.Service.AutorizationService;
 
 @Component
 @RequiredArgsConstructor

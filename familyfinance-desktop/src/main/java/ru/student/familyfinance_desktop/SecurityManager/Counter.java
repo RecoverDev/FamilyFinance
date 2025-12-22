@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import lombok.Setter;
-import ru.student.familyfinance_desktop.Storage.Storage;
+import ru.student.familyfinance_service.Storage.Storage;
 
 @Setter
 @Component
