@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.student.familyfinance_desktop.DTO.ShopDTO;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.Shop;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Model.Shop;
 
 @Mapper(componentModel = SPRING)
 public abstract class ShopMapper {

@@ -16,8 +16,8 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.Shop;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Model.Shop;
 
 @Setter
 @Getter

@@ -15,8 +15,9 @@ import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
-import ru.student.familyfinance_desktop.Model.RegistrationPerson;
-import ru.student.familyfinance_desktop.Service.RegistrationService;
+
+import ru.student.familyfinance_service.Model.RegistrationPerson;
+import ru.student.familyfinance_service.Service.RegistrationService;
 
 @Component
 @RequiredArgsConstructor

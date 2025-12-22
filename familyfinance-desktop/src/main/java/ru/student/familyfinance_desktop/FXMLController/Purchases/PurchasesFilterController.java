@@ -32,8 +32,8 @@ import ru.student.familyfinance_desktop.DTO.ShopDTO;
 import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemBasket;
 import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemShop;
 import ru.student.familyfinance_desktop.Mapper.BasketMapper;
-import ru.student.familyfinance_desktop.Model.Basket;
-import ru.student.familyfinance_desktop.Service.BasketService;
+import ru.student.familyfinance_service.Model.Basket;
+import ru.student.familyfinance_service.Service.BasketService;
 
 @Getter
 @Setter

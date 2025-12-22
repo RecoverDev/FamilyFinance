@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.DTO.GrossBookDTO;
 import ru.student.familyfinance_desktop.Mapper.GrossBookMapper;
-import ru.student.familyfinance_desktop.Service.GrossBookService;
+import ru.student.familyfinance_service.Service.GrossBookService;
 
 @Component
 @RequiredArgsConstructor

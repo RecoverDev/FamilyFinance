@@ -28,8 +28,9 @@ import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.DTO.PlanDTO;
 import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemPlan;
 import ru.student.familyfinance_desktop.Mapper.PlanMapper;
-import ru.student.familyfinance_desktop.Model.Plan;
-import ru.student.familyfinance_desktop.Service.PlanService;
+
+import ru.student.familyfinance_service.Model.Plan;
+import ru.student.familyfinance_service.Service.PlanService;
 
 @Controller
 @FxmlView("PlanTablePage.fxml")

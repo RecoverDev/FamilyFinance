@@ -11,11 +11,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import ru.student.familyfinance_desktop.DTO.TargetDTO;
-import ru.student.familyfinance_desktop.Model.GrossBook;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.Target;
-import ru.student.familyfinance_desktop.Service.GrossBookService;
-import ru.student.familyfinance_desktop.Service.TargetService;
+import ru.student.familyfinance_service.Model.GrossBook;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Model.Target;
+import ru.student.familyfinance_service.Service.GrossBookService;
+import ru.student.familyfinance_service.Service.TargetService;
 
 @Mapper(componentModel = SPRING)
 public abstract class TargetMapper {

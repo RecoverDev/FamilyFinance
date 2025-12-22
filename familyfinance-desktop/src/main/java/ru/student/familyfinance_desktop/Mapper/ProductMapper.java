@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.student.familyfinance_desktop.DTO.ProductDTO;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.Product;
-import ru.student.familyfinance_desktop.Service.ExpensesService;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Model.Product;
+import ru.student.familyfinance_service.Service.ExpensesService;
 
 @Mapper(componentModel = SPRING)
 public abstract class ProductMapper {

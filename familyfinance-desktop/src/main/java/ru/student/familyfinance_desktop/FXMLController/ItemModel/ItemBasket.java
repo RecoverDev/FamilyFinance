@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import lombok.RequiredArgsConstructor;
 import ru.student.familyfinance_desktop.DTO.BasketDTO;
 import ru.student.familyfinance_desktop.Mapper.BasketMapper;
-import ru.student.familyfinance_desktop.Service.BasketService;
+import ru.student.familyfinance_service.Service.BasketService;
 
 @Component
 @RequiredArgsConstructor

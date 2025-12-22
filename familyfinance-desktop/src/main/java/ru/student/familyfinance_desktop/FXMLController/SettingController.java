@@ -15,8 +15,9 @@ import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Service.PersonService;
+
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Service.PersonService;
 
 @Controller
 @FxmlView("SettingPage.fxml")

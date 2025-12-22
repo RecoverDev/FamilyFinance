@@ -29,12 +29,13 @@ import ru.student.familyfinance_desktop.DTO.TargetDTO;
 import ru.student.familyfinance_desktop.Mapper.ExpensesMapper;
 import ru.student.familyfinance_desktop.Mapper.IncomeMapper;
 import ru.student.familyfinance_desktop.Mapper.TargetMapper;
-import ru.student.familyfinance_desktop.Model.GrossBook;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.WorkPeriod;
-import ru.student.familyfinance_desktop.Service.ExpensesService;
-import ru.student.familyfinance_desktop.Service.IncomeService;
-import ru.student.familyfinance_desktop.Service.TargetService;
+
+import ru.student.familyfinance_service.Model.GrossBook;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Model.WorkPeriod;
+import ru.student.familyfinance_service.Service.ExpensesService;
+import ru.student.familyfinance_service.Service.IncomeService;
+import ru.student.familyfinance_service.Service.TargetService;
 
 @Getter
 @Setter

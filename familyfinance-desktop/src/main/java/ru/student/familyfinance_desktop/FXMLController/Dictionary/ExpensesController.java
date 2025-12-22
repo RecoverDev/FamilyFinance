@@ -17,10 +17,10 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
-import ru.student.familyfinance_desktop.Model.Expenses;
-import ru.student.familyfinance_desktop.Model.ExpensesType;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Service.ExpensesTypeService;
+import ru.student.familyfinance_service.Model.Expenses;
+import ru.student.familyfinance_service.Model.ExpensesType;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Service.ExpensesTypeService;
 
 @Getter
 @Setter

@@ -11,11 +11,11 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.student.familyfinance_desktop.DTO.PlanDTO;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.Plan;
-import ru.student.familyfinance_desktop.Service.ExpensesService;
-import ru.student.familyfinance_desktop.Service.IncomeService;
-import ru.student.familyfinance_desktop.Service.TargetService;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Model.Plan;
+import ru.student.familyfinance_service.Service.ExpensesService;
+import ru.student.familyfinance_service.Service.IncomeService;
+import ru.student.familyfinance_service.Service.TargetService;
 
 @Mapper(componentModel = SPRING)
 public abstract class PlanMapper {

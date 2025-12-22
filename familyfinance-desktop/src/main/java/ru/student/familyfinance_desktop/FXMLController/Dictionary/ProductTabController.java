@@ -26,8 +26,8 @@ import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.DTO.ProductDTO;
 import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemProduct;
 import ru.student.familyfinance_desktop.Mapper.ProductMapper;
-import ru.student.familyfinance_desktop.Model.Product;
-import ru.student.familyfinance_desktop.Service.ProductService;
+import ru.student.familyfinance_service.Model.Product;
+import ru.student.familyfinance_service.Service.ProductService;
 
 @Component
 @FxmlView("ProductTabPage.fxml")

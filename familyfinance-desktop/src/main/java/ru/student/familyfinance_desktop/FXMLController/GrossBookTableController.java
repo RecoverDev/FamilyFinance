@@ -29,8 +29,8 @@ import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.DTO.GrossBookDTO;
 import ru.student.familyfinance_desktop.FXMLController.ItemModel.ItemGrossBook;
 import ru.student.familyfinance_desktop.Mapper.GrossBookMapper;
-import ru.student.familyfinance_desktop.Model.GrossBook;
-import ru.student.familyfinance_desktop.Service.GrossBookService;
+import ru.student.familyfinance_service.Model.GrossBook;
+import ru.student.familyfinance_service.Service.GrossBookService;
 
 @Controller
 @FxmlView("GrossBookTablePage.fxml")

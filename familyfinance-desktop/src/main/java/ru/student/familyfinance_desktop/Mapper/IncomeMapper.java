@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.student.familyfinance_desktop.DTO.IncomeDTO;
-import ru.student.familyfinance_desktop.Model.Income;
-import ru.student.familyfinance_desktop.Model.Person;
+import ru.student.familyfinance_service.Model.Income;
+import ru.student.familyfinance_service.Model.Person;
 
 @Mapper(componentModel = SPRING)
 public abstract class IncomeMapper {

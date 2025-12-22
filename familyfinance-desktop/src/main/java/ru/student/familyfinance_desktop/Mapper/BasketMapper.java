@@ -9,10 +9,10 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.student.familyfinance_desktop.DTO.BasketDTO;
-import ru.student.familyfinance_desktop.Model.Basket;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Service.ProductService;
-import ru.student.familyfinance_desktop.Service.ShopService;
+import ru.student.familyfinance_service.Model.Basket;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Service.ProductService;
+import ru.student.familyfinance_service.Service.ShopService;
 
 @Mapper(componentModel=SPRING)
 public abstract class BasketMapper {

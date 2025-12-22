@@ -24,13 +24,14 @@ import ru.student.familyfinance_desktop.Configuration.Navigator;
 import ru.student.familyfinance_desktop.FXMLController.Dictionary.DictionaryController;
 import ru.student.familyfinance_desktop.FXMLController.Purchases.PurchasesTabController;
 import ru.student.familyfinance_desktop.FXMLController.Statistic.StatisticController;
-import ru.student.familyfinance_desktop.Model.AutorizateData;
-import ru.student.familyfinance_desktop.Model.Person;
-import ru.student.familyfinance_desktop.Model.WorkPeriod;
-import ru.student.familyfinance_desktop.Service.GrossBookService;
-import ru.student.familyfinance_desktop.Service.PlanService;
 import ru.student.familyfinance_desktop.StyleManager.Style;
 import ru.student.familyfinance_desktop.StyleManager.StyleManager;
+
+import ru.student.familyfinance_service.Model.AutorizateData;
+import ru.student.familyfinance_service.Model.Person;
+import ru.student.familyfinance_service.Model.WorkPeriod;
+import ru.student.familyfinance_service.Service.GrossBookService;
+import ru.student.familyfinance_service.Service.PlanService;
 
 @Component
 @FxmlView("DesktopPage.fxml")
